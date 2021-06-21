@@ -1,0 +1,168 @@
+scalar Upload
+
+type Mutation {
+     signupAlfa(data:[String]!):signupAlfa
+     signupEmpresas(data:[String]!):signupEmpresas
+     insertCotizaciones(data:[String]!):insertCotizaciones
+   
+}
+
+type Query{
+loginAdminAlfa(data:[String]!):loginAdminAlfa
+loginEmpresas(data:[String]!):loginEmpresas
+getTablaClientes(data:[String]!):[getTablaClientes]
+# getEmpresa(data:[String]!):[getEmpresa]
+getEmpresas(data:[String]!):[getEmpresas]
+getCotizacionesTabla(data:[String]!):[getCotizacionesTabla]
+getIdCotizacion(data:[String]!):[getIdCotizacion]
+getClienteRFC(data:[String]!):[getClienteRFC]
+}
+
+type getClienteRFC {
+    id_cliente:String,
+    empresa:String,
+    rfc:String,
+    nombre:String,
+    apellido:String,
+    correo1:String,
+    correo2:String,
+    telefono1:String,
+    telefono2:String,    
+    message:String
+}
+
+type getIdCotizacion{
+   id_cotizacion:String, 
+   razonSocial:String ,
+   nombre:String, 
+   apellidos:String , 
+   correo1:String ,
+   correo2:String , 
+   telefono1:String,
+   telefono2:String,  
+   servicio:String,
+   precio:String, 
+   iva:String,
+   total:String,
+   promocion:String, 
+   vendedor:String,
+   fecha:String,   
+   fk_adminalfa:String,
+   message:String
+
+}
+
+
+type getCotizacionesTabla{
+   id_cotizacion:String, 
+   razonSocial:String ,
+   nombre:String, 
+   apellidos:String , 
+   correo1:String ,
+   correo2:String , 
+   telefono1:String,
+   telefono2:String,  
+   servicio:String,
+   precio:String, 
+   iva:String,
+   total:String,
+   promocion:String, 
+   vendedor:String,
+   fecha:String,   
+   fk_adminalfa:String,
+   message:String
+}
+
+
+type insertCotizaciones{
+   id_cotizacion:String, 
+   razonSocial:String ,
+   nombre:String, 
+   apellidos:String , 
+   correo1:String ,
+   correo2:String , 
+   telefono1:String ,
+   telefono2:String,  
+   servicio:String,
+   precio:String, 
+   iva:String,
+   total:String,
+   promocion:String, 
+   vendedor:String,
+   fecha:String,   
+   fk_adminalfa:String,
+   message:String
+}
+
+
+# type getEmpresa{
+#     id_empresa:String,
+#     rfc:String,
+#     razonSocial:String,
+#     correo:String,
+#     telefono:String,  
+#     message:String,
+# }
+
+type getEmpresas{
+    id_empresa:String,
+    rfc:String,
+    razonSocial:String,
+    correo:String,
+    telefono:String, 
+    # token:String,
+    message:String     
+}
+
+type signupAlfa{
+    id_admin:String,
+    nombre:String,
+    apellido:String,
+    correo:String,
+    token:String,
+    message:String,
+    fk_empresa:String
+}
+type signupEmpresas{    
+    rfc:String,
+    razonSocial:String,
+    correo:String,
+    telefono:String,
+    token:String,
+    message:String
+}
+
+type loginAdminAlfa{
+    id_admin:String,
+    nombre:String,
+    apellido:String,
+    correo:String,
+    token:String,
+    message:String,
+    fk_empresa:String
+    
+}
+
+type loginEmpresas{
+    id_empresa:String,
+    rfc:String,
+    razonSocial:String,
+    correo:String,
+    telefono:String,
+    token:String,
+    message:String
+}
+
+type getTablaClientes{
+    id_cliente:String,
+    empresa:String,
+    rfc:String,
+    nombre:String,
+    apellido:String,
+    correo1:String,
+    correo2:String,
+    telefono1:String,
+    telefono2:String,    
+    message:String
+
+}
