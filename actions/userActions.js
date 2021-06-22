@@ -242,7 +242,7 @@ const insertCotizaciones = (data)=> {
         let fecha = date.toLocaleString('es')
         
     //    console.log("fecha", fecha)
-    client.query(`insert into cotizaciones(razonSocial,nombre,apellidos,correo1,correo2,telefono1,telefono2,servicio,precio,iva,total,promocion,vendedor,fecha,fk_adminalfa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[10]}','${data[11]}','${data[12]}','${fecha}','${data[13]}')`) 
+    client.query(`insert into cotizaciones(rfc,razonSocial,nombre,apellidos,correo1,correo2,telefono1,telefono2,servicio,precio,iva,total,promocion,vendedor,fecha,fk_adminalfa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[10]}','${data[11]}','${data[12]}','${data[13]}','${fecha}','${data[14]}')`) 
       
     resolve({message:"registro exitoso"})
     })
@@ -289,6 +289,21 @@ const insertCotizaciones = (data)=> {
                 })
                 }
 
+                const insertClientes = (data)=> { 
+                    console.log("data",data)
+                    return new Promise((resolve,reject)=>{  
+                        //  let id_Admin = parseInt(data[9]);  
+                                
+                   // client.query(`insert into clientes (nombre_cliente, apellidos_cliente,curp,rfc,nombreEmpresa,telefono,correo,contrasena,num_factura,fk_administrador) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}')`) 
+                            
+                    client.query(`insert into clientes (rfc,empresa,nombre,apellido,correo1,correo2,telefono1,telefono2) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}')`) 
+                    // client.query(`insert into clientes (nombre_cliente, apellidos_cliente,curp,rfc,nombreEmpresa,telefono,correo,contrasena,num_factura) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}')`) 
+                       
+                        resolve({message:"registro exitoso"})
+                    })
+                    }
+                
+
 module.exports={ 
     
     signupEmpresas,  
@@ -301,6 +316,7 @@ module.exports={
     getEmpresas,
     getCotizacionesTabla,
     getIdCotizacion,
-    getClienteRFC   
+    getClienteRFC,
+    insertClientes   
 
 }

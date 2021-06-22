@@ -4,6 +4,7 @@ type Mutation {
      signupAlfa(data:[String]!):signupAlfa
      signupEmpresas(data:[String]!):signupEmpresas
      insertCotizaciones(data:[String]!):insertCotizaciones
+     insertClientes(data:[String]!):insertClientes
    
 }
 
@@ -16,6 +17,19 @@ getEmpresas(data:[String]!):[getEmpresas]
 getCotizacionesTabla(data:[String]!):[getCotizacionesTabla]
 getIdCotizacion(data:[String]!):[getIdCotizacion]
 getClienteRFC(data:[String]!):[getClienteRFC]
+}
+
+type insertClientes{ 
+     rfc:String,
+     empresa:String,
+     nombre:String,
+     apellido:String,
+     correo1:String,
+     correo2:String,
+     telefono1:String,
+     telefono2:String,
+     message:String
+
 }
 
 type getClienteRFC {
@@ -32,7 +46,8 @@ type getClienteRFC {
 }
 
 type getIdCotizacion{
-   id_cotizacion:String, 
+   id_cotizacion:String,
+   rfc:String, 
    razonSocial:String ,
    nombre:String, 
    apellidos:String , 
@@ -54,7 +69,8 @@ type getIdCotizacion{
 
 
 type getCotizacionesTabla{
-   id_cotizacion:String, 
+   id_cotizacion:String,
+   rfc:String,  
    razonSocial:String ,
    nombre:String, 
    apellidos:String , 
@@ -75,7 +91,8 @@ type getCotizacionesTabla{
 
 
 type insertCotizaciones{
-   id_cotizacion:String, 
+   id_cotizacion:String,
+   rfc:String,  
    razonSocial:String ,
    nombre:String, 
    apellidos:String , 

@@ -24,11 +24,20 @@ const actions = require('../actions/userActions')
     return actions.insertCotizaciones(variable)
         }
 
+    const insertClientes = (_,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+    
+        console.log("la data de insertClientes es " , data)
+    return actions.insertClientes(variable)
+        }
+
 
   
     
 module.exports={
     signupAlfa,
     signupEmpresas,
-    insertCotizaciones
+    insertCotizaciones,
+    insertClientes
 }
