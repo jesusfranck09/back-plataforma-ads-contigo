@@ -200,8 +200,6 @@ const getEmpresas   = ( data)  => {
           
             resolve(resultados)
             console.log("resultados",resultados)
-            
-            
         }) 
     })
     }
@@ -229,9 +227,8 @@ const insertCotizaciones = (data)=> {
             text: 'Hello world  de parte de nuestra primera prueba?', // plaintext body
             html: '<b>Hello world ?</b>' // html body
         };
-        
-        // send mail with defined transport object
-        transporter.sendMail(mailOptions, function(error, info){
+  
+        transporter.sendMail(mailOptions, message, function(error, info){
             if(error){
                 return console.log(error);
             }
