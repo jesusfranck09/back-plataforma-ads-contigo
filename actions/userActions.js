@@ -190,6 +190,8 @@ const getTablaClientes   = ( data)  => {
 // } )
 
 // }
+///////////correcto///////////
+
 const getEmpresas   = ( data)  => {
     return new Promise((resolve,reject)=>{
         
@@ -204,7 +206,23 @@ const getEmpresas   = ( data)  => {
     })
     }
 
+////////////////////////////
 
+// const getEmpresas   = ( data)  => {
+//     return new Promise((resolve,reject)=>{
+        
+//         client.query(`select * from empresas where rfc='${data[0]}'`, function (err,result,fields ) {
+            
+//             var string = JSON.stringify(result)
+//             var resultados=JSON.parse(string);
+//           if(result){
+//             resolve(resultados)
+//           }    else  {
+//             resolve({message:"usuario  incorrecto"})
+//           }      
+//         }) 
+//     })
+//     }
 const insertCotizaciones = (data)=> { 
     console.log("data de insertCotizaciones",data)
     return new Promise((resolve,reject)=>{  
@@ -228,7 +246,7 @@ const insertCotizaciones = (data)=> {
             html: '<b>Hello world ?</b>' // html body
         };
   
-        transporter.sendMail(mailOptions, message, function(error, info){
+        transporter.sendMail(mailOptions, function(error, info){
             if(error){
                 return console.log(error);
             }
