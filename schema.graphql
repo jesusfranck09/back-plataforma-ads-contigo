@@ -5,6 +5,8 @@ type Mutation {
      signupEmpresas(data:[String]!):signupEmpresas
      insertCotizaciones(data:[String]!):insertCotizaciones
      insertClientes(data:[String]!):insertClientes
+     deleteCliente(data:[String]!):deleteCliente
+     updateCliente(date:[String]!):updateCliente
    
 }
 
@@ -17,6 +19,36 @@ getEmpresas(data:[String]!):[getEmpresas]
 getCotizacionesTabla(data:[String]!):[getCotizacionesTabla]
 getIdCotizacion(data:[String]!):[getIdCotizacion]
 getClienteRFC(data:[String]!):[getClienteRFC]
+
+}
+
+
+type updateCliente{ 
+   id_cliente:String,
+    empresa:String,
+    rfc:String,
+    nombre:String,
+    apellido:String,
+    correo1:String,
+    correo2:String,
+    telefono1:String,
+    telefono2:String,    
+    message:String
+
+}
+
+type deleteCliente{ 
+   id_cliente:String,
+    empresa:String,
+    rfc:String,
+    nombre:String,
+    apellido:String,
+    correo1:String,
+    correo2:String,
+    telefono1:String,
+    telefono2:String,    
+    message:String
+
 }
 
 type insertClientes{ 

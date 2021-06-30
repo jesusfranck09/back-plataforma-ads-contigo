@@ -64,7 +64,8 @@ const getClienteRFC   =  (_ , data) =>{
 }
 
 
-module.exports={ 
+
+module.exports={     
     loginAdminAlfa,
     loginEmpresas,
     getTablaClientes,

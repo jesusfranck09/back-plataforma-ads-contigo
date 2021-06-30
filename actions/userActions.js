@@ -304,23 +304,54 @@ const insertCotizaciones = (data)=> {
                 })
                 }
 
-                const insertClientes = (data)=> { 
-                    console.log("data",data)
-                    return new Promise((resolve,reject)=>{  
-                        //  let id_Admin = parseInt(data[9]);  
-                                
-                   // client.query(`insert into clientes (nombre_cliente, apellidos_cliente,curp,rfc,nombreEmpresa,telefono,correo,contrasena,num_factura,fk_administrador) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}')`) 
+            const insertClientes = (data)=> { 
+                console.log("data",data)
+                return new Promise((resolve,reject)=>{  
+                    //  let id_Admin = parseInt(data[9]);  
                             
-                    client.query(`insert into clientes (rfc,empresa,nombre,apellido,correo1,correo2,telefono1,telefono2) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}')`) 
-                    // client.query(`insert into clientes (nombre_cliente, apellidos_cliente,curp,rfc,nombreEmpresa,telefono,correo,contrasena,num_factura) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}')`) 
-                       
-                        resolve({message:"registro exitoso"})
+            // client.query(`insert into clientes (nombre_cliente, apellidos_cliente,curp,rfc,nombreEmpresa,telefono,correo,contrasena,num_factura,fk_administrador) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}')`) 
+                        
+                client.query(`insert into clientes (rfc,empresa,nombre,apellido,correo1,correo2,telefono1,telefono2) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}')`) 
+                // client.query(`insert into clientes (nombre_cliente, apellidos_cliente,curp,rfc,nombreEmpresa,telefono,correo,contrasena,num_factura) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}')`) 
+                
+                    resolve({message:"registro exitoso"})
+                })
+                }
+
+                const deleteCliente   = ( data)  => {
+                    return new Promise((resolve,reject)=>{
+                        
+                        client.query(`delete from clientes where id_cliente='${data[0]}'`, function (err,result,fields ) {
+                            
+                            var string = JSON.stringify(result)
+                            var resultados=JSON.parse(string);
+                        
+                            resolve(resultados)
+                            console.log("resultados",resultados)                        
+                            
+                        }) 
                     })
                     }
+
+                    const updateCliente   = ( data)  => {
+                        return new Promise((resolve,reject)=>{
+                            
+                            client.query(`update clientes  set  rfc= '${data[1]}' , empresa='${data[2]}', nombre= '${data[3]} ', apellido='${data[4]}',correo1='${data[5]}',correo2='${data[6]}',telefono1='${data[7]}', telefono2='${data[8]}' where id_cliente='${data[0]}'`,  function (err,result,fields ) {
+                                
+                                var string = JSON.stringify(result)
+                                var resultados=JSON.parse(string);
+                            
+                                resolve(resultados)
+                                console.log("resultados",resultados)                        
+                                
+                            }) 
+                        })
+                        }
                 
 
 module.exports={ 
-    
+    updateCliente,
+    deleteCliente,
     signupEmpresas,  
     signupAlfa,
     loginAdminAlfa,
