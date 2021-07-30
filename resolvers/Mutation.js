@@ -28,7 +28,7 @@ const actions = require('../actions/userActions')
         var cadena= data.data[0]
         var variable = cadena.split(",")
     
-        console.log("la data de insertClientes es " , data)
+        console.log("la data de insertClientes es:" , data)
     return actions.insertClientes(variable)
         }
 

@@ -60,6 +60,7 @@ type insertClientes{
      correo2:String,
      telefono1:String,
      telefono2:String,
+     fk_empresas:String,
      message:String
 
 }
