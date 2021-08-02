@@ -3,15 +3,13 @@ const actions = require('../actions/userActions')
     const signupAlfa=(_,data) =>{
         var cadena= data.data[0]
         var variable = cadena.split(",")
-
     console.log("la data de signup " , variable)
     return actions.signupAlfa(variable)
         }
 
     const signupEmpresas=(_,data) =>{
         var cadena= data.data[0]
-        var variable = cadena.split(",")
-    
+        var variable = cadena.split(",")    
     console.log("la data de signup " , variable)
     return actions.signupEmpresas(variable)
         }
@@ -19,7 +17,6 @@ const actions = require('../actions/userActions')
     const insertCotizaciones = (_,data) =>{
         var cadena = data.data[0]
         var variable = cadena.split(",")
-
     console.log("la data de signup " , variable)
     return actions.insertCotizaciones(variable)
         }
@@ -34,24 +31,18 @@ const actions = require('../actions/userActions')
 
     const deleteCliente  =  (_ , data) =>{
         var cadena= data.data[0]
-        var variable = cadena.split(",")
-    //  console.log("la data en query es " , data)
+        var variable = cadena.split(",")    
         console.log("esto es variable", variable)
         return actions.deleteCliente  (variable)
     
     }
     const updateCliente =  (_ , data) =>{
         var cadena= data.data[0]
-        var variable = cadena.split(",")
-    //  console.log("la data en query es " , data)
+        var variable = cadena.split(",")   
         console.log("esto es variable", variable)
         return actions.updateCliente  (variable)
     
     }
-
-
-
-  
     
 module.exports={
     updateCliente,

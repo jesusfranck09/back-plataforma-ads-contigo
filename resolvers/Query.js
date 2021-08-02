@@ -4,7 +4,6 @@ const actions = require('../actions/userActions')
 const loginAdminAlfa  =  (_ , data) =>{
     var cadena= data.data[0]
     var variable = cadena.split(",")
- console.log("la data en query es " , data)
  console.log("esto es variable", variable)
  return actions.loginAdminAlfa(variable)
 }
@@ -12,7 +11,6 @@ const loginAdminAlfa  =  (_ , data) =>{
 const loginEmpresas  =  (_ , data) =>{
     var cadena= data.data[0]
     var variable = cadena.split(",")
- console.log("la data en query es " , data)
  console.log("esto es variable", variable)
  return actions.loginEmpresas(variable)
 }
@@ -40,7 +38,6 @@ const getEmpresas =  (_ , data) =>{
 const getCotizacionesTabla  =  (_ , data) =>{
     var cadena= data.data[0]
     var variable = cadena.split(",")
-//  console.log("la data en query es " , data)
  console.log("esto es variable", variable)
  return actions.getCotizacionesTabla  (variable)
 
@@ -49,7 +46,6 @@ const getCotizacionesTabla  =  (_ , data) =>{
 const getIdCotizacion  =  (_ , data) =>{
     var cadena= data.data[0]
     var variable = cadena.split(",")
-//  console.log("la data en query es " , data)
  console.log("esto es variable", variable)
  return actions.getIdCotizacion  (variable)
 
@@ -57,13 +53,10 @@ const getIdCotizacion  =  (_ , data) =>{
 const getClienteRFC   =  (_ , data) =>{
     var cadena= data.data[0]
     var variable = cadena.split(",")
-//  console.log("la data en query es " , data)
  console.log("esto es variable", variable)
  return actions.getClienteRFC   (variable)
 
 }
-
-
 
 module.exports={     
     loginAdminAlfa,
