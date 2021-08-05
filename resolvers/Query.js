@@ -55,10 +55,27 @@ const getClienteRFC   =  (_ , data) =>{
     var variable = cadena.split(",")
  console.log("esto es variable", variable)
  return actions.getClienteRFC   (variable)
-
 }
 
-module.exports={     
+const getTablaProductoServicio   =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+ console.log("esto es variable", variable)
+ return actions.getTablaProductoServicio(variable)
+}
+
+const getProductoServicio   =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+ console.log("esto es variable", variable)
+ return actions.getProductoServicio(variable)
+}
+
+
+
+module.exports={ 
+    getProductoServicio, 
+    getTablaProductoServicio,   
     loginAdminAlfa,
     loginEmpresas,
     getTablaClientes,

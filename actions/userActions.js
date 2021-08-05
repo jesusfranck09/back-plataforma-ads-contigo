@@ -396,9 +396,45 @@ const insertCotizaciones = (data)=> {
                             }) 
                         })
                         }
+
+                        const getProductoServicio   = ( data)  => {
+                            return new Promise((resolve,reject)=>{
+                                
+                                client.query(`select * from productoServicio where id_productoServicio='${data[0]}'`,  function (err,result,fields ) {
+                                    
+                                    var string = JSON.stringify(result)
+                                    var resultados=JSON.parse(string);
+                                
+                                    resolve(resultados)
+                                    console.log("resultados",resultados)                        
+                                    
+                                }) 
+                            })
+                            }
+
+                        const  getTablaProductoServicio  = ( data)  => {
+                            return new Promise((resolve,reject)=>{
+                                
+                                client.query(`select * from productoServicio`,  function (err,result,fields ) {
+                                    
+                                    var string = JSON.stringify(result)
+                                    var resultados=JSON.parse(string);
+                                
+                                    resolve(resultados)
+                                    console.log("resultados",resultados)                        
+                                    
+                                }) 
+                            })
+                            }
+                            
+    
+
+                        
                 
 
 module.exports={ 
+    getTablaProductoServicio,
+    getProductoServicio,
     updateCliente,
     deleteCliente,
     signupEmpresas,  

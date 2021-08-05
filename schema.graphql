@@ -19,9 +19,24 @@ getEmpresas(data:[String]!):[getEmpresas]
 getCotizacionesTabla(data:[String]!):[getCotizacionesTabla]
 getIdCotizacion(data:[String]!):[getIdCotizacion]
 getClienteRFC(data:[String]!):[getClienteRFC]
+getTablaProductoServicio(data:[String]!):[getTablaProductoServicio]
+getProductoServicio(data:[String]!):[getProductoServicio]
+
 
 }
 
+type getProductoServicio{
+    id_productoServicio:String,
+    tipo:String,
+    concepto:String,
+    precio:String  
+}
+type getTablaProductoServicio{
+    id_productoServicio:String,
+    tipo:String,
+    concepto:String,
+    precio:String  
+}
 
 type updateCliente{ 
    id_cliente:String,
