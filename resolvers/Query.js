@@ -60,7 +60,7 @@ const getClienteRFC   =  (_ , data) =>{
 const getTablaProductoServicio   =  (_ , data) =>{
     var cadena= data.data[0]
     var variable = cadena.split(",")
- console.log("esto es variable", variable)
+ console.log("esto es variable getTablaProductoServicio", variable)
  return actions.getTablaProductoServicio(variable)
 }
 
