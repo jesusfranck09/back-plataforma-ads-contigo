@@ -7,6 +7,8 @@ type Mutation {
      insertClientes(data:[String]!):insertClientes
      deleteCliente(data:[String]!):deleteCliente
      updateCliente(date:[String]!):updateCliente
+     insertProductoServicio(date:[String]!):insertProductoServicio
+     insertContacto(date:[String]!):insertContacto
    
 }
 
@@ -25,6 +27,27 @@ getProductoServicio(data:[String]!):[getProductoServicio]
 
 }
 
+type insertContacto{
+    nombre:String,
+    apellidos:String,
+    correo1:String,
+    correo2:String,
+    telefono1:String,
+    extensionTelefonica:String,
+    telefono2:String,
+    puesto:String,  
+    message:String
+}
+
+type insertProductoServicio{
+    id_productoServicio:String,
+    tipo:String,
+    concepto:String,
+    precio:String , 
+    consecutivo:String,
+    message:String
+}
+
 type getProductoServicio{
     id_productoServicio:String,
     tipo:String,
@@ -35,7 +58,8 @@ type getTablaProductoServicio{
     id_productoServicio:String,
     tipo:String,
     concepto:String,
-    precio:String  
+    precio:String , 
+    consecutivo:String
 }
 
 type updateCliente{ 
@@ -193,6 +217,8 @@ type signupEmpresas{
     razonSocial:String,
     correo:String,
     telefono:String,
+    paginaWeb:String,
+    domicilioFiscal:String,
     token:String,
     message:String
 }

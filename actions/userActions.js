@@ -1,4 +1,3 @@
-
 const client  = require('../database');
 const bcrypt =  require('bcrypt');
 const puppeteer = require('puppeteer');
@@ -44,14 +43,14 @@ const signupEmpresas = (data) => {
          if (error){    
               reject(error,{message:'error',token:error})
          } else{
-             bcrypt.hash(data[4],salt, function(error,hash){
+             bcrypt.hash(data[6],salt, function(error,hash){
               //   console.log("data[6]" , data[6])
                  if(error){
                     throw error
                  } else{
                    //  let idAdmin = parseInt(data[7]);
                   //  console.log(`insert into administrador(nombre,apellidos,razonSocial,RFC,telefono,correo,statusCorreo,contraseña,fk_adminGral) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','TRUE' , '${hash}',${idAdmin})`)
-                    client.query(`insert into empresas(rfc,razonSocial,correo,telefono,contraseña) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${hash}')`);
+                    client.query(`insert into empresas(rfc,razonSocial,correo,telefono,paginaWeb,domicilioFiscal,contraseña) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${hash}')`);
                   
                        resolve({           
                         message:"el registro en signup fue exitoso",
@@ -427,12 +426,33 @@ const insertCotizaciones = (data)=> {
                             })
                             }
                             
+        const insertProductoServicio = (data)=> { 
+            console.log("data de insertProductoServicio",data)
+            return new Promise((resolve,reject)=>{  
+        
+                client.query(`insert into productoServivio(concepto,precio) values('${data[0]}','${data[1]}','${data[2]}')`) 
+            //  client.query(`insert into clientes (rfc,empresa,nombre,apellido,correo1,correo2,telefono1,telefono2) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}')`) 
+            
+            
+                resolve({message:"registro exitoso"})
+            })
+            }   
+            
+             const insertContacto = (data)=> { 
+            console.log("data de insertContacto",data)
+            return new Promise((resolve,reject)=>{
+           client.query(`insert into contacto(nombre,apellidos,correo1,correo2,telefono1,extensionTelefonica,telefono2,puesto) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}')`) 
+           resolve({message:"registro exitoso"})
+            })
+            }  
     
 
                         
                 
 
 module.exports={ 
+    insertContacto,
+    insertProductoServicio,
     getTablaProductoServicio,
     getProductoServicio,
     updateCliente,

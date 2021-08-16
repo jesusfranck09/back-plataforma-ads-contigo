@@ -43,8 +43,25 @@ const actions = require('../actions/userActions')
         return actions.updateCliente  (variable)
     
     }
+
+    const insertProductoServicio = (_,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+    
+        console.log("la data de insertClientes es:" , data)
+    return actions.insertProductoServicio(variable)
+        }
+
+        const insertContacto = (_,data) =>{
+            var cadena= data.data[0]
+            var variable = cadena.split(",")        
+            console.log("la data de insertContacto es:" , data)
+        return actions.insertContacto(variable)
+            }
     
 module.exports={
+    insertContacto,
+    insertProductoServicio,
     updateCliente,
     deleteCliente,
     signupAlfa,
