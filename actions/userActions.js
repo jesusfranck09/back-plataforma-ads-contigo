@@ -13,14 +13,14 @@ const signupAlfa = (data) => {
          if (error){    
               reject(error,{message:'error',token:error})
          } else{
-             bcrypt.hash(data[3],salt, function(error,hash){
+             bcrypt.hash(data[6],salt, function(error,hash){
               //   console.log("data[6]" , data[6])
                  if(error){
                     throw error
                  } else{
                    //  let idAdmin = parseInt(data[7]);
                   //  console.log(`insert into administrador(nombre,apellidos,razonSocial,RFC,telefono,correo,statusCorreo,contraseña,fk_adminGral) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','TRUE' , '${hash}',${idAdmin})`)
-                    client.query(`insert into adminAlfa(nombre,apellido,correo,contraseña,fk_empresa) values ('${data[0]}','${data[1]}','${data[2]}','${hash}','${data[4]}')`);
+                    client.query(`insert into adminAlfa(nombre,apellido,correo,telefono,extensionTelefonica,puesto,contraseña,fk_empresa) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${hash}','${data[7]}')`);
                   
                        resolve({           
                         message:"el registro en signup fue exitoso",
@@ -424,19 +424,8 @@ const insertCotizaciones = (data)=> {
                                     
                                 }) 
                             })
-                            }
-                            
-        const insertProductoServicio = (data)=> { 
-            console.log("data de insertProductoServicio",data)
-            return new Promise((resolve,reject)=>{  
-        
-                client.query(`insert into productoServivio(concepto,precio) values('${data[0]}','${data[1]}','${data[2]}')`) 
-            //  client.query(`insert into clientes (rfc,empresa,nombre,apellido,correo1,correo2,telefono1,telefono2) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}')`) 
-            
-            
-                resolve({message:"registro exitoso"})
-            })
-            }   
+                            }                            
+         
             
              const insertContacto = (data)=> { 
             console.log("data de insertContacto",data)
@@ -445,14 +434,39 @@ const insertCotizaciones = (data)=> {
            resolve({message:"registro exitoso"})
             })
             }  
+
+            const insertProductoServicio = (data)=> { 
+                console.log("data de insertProductoServicio",data)
+                return new Promise((resolve,reject)=>{  
+                    //  let fk_empresas =(data[8]); 
+                    //  console.log("fk_empresas back",fk_empresas) 
+                            
+            
+                 client.query(`insert into productoServicio(tipo,concepto,precio) values('${data[0]}','${data[1]}','${data[2]}')`) 
+              //  client.query(`insert into clientes (rfc,empresa,nombre,apellido,correo1,correo2,telefono1,telefono2) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}')`) 
+                
+                
+                    resolve({message:"registro exitoso"})
+                })
+                }
+
+                const insertClienteADS = (data)=> { 
+                    console.log("data de insertClienteADS",data)
+                    return new Promise((resolve,reject)=>{   
+                     client.query(`insert into clientesads(rfc,razonSocial,fk_empresas) values('${data[0]}','${data[1]}','${data[2]}')`) 
+                        resolve({message:"registro exitoso"})
+                    })
+                    }
+        
     
 
                         
                 
 
 module.exports={ 
-    insertContacto,
+    insertClienteADS,
     insertProductoServicio,
+    insertContacto,
     getTablaProductoServicio,
     getProductoServicio,
     updateCliente,

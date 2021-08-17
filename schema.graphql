@@ -6,9 +6,10 @@ type Mutation {
      insertCotizaciones(data:[String]!):insertCotizaciones
      insertClientes(data:[String]!):insertClientes
      deleteCliente(data:[String]!):deleteCliente
-     updateCliente(date:[String]!):updateCliente
-     insertProductoServicio(date:[String]!):insertProductoServicio
-     insertContacto(date:[String]!):insertContacto
+     updateCliente(data:[String]!):updateCliente    
+     insertContacto(data:[String]!):insertContacto
+     insertProductoServicio(data:[String]!):insertProductoServicio 
+     insertClientesADS(data:[String]!):insertClientesADS
    
 }
 
@@ -27,6 +28,20 @@ getProductoServicio(data:[String]!):[getProductoServicio]
 
 }
 
+type insertClientesADS{
+     rfc:String,
+     razonSocial:String,
+     fk_empresas:String
+}
+
+type insertProductoServicio {
+    tipo:String,
+    concepto:String,
+    precio:String,
+    message:String
+
+}
+
 type insertContacto{
     nombre:String,
     apellidos:String,
@@ -39,14 +54,6 @@ type insertContacto{
     message:String
 }
 
-type insertProductoServicio{
-    id_productoServicio:String,
-    tipo:String,
-    concepto:String,
-    precio:String , 
-    consecutivo:String,
-    message:String
-}
 
 type getProductoServicio{
     id_productoServicio:String,
@@ -198,7 +205,9 @@ type getEmpresas{
     rfc:String,
     razonSocial:String,
     correo:String,
-    telefono:String, 
+    telefono:String,
+    paginaWeb:String,
+    domicilioFiscal:String,
     # token:String,
     message:String     
 }
@@ -208,6 +217,9 @@ type signupAlfa{
     nombre:String,
     apellido:String,
     correo:String,
+    telefono:String,
+    ext:String,
+    puesto:String,
     token:String,
     message:String,
     fk_empresa:String
