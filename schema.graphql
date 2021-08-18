@@ -9,7 +9,7 @@ type Mutation {
      updateCliente(data:[String]!):updateCliente    
      insertContacto(data:[String]!):insertContacto
      insertProductoServicio(data:[String]!):insertProductoServicio 
-     insertClientesADS(data:[String]!):insertClientesADS
+     insertClientesAlfa(data:[String]!):insertClientesAlfa
    
 }
 
@@ -28,10 +28,11 @@ getProductoServicio(data:[String]!):[getProductoServicio]
 
 }
 
-type insertClientesADS{
+type insertClientesAlfa{
      rfc:String,
      razonSocial:String,
-     fk_empresas:String
+     fk_empresa:String,
+     message:String
 }
 
 type insertProductoServicio {

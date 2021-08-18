@@ -166,7 +166,7 @@ const loginEmpresas = async  data =>{
 }
 const getTablaClientes   = ( data)  => {
     return new Promise((resolve,reject)=>{
-        client.query(`select * from clientes`, function (err,results,fields ) {
+        client.query(`select * from clientes where fk_empresa='${data[0]}'`, function (err,results,fields ) {
             
             var string = JSON.stringify(results)
             var resultados=JSON.parse(string);
@@ -450,10 +450,10 @@ const insertCotizaciones = (data)=> {
                 })
                 }
 
-                const insertClienteADS = (data)=> { 
-                    console.log("data de insertClienteADS",data)
+                const insertClientesAlfa = (data)=> { 
+                    console.log("data de insertClientesAlfa",data)
                     return new Promise((resolve,reject)=>{   
-                     client.query(`insert into clientesads(rfc,razonSocial,fk_empresas) values('${data[0]}','${data[1]}','${data[2]}')`) 
+                     client.query(`insert into clientesads(rfc,razonSocial,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}')`) 
                         resolve({message:"registro exitoso"})
                     })
                     }
@@ -464,7 +464,7 @@ const insertCotizaciones = (data)=> {
                 
 
 module.exports={ 
-    insertClienteADS,
+    insertClientesAlfa,
     insertProductoServicio,
     insertContacto,
     getTablaProductoServicio,
