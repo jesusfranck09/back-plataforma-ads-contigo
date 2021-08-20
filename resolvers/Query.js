@@ -70,10 +70,17 @@ const getProductoServicio   =  (_ , data) =>{
  console.log("esto es variable", variable)
  return actions.getProductoServicio(variable)
 }
+const getTablaClientesAlfa   =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+ console.log("esto es variable", variable)
+ return actions.getTablaClientesAlfa(variable)
+}
 
 
 
 module.exports={ 
+    getTablaClientesAlfa,
     getProductoServicio, 
     getTablaProductoServicio,   
     loginAdminAlfa,

@@ -10,6 +10,8 @@ type Mutation {
      insertContacto(data:[String]!):insertContacto
      insertProductoServicio(data:[String]!):insertProductoServicio 
      insertClientesAlfa(data:[String]!):insertClientesAlfa
+     sendEmailCotizacion(data:[String]!):message
+     insertTotales(data:[String]!):insertTotales
    
 }
 
@@ -24,9 +26,28 @@ getIdCotizacion(data:[String]!):[getIdCotizacion]
 getClienteRFC(data:[String]!):[getClienteRFC]
 getTablaProductoServicio(data:[String]!):[getTablaProductoServicio]
 getProductoServicio(data:[String]!):[getProductoServicio]
-
-
+getTablaClientesAlfa(data:[String]!):[getTablaClientesAlfa]
 }
+
+type getTablaClientesAlfa{
+    id_cliente:String,
+    rfc:String,
+    razonSocial:String,
+    fk_empresa:String
+}
+
+type insertTotales{
+    subtotal:String,
+    iva:String,
+    total:String,
+    message:String
+}
+
+
+type message{
+    message:String
+}
+
 
 type insertClientesAlfa{
      rfc:String,
@@ -178,28 +199,14 @@ type insertCotizaciones{
    apellidos:String , 
    correo1:String ,
    correo2:String , 
-   telefono1:String ,
-   telefono2:String,  
-   servicio:String,
-   precio:String, 
-   iva:String,
-   total:String,
+   telefono1:String ,  
    promocion:String, 
    vendedor:String,
-   fecha:String,   
+   fechaEmision:String,   
    fk_adminalfa:String,
+   fk_productoServicio:String
    message:String
 }
-
-
-# type getEmpresa{
-#     id_empresa:String,
-#     rfc:String,
-#     razonSocial:String,
-#     correo:String,
-#     telefono:String,  
-#     message:String,
-# }
 
 type getEmpresas{
     id_empresa:String,

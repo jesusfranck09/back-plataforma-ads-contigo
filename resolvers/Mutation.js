@@ -21,6 +21,13 @@ const actions = require('../actions/userActions')
     return actions.insertCotizaciones(variable)
         }
 
+    const insertTotales = (_,data) =>{
+        var cadena = data.data[0]
+        var variable = cadena.split(",")
+    console.log("la data de signup " , variable)
+    return actions.insertTotales(variable)
+        }
+
     const insertClientes = (_,data) =>{
         var cadena= data.data[0]
         var variable = cadena.split(",")
@@ -65,8 +72,16 @@ const actions = require('../actions/userActions')
                 return actions.insertClientesAlfa(variable)
                     }
 
+                    const sendEmailCotizacion =  (_ ,data) =>{
+                        var cadena= data.data[0]
+                        var variable = cadena.split(",")   
+                        return actions.SendEmailCotizacion(variable)
+                    }
+
     
 module.exports={
+    insertTotales,
+    sendEmailCotizacion,
     insertClientesAlfa,
     insertProductoServicio,
     insertContacto,

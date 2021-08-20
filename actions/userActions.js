@@ -177,6 +177,8 @@ const getTablaClientes   = ( data)  => {
     })
     }
 
+    
+
 //     const getEmpresa = (data) => {
 //     console.log('esto es la data de mi empresa',data)
 //   return new Promise((resolve,reject) =>{
@@ -207,108 +209,28 @@ const getEmpresas   = ( data)  => {
     })
     }
 
-////////////////////////////
 
-// const getEmpresas   = ( data)  => {
-//     return new Promise((resolve,reject)=>{
-        
-//         client.query(`select * from empresas where rfc='${data[0]}'`, function (err,result,fields ) {
-            
-//             var string = JSON.stringify(result)
-//             var resultados=JSON.parse(string);
-//           if(result){
-//             resolve(resultados)
-//           }    else  {
-//             resolve({message:"usuario  incorrecto"})
-//           }      
-//         }) 
-//     })
-//     }
 const insertCotizaciones = (data)=> { 
     console.log("data de insertCotizaciones",data)
     return new Promise((resolve,reject)=>{  
-
-        var nodemailer = require('nodemailer');
-        var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-               user: 'cotizacionesads20@gmail.com',
-               pass: 'programacion2021'
-           }
-       });
-      
-        var mailOptions = {
-           
-            from: 'cotizacionesads20@gmail.com', // sender address
-            to:'lizcuevas68@gmail.com', // list of receivers
-            subject: 'Bienvenido a nuestras cotizacions ✔', // Subject line
-            text: 'Hello world  de parte de nuestra primera prueba?', // plaintext body
-            html: '<b>Hello world ?</b>' // html body
-        };
-  
-        transporter.sendMail(mailOptions, function(error, info){
-            if(error){
-                return console.log(error);
-            }
-            console.log('Message sent: ' + info);
-        });
-
-        
-      
-//********************************** */
-// const nodemailer = require("nodemailer");
-
-// // async..await is not allowed in global scope, must use a wrapper
-// async function main() {
-//   // Generate test SMTP service account from ethereal.email
-//   // Only needed if you don't have a real mail account for testing
-//   let testAccount = await nodemailer.createTestAccount();
-
-//   // create reusable transporter object using the default SMTP transport
-//   let transporter = nodemailer.createTransport({
-//     host: "smtp.ethereal.email",
-//     port: 535,
-//     secure: false, // true for 465, false for other ports
-//     auth: {
-//       user: 'cotizacionesads20@gmail.com', // generated ethereal user
-//       pass: 'programacion2021', // generated ethereal password
-//     },
-//   });
-
-//   // send mail with defined transport object
-//   let info = await transporter.sendMail({
-//     from: 'cotizacionesads20@gmail.com', // sender address
-//     to: "lizcuevas68@gmail.com", // list of receivers
-//     subject: "Hello ✔", // Subject line
-//     text: "Hello world?", // plain text body
-//     html: "<b>Hello world?</b>", // html body
-//   });
-
-//   console.log("Message sent: %s", info.messageId);
-//   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-
-//   // Preview only available when sending through an Ethereal account
-//   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-//   // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
-// }
-
-// main().catch(console.error);
-
-
-
-
-
-
-// *************************************
         var date= new Date()
-        let fecha = date.toLocaleString('es')
-        
-    //    console.log("fecha", fecha)
-    client.query(`insert into cotizaciones(rfc,razonSocial,nombre,apellidos,correo1,correo2,telefono1,telefono2,servicio,precio,iva,total,promocion,vendedor,fecha,fk_adminalfa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[10]}','${data[11]}','${data[12]}','${data[13]}','${fecha}','${data[14]}')`) 
+        let fecha = date.toLocaleString('es')        
+       console.log("fecha", fecha)
+    client.query(`insert into cotizaciones(rfc,razonSocial,nombre,apellidos,correo1,correo2,telefono1,fechaEmision,promocion) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${fecha}','${data[7]}')`) 
       
     resolve({message:"registro exitoso"})
     })
     }
+
+    const insertTotales = (data)=> { 
+        console.log("data de insertTotales",data)
+        return new Promise((resolve,reject)=>{  
+         
+        client.query(`insert into totales(subtotal,iva,total) values('${data[0]}','${data[1]}','${data[2]}')`) 
+          
+        resolve({message:"registro exitoso"})
+        })
+        }
 
       const getCotizacionesTabla  = ( data)  => {
             console.log("data",data)
@@ -457,6 +379,65 @@ const insertCotizaciones = (data)=> {
                         resolve({message:"registro exitoso"})
                     })
                     }
+
+                    const getTablaClientesAlfa = ( data)  => {
+                        return new Promise((resolve,reject)=>{
+                            client.query(`select * from clientesads where fk_empresa='${data[0]}'`, function (err,results,fields ) {
+                                
+                                var string = JSON.stringify(results)
+                                var resultados=JSON.parse(string);
+                    
+                                resolve(resultados)
+                                console.log("resultados",resultados)
+                            }) 
+                        })
+                        }
+
+
+                    const SendEmailCotizacion   = ( data)  => {
+                        return new Promise((resolve,reject)=>{
+                            var date= new Date()
+                            let fecha = date.toLocaleString('es')
+                            
+                            var transporter = nodemailer.createTransport({
+                  
+                                secure: false,
+                                host: 'mail.diagnostico035.com',
+                                port: 587,
+                                auth: {
+                                        user: 'info@diagnostico035.com',
+                                        pass: 'jpY9f23#',
+                                       
+                                    },
+                                tls: {rejectUnauthorized: false},
+                                });
+                                const mailOptions = {
+                                  from: 'info@diagnostico035.com', // sender address
+                                to: `lizbeth.cuevas@ads.com.mx`, // list of receivers
+                                subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
+                                text: 'Archivo de cotización PDF',
+                                html: `<p>En base a su amable solicitud, me permito poner a su consideración nuestra
+                                propuesta referente a los productos y servicios de su interés.<center><br/><br/>${data[1]}<br/>
+                                Ejecutivo de ventas
+                                ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
+                                www.ads.com.mx<br/>${data[2]}</center>
+                                </p> `, // plain text body
+                                attachments: [{
+                                  filename: 'Archivo de cortización.pdf',
+                                  path: `C:/Users/UserAdmin/Downloads/${data[0]}`,
+                                  contentType: 'application/pdf'
+                                }]
+                                };
+                                transporter.sendMail(mailOptions, function (err, info) {
+                                  if("este es el error" , err)
+                                    console.log(err)
+                                  else
+                                    console.log("esta es la info" ,  info);
+                                });
+                            resolve({message:"Correo Enviado"})      
+                        })
+                    }            
+                
         
     
 
@@ -464,6 +445,9 @@ const insertCotizaciones = (data)=> {
                 
 
 module.exports={ 
+    getTablaClientesAlfa,
+    insertTotales,
+    SendEmailCotizacion,
     insertClientesAlfa,
     insertProductoServicio,
     insertContacto,
@@ -475,8 +459,7 @@ module.exports={
     signupAlfa,
     loginAdminAlfa,
     loginEmpresas,
-    getTablaClientes,
-    // getEmpresa,
+    getTablaClientes,    
     insertCotizaciones,
     getEmpresas,
     getCotizacionesTabla,
