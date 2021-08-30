@@ -6,14 +6,13 @@ type Mutation {
      insertCotizaciones(data:[String]!):insertCotizaciones
      insertClientes(data:[String]!):insertClientes
      deleteCliente(data:[String]!):deleteCliente
-     updateCliente(data:[String]!):updateCliente
-     insertProductoServicio(data:[String]!):insertProductoServicio
-     insertContacto(date:[String]!):insertContacto
-     # Agregue este metodo
+     updateCliente(data:[String]!):updateCliente    
+     insertContacto(data:[String]!):insertContacto
+     insertProductoServicio(data:[String]!):insertProductoServicio 
+     insertClientesAlfa(data:[String]!):insertClientesAlfa
      sendEmailCotizacion(data:[String]!):message
      insertTotales(data:[String]!):message
      updateStatusCotizacion(data:[String]!):message
-     # Agregue este metodo
    
 }
 
@@ -24,23 +23,17 @@ getTablaClientes(data:[String]!):[getTablaClientes]
 # getEmpresa(data:[String]!):[getEmpresa]
 getEmpresas(data:[String]!):[getEmpresas]
 getCotizacionesTabla(data:[String]!):[getCotizacionesTabla]
-getIdCotizacion(data:[String]!):[getCotizacionesTabla]
+getIdCotizacion(data:[String]!):[getIdCotizacion]
 getClienteRFC(data:[String]!):[getClienteRFC]
 getTablaProductoServicio(data:[String]!):[getTablaProductoServicio]
 getProductoServicio(data:[String]!):[getProductoServicio]
+getTablaClientesAlfa(data:[String]!):[getTablaClientesAlfa]
+getIdClientesAlfa(data:[String]!):[getIdClientesAlfa]
+getTablaContactos(data:[String]!):[getTablaContactos]
 getProductoServicioByFolio(data:[String]!):[getProductoServicio]
 getTotalesByFolio(data:[String]!):[totales]
-getTablaClientesAlfa(data:[String]!):[getTablaClientesAlfa]
 getClienteId(data:[String]!):[getTablaClientes]
 }
-
- type getTablaClientesAlfa{
-     id_cliente:String,
-     rfc:String,
-     razonSocial:String, 
-     fk_empresa:String,
-     message:String
- }
 
 type totales{
      subtotal:String,
@@ -49,8 +42,60 @@ type totales{
      message:String
  }
 
+type getTablaContactos{
+    id_contacto:String,
+    nombre:String,
+    apellidos:String,
+    correo1:String,
+    correo2:String,
+    telefono1:String,
+    extensionTelefonica:String
+    telefono2:String,
+    puesto:String,
+    message:String
+}
+
+type getIdClientesAlfa{
+    id_cliente:String,
+    rfc:String,
+    razonSocial:String, 
+}
+
+type getTablaClientesAlfa{
+    id_cliente:String,
+    rfc:String,
+    razonSocial:String,
+    fk_empresa:String
+}
+
+type insertTotales{
+    subtotal:String,
+    iva:String,
+    total:String,
+    message:String
+}
+
+
 type message{
     message:String
+}
+
+
+type insertClientesAlfa{
+     rfc:String,
+     razonSocial:String,
+     fk_empresa:String,
+     message:String
+}
+
+type insertProductoServicio {
+   id_productoServicio:String,
+    tipo:String,
+    concepto:String,
+    precio:String , 
+    consecutivo:String,
+    message:String
+
 }
 
 type insertContacto{
@@ -61,18 +106,11 @@ type insertContacto{
     telefono1:String,
     extensionTelefonica:String,
     telefono2:String,
-    puesto:String,  
+    puesto:String, 
+    fk_clientesads:String, 
     message:String
 }
 
-type insertProductoServicio{
-    id_productoServicio:String,
-    tipo:String,
-    concepto:String,
-    precio:String , 
-    consecutivo:String,
-    message:String
-}
 
 type getProductoServicio{
     id_productoServicio:String,
@@ -189,7 +227,7 @@ type getCotizacionesTabla{
 
 
 type insertCotizaciones{
-   id_cotizaciones:String,
+  id_cotizaciones:String,
    fechaEmision:String,
    NumFolio:String,
    promocion:String,
@@ -203,24 +241,17 @@ type insertCotizaciones{
    fk_empresa:String,   
    fechaExpiracion:String, 
    message:String
+
 }
-
-
-# type getEmpresa{
-#     id_empresa:String,
-#     rfc:String,
-#     razonSocial:String,
-#     correo:String,
-#     telefono:String,  
-#     message:String,
-# }
 
 type getEmpresas{
     id_empresa:String,
     rfc:String,
     razonSocial:String,
     correo:String,
-    telefono:String, 
+    telefono:String,
+    paginaWeb:String,
+    domicilioFiscal:String,
     # token:String,
     message:String     
 }
@@ -230,6 +261,9 @@ type signupAlfa{
     nombre:String,
     apellido:String,
     correo:String,
+    telefono:String,
+    ext:String,
+    puesto:String,
     token:String,
     message:String,
     fk_empresa:String
