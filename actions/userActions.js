@@ -416,7 +416,7 @@ const getCotizacionesTabla  = ( data)  => {
             })
         }
 
-        const getClienteId = ( data)  => {
+        const GetClienteId = ( data)  => {
             return new Promise((resolve,reject)=>{             
                 client.query(`select * from clientes where id_cliente ='${data[0]}'`, function (err,results,fields ) {                
                     var string = JSON.stringify(results)
@@ -427,7 +427,7 @@ const getCotizacionesTabla  = ( data)  => {
             }
 
 module.exports={
-    getClienteId,
+    GetClienteId,
     InsertTotales,
     GetProductoServicioByFolio, 
     GetTotalesByFolio,
