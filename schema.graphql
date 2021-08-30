@@ -11,7 +11,8 @@ type Mutation {
      insertProductoServicio(data:[String]!):insertProductoServicio 
      insertClientesAlfa(data:[String]!):insertClientesAlfa
      sendEmailCotizacion(data:[String]!):message
-     insertTotales(data:[String]!):insertTotales
+     insertTotales(data:[String]!):message
+     updateStatusCotizacion(data:[String]!):message
    
 }
 
@@ -27,6 +28,36 @@ getClienteRFC(data:[String]!):[getClienteRFC]
 getTablaProductoServicio(data:[String]!):[getTablaProductoServicio]
 getProductoServicio(data:[String]!):[getProductoServicio]
 getTablaClientesAlfa(data:[String]!):[getTablaClientesAlfa]
+getIdClientesAlfa(data:[String]!):[getIdClientesAlfa]
+getTablaContactos(data:[String]!):[getTablaContactos]
+getProductoServicioByFolio(data:[String]!):[getProductoServicio]
+getTotalesByFolio(data:[String]!):[totales]
+}
+
+type totales{
+     subtotal:String,
+     iva:String,
+     total:String, 
+     message:String
+ }
+
+type getTablaContactos{
+    id_contacto:String,
+    nombre:String,
+    apellidos:String,
+    correo1:String,
+    correo2:String,
+    telefono1:String,
+    extensionTelefonica:String
+    telefono2:String,
+    puesto:String,
+    message:String
+}
+
+type getIdClientesAlfa{
+    id_cliente:String,
+    rfc:String,
+    razonSocial:String, 
 }
 
 type getTablaClientesAlfa{
@@ -57,9 +88,11 @@ type insertClientesAlfa{
 }
 
 type insertProductoServicio {
+   id_productoServicio:String,
     tipo:String,
     concepto:String,
-    precio:String,
+    precio:String , 
+    consecutivo:String,
     message:String
 
 }
@@ -72,7 +105,8 @@ type insertContacto{
     telefono1:String,
     extensionTelefonica:String,
     telefono2:String,
-    puesto:String,  
+    puesto:String, 
+    fk_clientesads:String, 
     message:String
 }
 
@@ -170,42 +204,43 @@ type getIdCotizacion{
 
 
 type getCotizacionesTabla{
-   id_cotizacion:String,
-   rfc:String,  
-   razonSocial:String ,
-   nombre:String, 
-   apellidos:String , 
-   correo1:String ,
-   correo2:String , 
-   telefono1:String,
-   telefono2:String,  
-   servicio:String,
-   precio:String, 
-   iva:String,
-   total:String,
-   promocion:String, 
-   vendedor:String,
-   fecha:String,   
-   fk_adminalfa:String,
-   message:String
+    id_cotizaciones:String 
+    fechaEmision:String
+    NumFolio:String
+    promocion:String
+    cantidad:String
+    descuento:String
+    descuentoAplicado:String
+    TotalPrecioProducto:String
+    statusCotizacion:String   
+    subtotal:String
+    iva:String
+    total:String
+    empresa:String
+    rfc:String
+    fk_cliente:String
+    tipo:String
+    concepto:String
+    message:String
 }
 
 
 type insertCotizaciones{
-   id_cotizacion:String,
-   rfc:String,  
-   razonSocial:String ,
-   nombre:String, 
-   apellidos:String , 
-   correo1:String ,
-   correo2:String , 
-   telefono1:String ,  
-   promocion:String, 
-   vendedor:String,
-   fechaEmision:String,   
+  id_cotizaciones:String,
+   fechaEmision:String,
+   NumFolio:String,
+   promocion:String,
+   cantidad:String,
+   descuento:String,
+   descuentoAplicado:String,
+   TotalPrecioProducto:String,
+   fk_cliente:String,
+   fk_productoServicio:String,
    fk_adminalfa:String,
-   fk_productoServicio:String
+   fk_empresa:String,   
+   fechaExpiracion:String, 
    message:String
+
 }
 
 type getEmpresas{
