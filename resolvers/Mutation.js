@@ -76,12 +76,27 @@ const actions = require('../actions/userActions')
         return actions.UpdateStatusCotizacion(variable)
     }
 
+    const updateContacto =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")   
+        return actions.UpdateContacto(variable)
+    }
+
+    const deliteContacto  =  (_ , data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.deliteContacto(variable)
+    
+    }
+
 
 
     
 
     
 module.exports={
+    deliteContacto,
+    updateContacto,
     updateStatusCotizacion,
     insertTotales,
     sendEmailCotizacion,

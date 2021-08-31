@@ -306,7 +306,7 @@ const getCotizacionesTabla  = ( data)  => {
                     });
                     const mailOptions = {
                         from: 'info@diagnostico035.com', // sender address
-                    to: `jesus.francisco@ads.com.mx`, // list of receivers
+                    to: `lizbeth.cuevas@ads.com.mx`, // list of receivers
                     // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
                     subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
                     text: 'Archivo de cotización PDF',
@@ -328,7 +328,7 @@ const getCotizacionesTabla  = ( data)  => {
                     </p> `, // plain text body
                     attachments: [{
                         filename: 'Archivo de cortización.pdf',
-                        path: `C:/Users/Frnk.000/Downloads/${data[0]}`,
+                        path: `C:/Users/UserAdmin/Downloads/${data[0]}`,
                         contentType: 'application/pdf'
                     }]
                     };
@@ -380,7 +380,6 @@ const getCotizacionesTabla  = ( data)  => {
             client.query(`select * from contacto where fk_clientesads='${data[0]}'`, function (err,results,fields ) {                
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);   
-                console.log("resultados getTablaContactos",resultados)
                 resolve(resultados)
             }) 
         })
@@ -426,7 +425,30 @@ const getCotizacionesTabla  = ( data)  => {
             })
             }
 
+
+            const UpdateContacto = ( data)  => {
+                return new Promise((resolve,reject)=>{
+                    console.log("data",data)
+                    client.query(`update contacto set  nombre= '${data[1]} ', apellidos='${data[2]}',correo1='${data[3]}',correo2='${data[4]}',telefono1='${data[5]}',UpdateContacto='${data[6]}' telefono2='${data[7]}',puesto='${data[8]}' where id_contacto='${data[0]}'`) 
+                    resolve({message:"actualizacion exitosa"})
+                })
+            }
+            const deliteContacto   = ( data)  => {
+                return new Promise((resolve,reject)=>{                        
+                    client.query(`delete from contacto where id_contacto='${data[0]}'`, function (err,result,fields ) {                            
+                        var string = JSON.stringify(result)
+                        var resultados=JSON.parse(string);                        
+                        resolve(resultados)
+                        console.log("resultados",resultados)                        
+                        
+                    }) 
+                })
+                }
+        
+
 module.exports={
+    deliteContacto,
+    UpdateContacto,
     GetClienteId,
     InsertTotales,
     GetProductoServicioByFolio, 

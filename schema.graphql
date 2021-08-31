@@ -13,6 +13,8 @@ type Mutation {
      sendEmailCotizacion(data:[String]!):message
      insertTotales(data:[String]!):message
      updateStatusCotizacion(data:[String]!):message
+     updateContacto(data:[String]!):updateContacto
+     deliteContacto(data:[String]!):deliteContacto
    
 }
 
@@ -23,7 +25,7 @@ getTablaClientes(data:[String]!):[getTablaClientes]
 # getEmpresa(data:[String]!):[getEmpresa]
 getEmpresas(data:[String]!):[getEmpresas]
 getCotizacionesTabla(data:[String]!):[getCotizacionesTabla]
-getIdCotizacion(data:[String]!):[getIdCotizacion]
+getIdCotizacion(data:[String]!):[getCotizacionesTabla]
 getClienteRFC(data:[String]!):[getClienteRFC]
 getTablaProductoServicio(data:[String]!):[getTablaProductoServicio]
 getProductoServicio(data:[String]!):[getProductoServicio]
@@ -33,6 +35,32 @@ getTablaContactos(data:[String]!):[getTablaContactos]
 getProductoServicioByFolio(data:[String]!):[getProductoServicio]
 getTotalesByFolio(data:[String]!):[totales]
 getClienteId(data:[String]!):[getTablaClientes]
+}
+type deliteContacto{
+    id_contacto:String,
+    nombre:String,
+    apellidos:String,
+    correo1:String,
+    correo2:String,
+    telefono1:String,
+    extensionTelefonica:String,
+    telefono2:String,
+    puesto:String,  
+    fk_clientesads:String,   
+    message:String
+}
+
+type updateContacto{
+     nombre:String,
+    apellidos:String,
+    correo1:String,
+    correo2:String,
+    telefono1:String,
+    extensionTelefonica:String,
+    telefono2:String,
+    puesto:String,     
+    message:String
+
 }
 
 type totales{
