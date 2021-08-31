@@ -79,7 +79,8 @@ const actions = require('../actions/userActions')
     const updateContacto =  (_ ,data) =>{
         var cadena= data.data[0]
         var variable = cadena.split(",")   
-        return actions.UpdateContacto(variable)
+        console.log("data a insertar",variable)
+        return actions.updateContacto(variable)
     }
 
     const deliteContacto  =  (_ , data) =>{

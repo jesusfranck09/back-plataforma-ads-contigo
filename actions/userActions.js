@@ -426,10 +426,11 @@ const getCotizacionesTabla  = ( data)  => {
             }
 
 
-            const UpdateContacto = ( data)  => {
+            const updateContacto = ( data)  => {
+                console.log("data", data)
                 return new Promise((resolve,reject)=>{
                     console.log("data",data)
-                    client.query(`update contacto set  nombre= '${data[1]} ', apellidos='${data[2]}',correo1='${data[3]}',correo2='${data[4]}',telefono1='${data[5]}',UpdateContacto='${data[6]}' telefono2='${data[7]}',puesto='${data[8]}' where id_contacto='${data[0]}'`) 
+                    client.query(`update contacto set  nombre='${data[1]}',apellidos='${data[2]}',correo1='${data[3]}',correo2='${data[4]}',telefono1='${data[5]}',extensionTelefonica='${data[6]}',telefono2='${data[7]}',puesto='${data[8]}' where id_contacto='${data[0]}'`) 
                     resolve({message:"actualizacion exitosa"})
                 })
             }
@@ -448,7 +449,7 @@ const getCotizacionesTabla  = ( data)  => {
 
 module.exports={
     deliteContacto,
-    UpdateContacto,
+    updateContacto,
     GetClienteId,
     InsertTotales,
     GetProductoServicioByFolio, 
