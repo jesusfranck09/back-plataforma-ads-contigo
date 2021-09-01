@@ -350,7 +350,7 @@ const getCotizacionesTabla  = ( data)  => {
     //     })
     // }
                 
-    const InsertTotales = ( data)  => {
+    const insertTotales = ( data)  => {
         return new Promise((resolve,reject)=>{
             // client.query(`select MAX(id_cotizaciones) as maxid from cotizaciones`,function(err,results,fields){
             //     var string =JSON.stringify(results)
@@ -453,7 +453,7 @@ module.exports={
     deliteContacto,
     updateContacto,
     GetClienteId,
-    InsertTotales,
+    insertTotales,
     GetProductoServicioByFolio, 
     GetTotalesByFolio,
     UpdateStatusCotizacion,
