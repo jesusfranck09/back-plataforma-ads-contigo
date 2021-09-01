@@ -398,9 +398,11 @@ const getCotizacionesTabla  = ( data)  => {
 
         const GetTotalesByFolio = ( data)  => {
             return new Promise((resolve,reject)=>{
+                console.log(`select * from totales where NumFolio = '${data[0]}'`)
                 client.query(`select * from totales where NumFolio = '${data[0]}'`,function(err,results,fields){
                     var string =JSON.stringify(results)
                     var resultados = JSON.parse(string);
+                    console.log("resultados",resultados)
                     resolve(resultados)
                 })
     
