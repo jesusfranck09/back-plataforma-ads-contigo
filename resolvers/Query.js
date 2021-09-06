@@ -95,7 +95,14 @@ const getClienteId   =  (_ , data) =>{
 return actions.GetClienteId(variable)
 }
 
+const getContactosId   =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.getContactosId(variable)
+}
+
 module.exports={ 
+    getContactosId,
     getClienteId,
     getTotalesByFolio,
     getProductoServicioByFolio,

@@ -86,16 +86,17 @@ const actions = require('../actions/userActions')
     const deliteContacto  =  (_ , data) =>{
         var cadena= data.data[0]
         var variable = cadena.split(",")
-        return actions.deliteContacto(variable)
-    
+        return actions.deliteContacto(variable)    
     }
 
+    const cotizacionVencida  =  (_ , data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.CotizacionVencida(variable)    
+    }
 
-
-    
-
-    
 module.exports={
+    cotizacionVencida,
     deliteContacto,
     updateContacto,
     updateStatusCotizacion,

@@ -153,7 +153,7 @@ const getEmpresas   = ( data)  => {
 
 const insertCotizaciones = (data)=> {             
     return new Promise( (resolve,reject)=>{  
-        client.query(`insert into cotizaciones(fechaEmision,NumFolio,promocion,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,statusCotizacion,fk_cliente,fk_productoServicio,fk_adminalfa,fk_empresa,fechaExpiracion) values('${data[0]}','${data[10]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','Enviada','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[11]}')`);
+        client.query(`insert into cotizaciones(fechaEmision,NumFolio,promocion,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,statusCotizacion,fk_cliente,fk_productoServicio,fk_adminalfa,fk_empresa,fechaExpiracion,vigencia) values('${data[0]}','${data[10]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','Enviada','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[11]}','activa')`);
         resolve({message:"registro exitoso"})
     })
 }
@@ -182,7 +182,7 @@ const getCotizacionesTabla  = ( data)  => {
 
     const getClienteRFC   = ( data)  => {
         return new Promise((resolve,reject)=>{                    
-            client.query(`select * from clientes where rfc='${data[0]}'`, function (err,result,fields ) {                        
+            client.query(`select * from clientesads where rfc='${data[0]}'`, function (err,result,fields ) {                        
                 var string = JSON.stringify(result)
                 var resultados=JSON.parse(string);                      
                 resolve(resultados)
@@ -202,25 +202,13 @@ const getCotizacionesTabla  = ( data)  => {
 
     const deleteCliente   = ( data)  => {
         return new Promise((resolve,reject)=>{                        
-            client.query(`delete from clientes where id_cliente='${data[0]}'`, function (err,result,fields ) {                            
-                var string = JSON.stringify(result)
-                var resultados=JSON.parse(string);                        
-                resolve(resultados)
-                console.log("resultados",resultados)                        
-                
-            }) 
+            client.query(`delete from clientes where id_cliente='${data[0]}'`) 
         })
         }
 
     const updateCliente   = ( data)  => {
         return new Promise((resolve,reject)=>{                            
-            client.query(`update clientes  set  rfc= '${data[1]}' , empresa='${data[2]}', nombre= '${data[3]} ', apellido='${data[4]}',correo1='${data[5]}',correo2='${data[6]}',telefono1='${data[7]}', telefono2='${data[8]}' where id_cliente='${data[0]}'`,  function (err,result,fields ) {                                
-                var string = JSON.stringify(result)
-                var resultados=JSON.parse(string);                            
-                resolve(resultados)
-                console.log("resultados",resultados)                        
-                
-            }) 
+            client.query(`update clientes set rfc= '${data[1]}' , empresa='${data[2]}', nombre= '${data[3]} ', apellido='${data[4]}',correo1='${data[5]}',correo2='${data[6]}',telefono1='${data[7]}', telefono2='${data[8]}' where id_cliente='${data[0]}'`) 
         })
         }
 
@@ -438,18 +426,33 @@ const getCotizacionesTabla  = ( data)  => {
             }
             const deliteContacto   = ( data)  => {
                 return new Promise((resolve,reject)=>{                        
-                    client.query(`delete from contacto where id_contacto='${data[0]}'`, function (err,result,fields ) {                            
-                        var string = JSON.stringify(result)
-                        var resultados=JSON.parse(string);                        
-                        resolve(resultados)
-                        console.log("resultados",resultados)                        
-                        
-                    }) 
+                    client.query(`delete from contacto where id_contacto='${data[0]}'`) 
                 })
                 }
+            const CotizacionVencida   = ( data)  => {
+                console.log("data",data)
+                return new Promise((resolve,reject)=>{                        
+                    client.query(`update cotizaciones set vigencia = "vencida"  where NumFolio='${data[0]}'`);
+                    resolve({message:`folio ${data[0]} vencida`})
+                })
+                }
+
+        const getContactosId   = ( data)  => {
+            return new Promise((resolve,reject)=>{
+                console.log("Data",data)
+                client.query(`select * from contacto where fk_clientesads='${data[0]}'`, function (err,results,fields ) {                
+                    var string = JSON.stringify(results)
+                    var resultados=JSON.parse(string);   
+                    console.log("resultados getContactos",resultados)
+                    resolve(resultados)
+                }) 
+            })
+            }
         
 
 module.exports={
+    getContactosId, 
+    CotizacionVencida,
     deliteContacto,
     updateContacto,
     GetClienteId,
