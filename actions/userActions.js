@@ -4,6 +4,7 @@ const puppeteer = require('puppeteer');
 const nodemailer = require("nodemailer")
 const {jsonwebtoken} = require('../utils/index');
 const SALT_WORK_FACTOR =10
+const downloadsFolder = require('downloads-folder');
 
 const signupAlfa = (data) => {
     console.log("esto contiene data:",data)
@@ -128,16 +129,26 @@ const loginEmpresas = async  data =>{
 } )
 
 }
-const getTablaClientes   = ( data)  => {
-    return new Promise((resolve,reject)=>{
-        client.query(`select * from clientes where fk_empresa='${data[0]}'`, function (err,results,fields ) {            
-            var string = JSON.stringify(results)
-            var resultados=JSON.parse(string);
-            resolve(resultados)
-            console.log("resultados",resultados)
-        }) 
-    })
-    }
+// const getTablaClientes   = ( data)  => {
+//     return new Promise((resolve,reject)=>{
+//         client.query(`select * from clientes where fk_empresa='${data[0]}'`, function (err,results,fields ) {            
+//             var string = JSON.stringify(results)
+//             var resultados=JSON.parse(string);
+//             resolve(resultados)
+//             console.log("resultados",resultados)
+//         }) 
+//     })
+//     }
+    const getTablaClientes   = ( data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`select * from clientesads where fk_empresa='${data[0]}'`, function (err,results,fields ) {            
+                var string = JSON.stringify(results)
+                var resultados=JSON.parse(string);
+                resolve(resultados)
+                console.log("resultados",resultados)
+            }) 
+        })
+        }
 
 
 const getEmpresas   = ( data)  => {
@@ -151,12 +162,14 @@ const getEmpresas   = ( data)  => {
     })
     }
 
-const insertCotizaciones = (data)=> {             
-    return new Promise( (resolve,reject)=>{  
-        client.query(`insert into cotizaciones(fechaEmision,NumFolio,promocion,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,statusCotizacion,fk_cliente,fk_productoServicio,fk_adminalfa,fk_empresa,fechaExpiracion,vigencia) values('${data[0]}','${data[10]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','Enviada','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[11]}','activa')`);
-        resolve({message:"registro exitoso"})
-    })
-}
+    const insertCotizaciones = (data)=> {    
+        console.log("data",data)         
+        return new Promise( (resolve,reject)=>{  
+            client.query(`insert into cotizaciones(fechaEmision,NumFolio,promocion,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,statusCotizacion,fk_cliente,fk_productoServicio,fk_adminalfa,fk_empresa,fechaExpiracion,vigencia,fk_contacto) values('${data[0]}','${data[10]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','Enviada','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[11]}','activa','${data[12]}')`);
+    //console.log(`insert into cotizaciones(fechaEmision,NumFolio,promocion,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,statusCotizacion,fk_cliente,fk_productoServicio,fk_adminalfa,fk_empresa,fechaExpiracion,vigencia,fk_contacto) values('${data[0]}','${data[10]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','Enviada','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[11]}','activa','${data[12]}')`);
+            resolve({message:"registro exitoso"})
+        })
+    }
 
 const getCotizacionesTabla  = ( data)  => {
             return new Promise((resolve,reject)=>{
@@ -278,58 +291,62 @@ const getCotizacionesTabla  = ( data)  => {
             }
 
 
-        const SendEmailCotizacion   = ( data)  => {
-            return new Promise((resolve,reject)=>{
-                var date= new Date()
-                let fecha = date.toLocaleString('es')            
-                var transporter = nodemailer.createTransport({  
-                    secure: false,
-                    host: 'mail.diagnostico035.com',
-                    port: 587,
-                    auth: {
-                            user: 'info@diagnostico035.com',
-                            pass: 'jpY9f23#',                       
-                        },
-                    tls: {rejectUnauthorized: false},
-                    });
-                    const mailOptions = {
-                        from: 'info@diagnostico035.com', // sender address
-                    to: `lizbeth.cuevas@ads.com.mx`, // list of receivers
-                    // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
-                    subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
-                    text: 'Archivo de cotización PDF',
-                    html: `<p>Alfa y Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
-                        que ha recibido el reconocimiento como el Primer Lugar en Ventas por 16 Años consecutivos en la
-                        Ciudad de México.
-                        <br/>
-                        Basado en su solicitud de cotización, adjunto en este email nuestra propuesta comercial.
-                        <br/>
-                        Por favor, avísime si tiene alguna pregunta respondiendo a este correo electrónico o llamandome
-                        a los teléfonos 55 3603 9970 y 55 5553 2049.
-                        <br/>
-                        <br/>
-                        Saludos cordiales, 
-                        <center><br/><br/>${data[1]}<br/>
-                    Ejecutivo de ventas <br/>
-                    ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
-                    www.ads.com.mx<br/>${data[2]}</center>
-                    </p> `, // plain text body
-                    attachments: [{
-                        filename: 'Archivo de cortización.pdf',
-                        path: `C:/Users/UserAdmin/Downloads/${data[0]}`,
-                        contentType: 'application/pdf'
-                    }]
-                    };
-                    transporter.sendMail(mailOptions, function (err, info) {
-                        if("este es el error" , err)
-                        console.log(err)
-                        else
-                        console.log("esta es la info" ,  info);
-                
-                    });
-                resolve({message:"Correo Enviado"})      
-            })
-        }       
+        
+            const SendEmailCotizacion   = ( data)  => {
+
+                let directorio = downloadsFolder()
+    
+                return new Promise((resolve,reject)=>{
+                    var date= new Date()
+                    let fecha = date.toLocaleString('es')            
+                    var transporter = nodemailer.createTransport({  
+                        secure: false,
+                        host: 'mail.diagnostico035.com',
+                        port: 587,
+                        auth: {
+                                user: 'info@diagnostico035.com',
+                                pass: 'jpY9f23#',                       
+                            },
+                        tls: {rejectUnauthorized: false},
+                        });
+                        const mailOptions = {
+                            from: 'info@diagnostico035.com', // sender address
+                        to: `lizbeth.cuevas@ads.com.mx`, // list of receivers
+                        // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
+                        subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
+                        text: 'Archivo de cotización PDF',
+                        html: `<p>Alfa y Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
+                            que ha recibido el reconocimiento como el Primer Lugar en Ventas por 16 Años consecutivos en la
+                            Ciudad de México.
+                            <br/>
+                            Basado en su solicitud de cotización, adjunto en este email nuestra propuesta comercial.
+                            <br/>
+                            Por favor, avísime si tiene alguna pregunta respondiendo a este correo electrónico o llamandome
+                            a los teléfonos 55 3603 9970 y 55 5553 2049.
+                            <br/>
+                            <br/>
+                            Saludos cordiales, 
+                            <center><br/><br/>${data[1]}<br/>
+                        Ejecutivo de ventas <br/>
+                        ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
+                        www.ads.com.mx<br/>${data[2]}</center>
+                        </p> `, // plain text body
+                        attachments: [{
+                            filename: 'Archivo de cortización.pdf',
+                            path: directorio + "/" + data[0],
+                            contentType: 'application/pdf'
+                        }]
+                        };
+                        transporter.sendMail(mailOptions, function (err, info) {
+                            if("este es el error" , err)
+                            console.log(err)
+                            else
+                            console.log("esta es la info" ,  info);
+                    
+                        });
+                    resolve({message:"Correo Enviado"})      
+                })
+            }        
                     
     // const insertCotizaciones = (data)=> { 
     //     return new Promise( (resolve,reject)=>{  
@@ -405,9 +422,18 @@ const getCotizacionesTabla  = ( data)  => {
             })
         }
 
+        // const GetClienteId = ( data)  => {
+        //     return new Promise((resolve,reject)=>{             
+        //         client.query(`select * from clientes where id_cliente ='${data[0]}'`, function (err,results,fields ) {                
+        //             var string = JSON.stringify(results)
+        //             var resultados=JSON.parse(string);                      
+        //             resolve(resultados)
+        //         }) 
+        //     })
+        //     }
         const GetClienteId = ( data)  => {
             return new Promise((resolve,reject)=>{             
-                client.query(`select * from clientes where id_cliente ='${data[0]}'`, function (err,results,fields ) {                
+                client.query(`select * from clientesads where id_cliente ='${data[0]}'`, function (err,results,fields ) {                
                     var string = JSON.stringify(results)
                     var resultados=JSON.parse(string);                      
                     resolve(resultados)
@@ -448,9 +474,22 @@ const getCotizacionesTabla  = ( data)  => {
                 }) 
             })
             }
+
+        const getCotizacionFk_Contactos = ( data)  => {
+            return new Promise((resolve,reject)=>{
+                console.log("Data",data)
+                client.query(`select * from contacto where id_contacto='${data[0]}'`, function (err,results,fields ) {                
+                    var string = JSON.stringify(results)
+                    var resultados=JSON.parse(string);   
+                    console.log("resultados getContactos",resultados)
+                    resolve(resultados)
+                }) 
+            })
+            }
         
 
 module.exports={
+    getCotizacionFk_Contactos,
     getContactosId, 
     CotizacionVencida,
     deliteContacto,

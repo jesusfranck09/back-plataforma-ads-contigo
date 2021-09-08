@@ -37,6 +37,7 @@ getTotalesByFolio(data:[String]!):[totales]
 getClienteId(data:[String]!):[getTablaClientes]
 getTablaContactos(data:[String]!):[getTablaContactos]
 getContactosId(data:[String]!):[getContactosId]
+getCotizacionFk_Contactos(data:[String]!):[getContactosId]
 }
 type getContactosId{
     id_contacto:String,
@@ -261,6 +262,7 @@ type getCotizacionesTabla{
     concepto:String
     message:String
     fechaExpiracion:String
+    fk_contacto:String
 }
 
 
@@ -278,6 +280,7 @@ type insertCotizaciones{
    fk_adminalfa:String,
    fk_empresa:String,   
    fechaExpiracion:String, 
+   fk_contacto:String,
    message:String
 
 }
@@ -340,14 +343,14 @@ type loginEmpresas{
 
 type getTablaClientes{
     id_cliente:String,
-    empresa:String,
+    razonSocial:String,
     rfc:String,
-    nombre:String,
-    apellido:String,
-    correo1:String,
-    correo2:String,
-    telefono1:String,
-    telefono2:String,    
+    # nombre:String,
+    # apellido:String,
+    # correo1:String,
+    # correo2:String,
+    # telefono1:String,
+    # telefono2:String,    
     message:String
 
 }

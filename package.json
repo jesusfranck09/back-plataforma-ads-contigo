@@ -12,6 +12,7 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "dotenv": "^9.0.2",
+    "downloads-folder": "^3.0.1",
     "express": "^4.17.1",
     "graphql": "^0.13.2",
     "graphql-yoga": "^1.18.3",

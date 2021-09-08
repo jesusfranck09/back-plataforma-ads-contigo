@@ -101,7 +101,14 @@ const getContactosId   =  (_ , data) =>{
 return actions.getContactosId(variable)
 }
 
+const getCotizacionFk_Contactos   =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.getCotizacionFk_Contactos(variable)
+}
+
 module.exports={ 
+    getCotizacionFk_Contactos,
     getContactosId,
     getClienteId,
     getTotalesByFolio,
