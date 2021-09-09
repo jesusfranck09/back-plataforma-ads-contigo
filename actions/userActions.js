@@ -7,7 +7,6 @@ const SALT_WORK_FACTOR =10
 const downloadsFolder = require('downloads-folder');
 
 const signupAlfa = (data) => {
-    console.log("esto contiene data:",data)
  return new Promise((resolve,reject) =>{
      bcrypt.genSalt(SALT_WORK_FACTOR,function(error,salt){
          if (error){    
@@ -93,7 +92,6 @@ const loginAdminAlfa  = async  data =>{
 }
 
 const loginEmpresas = async  data =>{
-    console.log('esto es la data',data)
   return new Promise((resolve,reject) =>{  client.query(`select * from empresas where correo='${data[0]}'`,
    function(err,results,field){
     if(err){ reject(err)
@@ -144,7 +142,6 @@ const loginEmpresas = async  data =>{
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);
                 resolve(resultados)
-                console.log("resultados",resultados)
             }) 
         })
         }
@@ -156,13 +153,11 @@ const getEmpresas   = ( data)  => {
             var string = JSON.stringify(result)
             var resultados=JSON.parse(string);          
             resolve(resultados)
-            console.log("resultados",resultados)
         }) 
     })
     }
 
-    const insertCotizaciones = (data)=> {    
-        console.log("data",data)         
+    const insertCotizaciones = (data)=> {        
         return new Promise( (resolve,reject)=>{  
             client.query(`insert into cotizaciones(fechaEmision,NumFolio,promocion,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,statusCotizacion,fk_cliente,fk_productoServicio,fk_adminalfa,fk_empresa,fechaExpiracion,vigencia,fk_contacto) values('${data[0]}','${data[10]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','Enviada','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[11]}','activa','${data[12]}')`);
     //console.log(`insert into cotizaciones(fechaEmision,NumFolio,promocion,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,statusCotizacion,fk_cliente,fk_productoServicio,fk_adminalfa,fk_empresa,fechaExpiracion,vigencia,fk_contacto) values('${data[0]}','${data[10]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','Enviada','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[11]}','activa','${data[12]}')`);
@@ -174,8 +169,7 @@ const getCotizacionesTabla  = ( data)  => {
             return new Promise((resolve,reject)=>{
                 client.query(`select * from cotizaciones  where  fk_adminalfa='${data[0]}'` , function (err,results,fields ) {            
                     var string = JSON.stringify(results)
-                    var resultados=JSON.parse(string);  
-                    console.log("resultados", resultados)  
+                    var resultados=JSON.parse(string);   
                     resolve(resultados)                   
                 }) 
         })
@@ -197,15 +191,12 @@ const getCotizacionesTabla  = ( data)  => {
             client.query(`select * from clientesads where rfc='${data[0]}'`, function (err,result,fields ) {                        
                 var string = JSON.stringify(result)
                 var resultados=JSON.parse(string);                      
-                resolve(resultados)
-                console.log("resultados",resultados)                        
-                
+                resolve(resultados)  
             }) 
         })
         }
 
     const insertClientes = (data)=> { 
-        console.log("data de inserClientes",data)
         return new Promise((resolve,reject)=>{  
             client.query(`insert into clientes (rfc,empresa,nombre,apellido,correo1,correo2,telefono1,telefono2) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}')`) 
         resolve({message:"registro exitoso"})
@@ -270,7 +261,6 @@ const getCotizacionesTabla  = ( data)  => {
         }
 
     const insertClientesAlfa = (data)=> { 
-        console.log("data de insertClientesAlfa",data)
         return new Promise((resolve,reject)=>{   
             client.query(`insert into clientesads(rfc,razonSocial,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}')`) 
             resolve({message:"registro exitoso"})
@@ -279,7 +269,6 @@ const getCotizacionesTabla  = ( data)  => {
 
         const getTablaClientesAlfa = ( data)  => {
             return new Promise((resolve,reject)=>{
-                console.log("Data",data)
                 client.query(`select * from clientesads where fk_empresa='${data[0]}'`, function (err,results,fields ) {                
                     var string = JSON.stringify(results)
                     var resultados=JSON.parse(string);   
@@ -368,7 +357,6 @@ const getCotizacionesTabla  = ( data)  => {
 
     const getIdClientesAlfa = ( data)  => {
         return new Promise((resolve,reject)=>{
-            console.log("Data",data)
             client.query(`select * from clientesads where id_cliente='${data[0]}'`, function (err,results,fields ) {                
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);   
@@ -380,7 +368,6 @@ const getCotizacionesTabla  = ( data)  => {
         
     const getTablaContactos = ( data)  => {
         return new Promise((resolve,reject)=>{
-            console.log("Data",data)
             client.query(`select * from contacto where fk_clientesads='${data[0]}'`, function (err,results,fields ) {                
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);   
@@ -402,11 +389,10 @@ const getCotizacionesTabla  = ( data)  => {
 
         const GetTotalesByFolio = ( data)  => {
             return new Promise((resolve,reject)=>{
-                console.log(`select * from totales where NumFolio = '${data[0]}'`)
+                // console.log(`select * from totales where NumFolio = '${data[0]}'`)
                 client.query(`select * from totales where NumFolio = '${data[0]}'`,function(err,results,fields){
                     var string =JSON.stringify(results)
                     var resultados = JSON.parse(string);
-                    console.log("resultados",resultados)
                     resolve(resultados)
                 })
     
@@ -415,7 +401,6 @@ const getCotizacionesTabla  = ( data)  => {
 
         const UpdateStatusCotizacion = ( data)  => {
             return new Promise((resolve,reject)=>{
-                console.log("data",data)
                 client.query(`update cotizaciones set statusCotizacion = '${data[1]}' where NumFolio ='${data[0]}'`)
                 resolve({message:"actualizacion exitosa"})
             })
@@ -442,9 +427,7 @@ const getCotizacionesTabla  = ( data)  => {
 
 
             const updateContacto = ( data)  => {
-                console.log("data", data)
                 return new Promise((resolve,reject)=>{
-                    console.log("data",data)
                     client.query(`update contacto set  nombre='${data[1]}',apellidos='${data[2]}',correo1='${data[3]}',correo2='${data[4]}',telefono1='${data[5]}',extensionTelefonica='${data[6]}',telefono2='${data[7]}',puesto='${data[8]}' where id_contacto='${data[0]}'`) 
                     resolve({message:"actualizacion exitosa"})
                 })
@@ -455,7 +438,6 @@ const getCotizacionesTabla  = ( data)  => {
                 })
                 }
             const CotizacionVencida   = ( data)  => {
-                console.log("data",data)
                 return new Promise((resolve,reject)=>{                        
                     client.query(`update cotizaciones set vigencia = "vencida"  where NumFolio='${data[0]}'`);
                     resolve({message:`folio ${data[0]} vencida`})
@@ -464,11 +446,9 @@ const getCotizacionesTabla  = ( data)  => {
 
         const getContactosId   = ( data)  => {
             return new Promise((resolve,reject)=>{
-                console.log("Data",data)
                 client.query(`select * from contacto where fk_clientesads='${data[0]}'`, function (err,results,fields ) {                
                     var string = JSON.stringify(results)
-                    var resultados=JSON.parse(string);   
-                    console.log("resultados getContactos",resultados)
+                    var resultados=JSON.parse(string);
                     resolve(resultados)
                 }) 
             })
@@ -476,11 +456,9 @@ const getCotizacionesTabla  = ( data)  => {
 
         const getCotizacionFk_Contactos = ( data)  => {
             return new Promise((resolve,reject)=>{
-                console.log("Data",data)
                 client.query(`select * from contacto where id_contacto='${data[0]}'`, function (err,results,fields ) {                
                     var string = JSON.stringify(results)
-                    var resultados=JSON.parse(string);   
-                    console.log("resultados getContactos",resultados)
+                    var resultados=JSON.parse(string); 
                     resolve(resultados)
                 }) 
             })

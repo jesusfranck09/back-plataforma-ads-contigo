@@ -66,14 +66,12 @@ const getTablaClientesAlfa   =  (_ , data) =>{
 const getIdClientesAlfa   =  (_ , data) =>{
     var cadena= data.data[0]
     var variable = cadena.split(",")
- console.log("esto es variable", variable)
  return actions.getIdClientesAlfa(variable)
 }
 
 const getTablaContactos  =  (_ , data) =>{
     var cadena= data.data[0]
     var variable = cadena.split(",")
- console.log("esto es variable", variable)
  return actions.getTablaContactos(variable)
 }
 
