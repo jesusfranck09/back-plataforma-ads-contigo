@@ -32,7 +32,6 @@ const signupAlfa = (data) => {
 } 
 
 const signupEmpresas = (data) => {
-    console.log("esto contiene data:",data)
  return new Promise((resolve,reject) =>{
      bcrypt.genSalt(SALT_WORK_FACTOR,function(error,salt){
          if (error){    
