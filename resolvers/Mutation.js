@@ -15,7 +15,6 @@ const actions = require('../actions/userActions')
     const insertCotizaciones = (_,data) =>{
         var cadena = data.data[0]
         var variable = cadena.split(",")
-        console.log("variable",variable)
     return actions.insertCotizaciones(variable)
         }
   
@@ -46,15 +45,13 @@ const actions = require('../actions/userActions')
 
     const insertProductoServicio = (_,data) =>{
         var cadena= data.data[0]
-        var variable = cadena.split(",")        
-        console.log("la data de insertProductoServicio es:",data)
+        var variable = cadena.split(",") 
         return actions.insertProductoServicio(variable)
         }
 
     const insertClientesAlfa = (_,data) =>{
         var cadena= data.data[0]
-        var variable = cadena.split(",")        
-        console.log("la data de insertClientesAlfa es:" , data)
+        var variable = cadena.split(",") 
     return actions.insertClientesAlfa(variable)
         }
 
@@ -78,8 +75,7 @@ const actions = require('../actions/userActions')
 
     const updateContacto =  (_ ,data) =>{
         var cadena= data.data[0]
-        var variable = cadena.split(",")   
-        console.log("data a insertar",variable)
+        var variable = cadena.split(",")
         return actions.updateContacto(variable)
     }
 
