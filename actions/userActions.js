@@ -56,13 +56,12 @@ const signupEmpresas = (data) => {
 } 
 
 
-const loginAdminAlfa  = async  data =>{
+const loginAdminAlfa  = async  data =>{ 
   return new Promise((resolve,reject) =>{ 
       client.query(`select * from adminAlfa where correo='${data[0]}'`,
         function(err,results,field){
             if(err){ reject(err)
    }
-
        var string = JSON.stringify(results)
        var resultados=JSON.parse(string);
        if(resultados[0]){
@@ -72,10 +71,13 @@ const loginAdminAlfa  = async  data =>{
                     id_admin:resultados[0].id_admin,
                     nombre:resultados[0].nombre,
                     apellido:resultados[0].apellido,                   
-                    correo:resultados[0].correo,                   
+                    correo:resultados[0].correo, 
+                    telefono:resultados[0].telefono,
+                    extensionTelefonica:resultados[0].extensionTelefonica,
+                    puesto:resultados[0].puesto,
                     message:"login exitoso",
                     token:jsonwebtoken(resultados[0].correo), //coreo data[0]]
-                    fk_empresa:resultados[0].fk_empresa,
+                    fk_empresa:resultados[0].fk_empresa,                  
             })
                } else{ 
                    resolve({message:"usuario y contraseña incorrecto", token:"no hay token"})
@@ -256,8 +258,8 @@ const getCotizacionesTabla  = ( data)  => {
         })
         }
 
-    const insertClientesAlfa = (data)=> {         
-        return new Promise((resolve,reject)=>{   
+    const insertClientesAlfa = (data)=> { 
+        return new Promise((resolve,reject)=>{ 
             client.query(`insert into clientesads(rfc,razonSocial,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}')`) 
             resolve({message:"registro exitoso"})
         })

@@ -325,6 +325,9 @@ type loginAdminAlfa{
     nombre:String,
     apellido:String,
     correo:String,
+    telefono:String,
+    extensionTelefonica:String,
+    puesto:String,
     token:String,
     message:String,
     fk_empresa:String
