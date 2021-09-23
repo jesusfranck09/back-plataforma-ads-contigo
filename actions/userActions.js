@@ -259,10 +259,10 @@ const getCotizacionesTabla  = ( data)  => {
         }
 
     const insertClientesAlfa = (data)=> { 
-        // console.log("data",data)
         return new Promise((resolve,reject)=>{ 
-            client.query(`insert into clientesads(rfc,razonSocial,tamañoEmpresa,giroEmpresarial,correo,telefono,paginaWeb,domicilioFiscal,contrasena,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}')`) 
+            client.query(`insert into clientesads(rfc,razonSocial,tamanoEmpresa,giroEmpresarial,correo,telefono,domicilioFiscal,paginaWeb,acceso,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','false','${data[8]}')`) 
             resolve({message:"registro exitoso"})
+            
         })
         }
 

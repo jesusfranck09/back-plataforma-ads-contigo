@@ -135,8 +135,7 @@ type insertClientesAlfa{
      telefono:String,
      paginaWeb:String,
      domicilioFiscal:String,
-     fk_empresa:String,    
-     contrasena:String,
+     fk_empresa:String, 
      message:String
 }
 
