@@ -129,7 +129,14 @@ type message{
 type insertClientesAlfa{
      rfc:String,
      razonSocial:String,
-     fk_empresa:String,
+     tamanoEmpresa:String,
+     giroEmpresarial:String,
+     correo:String,
+     telefono:String,
+     paginaWeb:String,
+     domicilioFiscal:String,
+     fk_empresa:String,    
+     contrasena:String,
      message:String
 }
 

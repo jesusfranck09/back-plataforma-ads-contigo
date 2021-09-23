@@ -52,6 +52,7 @@ const actions = require('../actions/userActions')
     const insertClientesAlfa = (_,data) =>{
         var cadena= data.data[0]
         var variable = cadena.split(",") 
+        // console.log("esto es data para insertar",variable)
     return actions.insertClientesAlfa(variable)
         }
 
