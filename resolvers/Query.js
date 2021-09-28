@@ -102,8 +102,20 @@ const getCotizacionFk_Contactos   =  (_ , data) =>{
     var variable = cadena.split(",")
 return actions.getCotizacionFk_Contactos(variable)
 }
+const getClienteByCorreo   =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.GetClienteByCorreo(variable)
+}
+const loginClientes   =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.LoginClientes(variable)
+}
 
-module.exports={ 
+module.exports={
+    getClienteByCorreo,
+    loginClientes,
     getCotizacionFk_Contactos,
     getContactosId,
     getClienteId,

@@ -15,7 +15,10 @@ type Mutation {
      updateStatusCotizacion(data:[String]!):message
      updateContacto(data:[String]!):updateContacto
      deliteContacto(data:[String]!):deliteContacto
-    cotizacionVencida(data:[String]!):message
+     cotizacionVencida(data:[String]!):message
+     accesoSistema(data:[String]!):message
+     transactionClientes(data:[String]!):message
+     updatePasswordCliente(data:[String]!):message
    
 }
 
@@ -38,6 +41,8 @@ getClienteId(data:[String]!):[getTablaClientes]
 getTablaContactos(data:[String]!):[getTablaContactos]
 getContactosId(data:[String]!):[getContactosId]
 getCotizacionFk_Contactos(data:[String]!):[getContactosId]
+getClienteByCorreo(data:[String]!):[getTablaClientesAlfa]
+loginClientes(data:[String]!):getTablaClientesAlfa
 }
 type getContactosId{
     id_contacto:String,
@@ -107,10 +112,19 @@ type getIdClientesAlfa{
 }
 
 type getTablaClientesAlfa{
+    message:String,
     id_cliente:String,
     rfc:String,
     razonSocial:String,
     fk_empresa:String
+    tamanoEmpresa:String
+    giroEmpresarial:String
+    correo:String
+    telefono:String
+    paginaWeb:String
+    domicilioFiscal:String
+    acceso:String,
+    token:String
 }
 
 type insertTotales{

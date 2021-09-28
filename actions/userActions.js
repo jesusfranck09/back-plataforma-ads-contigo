@@ -261,8 +261,7 @@ const getCotizacionesTabla  = ( data)  => {
     const insertClientesAlfa = (data)=> { 
         return new Promise((resolve,reject)=>{ 
             client.query(`insert into clientesads(rfc,razonSocial,tamanoEmpresa,giroEmpresarial,correo,telefono,domicilioFiscal,paginaWeb,acceso,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','false','${data[8]}')`) 
-            resolve({message:"registro exitoso"})
-            
+            resolve({message:"registro exitoso"})            
         })
         }
 
@@ -458,9 +457,167 @@ const getCotizacionesTabla  = ( data)  => {
                 }) 
             })
             }
+
+            const AccesoSistema = ( data)  => {
+                return new Promise((resolve,reject)=>{
+                    let año  = new Date().getFullYear()
+                    function generateUUID() {
+                        var d = new Date().getTime();
+                        var uuid = 'xCxxyx'.replace(/[xy]/g, function (c) {
+                            var r = (d + Math.random() * 16) % 16 | 0;
+                            d = Math.floor(d / 16);
+                            return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+                        });
+                        return uuid;
+                    }
+                    let folio = (generateUUID()).toUpperCase() + año;
+                    bcrypt.genSalt(SALT_WORK_FACTOR,function(error,salt){
+                        if (error){    
+                             reject(error,{message:'error',token:error})
+                        } else{
+                            bcrypt.hash(folio,salt, function(error,hash){
+                                if(error){
+                                   throw error
+                                } else{
+                                    client.query(`update clientesads set acceso = "true", contraseña = '${hash}' where  id_cliente = '${data[0]}'`)     
+                                    var transporter = nodemailer.createTransport({  
+                                        secure: false,
+                                        host: 'mail.diagnostico035.com',
+                                        port: 587,
+                                        auth: {
+                                                user: 'info@diagnostico035.com',
+                                                pass: 'jpY9f23#',                       
+                                            },
+                                        tls: {rejectUnauthorized: false},
+                                        });
+                                        const mailOptions = {
+                                            from: 'info@diagnostico035.com', // sender address
+                                        to: `${data[1]}`, // list of receivers
+                                        // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
+                                        subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
+                                        text: 'Datos de acceso',
+                                        html: `<p>Alfa y Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
+                                            que ha recibido el reconocimiento como el Primer Lugar en Ventas por 16 Años consecutivos en la
+                                            Ciudad de México.
+                                            <br/>
+                                            Basado en su solicitud de acceso, Se le otorgan los siguientes datos para que usted disfrute de los beneficios de la plataforma de ADS en el sitio https://www.google.com<br/><br/><br/>
+                                            Correo: ${data[1]}<br/>
+                                            Contraseña:${folio}<br/>
+                                            <br/>
+                                            Estimado cliente se le sugiere cambiar su <strong>contraseña</strong> para la seguridad de su sesión.
+                                            <br/>
+                                            <br/>
+                                            Saludos cordiales, 
+                                            <center><br/><br/><br/>
+                                        El equipo de desarrollo de <br/>
+                                        ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
+                                        www.ads.com.mx<br/></center>
+                                        </p> `
+                                        };
+                                        transporter.sendMail(mailOptions, function (err, info) {
+                                            if("este es el error" , err)
+                                            console.log(err)
+                                            else
+                                            console.log("esta es la info" ,  info);
+                                    
+                                        });
+                                      resolve({           
+                                       message:"acceso permitido",
+                                    })
+                                      
+                                }
+                            })
+                        }
+               
+                    })
+                  
+                    // client.query(`select * from contacto where id_contacto='${data[0]}'`, function (err,results,fields ) {                
+                    //     var string = JSON.stringify(results)
+                    //     var resultados=JSON.parse(string);   
+                    //     resolve(resultados)
+                    // }) 
+                })
+            }
+            
+        const LoginClientes = ( data)  => {
+            return new Promise((resolve,reject) =>{ 
+                client.query(`select * from clientesads where correo='${data[0]}'`,
+                  function(err,results,field){
+                      if(err){ reject(err)
+                      }
+                 var string = JSON.stringify(results)
+                 var resultados=JSON.parse(string);
+                 if(resultados[0]){
+                     bcrypt.compare(data[1],resultados[0].contraseña,function(error,result){
+                         if(result){
+                              resolve({
+                                id_cliente:resultados[0].id_cliente,
+                                rfc:resultados[0].rfc,
+                                razonSocial:resultados[0].razonSocial,
+                                tamanoEmpresa:resultados[0].tamanoEmpresa,
+                                giroEmpresarial:resultados[0].giroEmpresarial,
+                                telefono:resultados[0].telefono,
+                                paginaWeb:resultados[0].paginaWeb,
+                                domicilioFiscal:resultados[0].domicilioFiscal,
+                                message:"login exitoso",
+                                token:jsonwebtoken(resultados[0].correo) 
+                      })
+                         } else{ 
+                             resolve({message:"usuario y contraseña incorrecto", token:"no hay token"})
+                         }
+                     })       
+                 }else{
+                     resolve({
+                         message:"sin resultados",             
+                      })
+                 }   
+             })
+          } )
+        }
+        const TransactionClientes = ( data)  => {
+            return new Promise((resolve,reject)=>{
+               client.query(`insert into transaccionesClientes (id_cliente,rfc,fecha,hora) values ('${data[1]}','${data[0]}','${data[2]}','${data[3]}')`)
+               resolve({message:"actualización exitosa"})
+            })
+        }
+        const GetClienteByCorreo = ( data)  => {
+            return new Promise((resolve,reject)=>{
+                client.query(`select * from clientesads where correo='${data[0]}'`, function (err,results,fields ) {                
+                    var string = JSON.stringify(results)
+                    var resultados=JSON.parse(string);
+                    resolve(resultados)
+                })
+            })
+        }
+        const UpdatePasswordCliente = ( data)  => {
+            console.log("data",data)
+            return new Promise((resolve,reject)=>{
+                bcrypt.genSalt(SALT_WORK_FACTOR,function(error,salt){
+                    if (error){    
+                         reject(error,{message:'error',token:error})
+                    } else{
+                        bcrypt.hash(data[1],salt, function(error,hash){
+                            if(error){
+                               throw error
+                            } else{
+                                client.query(`update clientesads set contraseña = '${hash}' where id_cliente  = '${data[0]}'`)
+                                resolve({message:"actualización exitosa"})
+                            }
+                        })
+                    }
+           
+                })
+               
+            })
+        }
         
 
 module.exports={
+    UpdatePasswordCliente,
+    GetClienteByCorreo,
+    TransactionClientes,
+    LoginClientes,
+    AccesoSistema,
     getCotizacionFk_Contactos,
     getContactosId, 
     CotizacionVencida,

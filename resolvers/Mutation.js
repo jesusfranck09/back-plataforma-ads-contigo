@@ -90,8 +90,27 @@ const actions = require('../actions/userActions')
         var variable = cadena.split(",")
         return actions.CotizacionVencida(variable)    
     }
+    const accesoSistema  =  (_ , data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.AccesoSistema(variable)    
+    }
+    const transactionClientes  =  (_ , data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.TransactionClientes(variable)    
+    }
+    const updatePasswordCliente  =  (_ , data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.UpdatePasswordCliente(variable)    
+    }
+
 
 module.exports={
+    updatePasswordCliente,
+    transactionClientes,
+    accesoSistema,
     cotizacionVencida,
     deliteContacto,
     updateContacto,
