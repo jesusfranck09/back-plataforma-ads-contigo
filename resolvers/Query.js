@@ -41,7 +41,7 @@ const getIdCotizacion  =  (_ , data) =>{
 const getClienteRFC   =  (_ , data) =>{
     var cadena= data.data[0]
     var variable = cadena.split(",")
- return actions.getClienteRFC   (variable)
+ return actions.getClienteRFC(variable)
 }
 
 const getTablaProductoServicio   =  (_ , data) =>{

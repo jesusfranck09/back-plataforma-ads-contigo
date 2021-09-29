@@ -195,6 +195,16 @@ const getCotizacionesTabla  = ( data)  => {
             }) 
         })
         }
+        // const getClienteRFC   = ( data)  => {
+        //     return new Promise((resolve,reject)=>{                    
+        //         client.query(`select * from clientesads where rfc='${data[0]}' || razonSocial='${data[0]}'`, function (err,result,fields ) {                        
+        //             var string = JSON.stringify(result)
+        //             var resultados=JSON.parse(string);                      
+        //             resolve(resultados)                      
+                    
+        //         }) 
+        //     })
+        //     }
 
     const insertClientes = (data)=> { 
         return new Promise((resolve,reject)=>{  
@@ -267,7 +277,7 @@ const getCotizacionesTabla  = ( data)  => {
 
         const getTablaClientesAlfa = ( data)  => {
             return new Promise((resolve,reject)=>{
-                client.query(`select * from clientesads where fk_empresa='${data[0]}'`, function (err,results,fields ) {                
+                client.query(`select * from clientesads where fk_empresa='${data[0]}' ORDER BY razonSocial ASC`, function (err,results,fields ) {                
                     var string = JSON.stringify(results)
                     var resultados=JSON.parse(string);   
                     resolve(resultados)
@@ -363,7 +373,7 @@ const getCotizacionesTabla  = ( data)  => {
         
     const getTablaContactos = ( data)  => {
         return new Promise((resolve,reject)=>{
-            client.query(`select * from contacto where fk_clientesads='${data[0]}'`, function (err,results,fields ) {                
+            client.query(`select * from contacto where fk_clientesads='${data[0]}' ORDER BY apellidos ASC`, function (err,results,fields ) {                
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);   
                 resolve(resultados)
