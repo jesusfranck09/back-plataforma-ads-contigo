@@ -159,6 +159,7 @@ type insertProductoServicio {
     concepto:String,
     precio:String , 
     consecutivo:String,
+    tipoLicenciamiento:String,
     message:String
 
 }
@@ -301,6 +302,7 @@ type insertCotizaciones{
    fk_empresa:String,   
    fechaExpiracion:String, 
    fk_contacto:String,
+   tipoSolicitud:String,
    message:String
 
 }
