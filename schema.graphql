@@ -326,6 +326,7 @@ type signupAlfa{
     correo:String,
     telefono:String,
     ext:String,
+    celular:String,
     puesto:String,
     token:String,
     message:String,

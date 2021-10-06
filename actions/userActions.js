@@ -12,11 +12,11 @@ const signupAlfa = (data) => {
          if (error){    
               reject(error,{message:'error',token:error})
          } else{
-             bcrypt.hash(data[6],salt, function(error,hash){
+             bcrypt.hash(data[7],salt, function(error,hash){
                  if(error){
                     throw error
                  } else{
-                      client.query(`insert into adminAlfa(nombre,apellido,correo,telefono,extensionTelefonica,puesto,contraseña,fk_empresa) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${hash}','${data[7]}')`);                  
+                      client.query(`insert into adminAlfa(nombre,apellido,correo,telefono,extensionTelefonica,celular,puesto,contraseña,fk_empresa) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${hash}','${data[8]}')`);                  
                        resolve({           
                         message:"el registro en signup fue exitoso",
                      })
@@ -32,26 +32,24 @@ const signupAlfa = (data) => {
 
 const signupEmpresas = (data) => {
  return new Promise((resolve,reject) =>{
-     bcrypt.genSalt(SALT_WORK_FACTOR,function(error,salt){
-         if (error){    
-              reject(error,{message:'error',token:error})
-         } else{
-             bcrypt.hash(data[6],salt, function(error,hash){
-                 if(error){
-                    throw error
-                 } else{
-                    client.query(`insert into empresas(rfc,razonSocial,correo,telefono,paginaWeb,domicilioFiscal,contraseña) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${hash}')`);                  
+    //  bcrypt.genSalt(SALT_WORK_FACTOR,function(error,salt){
+        //  if (error){    
+        //       reject(error,{message:'error',token:error})
+        //  } else{
+            //  bcrypt.hash(data[6],salt, function(error,hash){
+            //      if(error){
+            //         throw error
+            //      } else{
+                    // client.query(`insert into empresas(rfc,razonSocial,correo,telefono,paginaWeb,domicilioFiscal,contraseña) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${hash}')`);    
+                    client.query(`insert into empresas(rfc,razonSocial,correo,telefono,paginaWeb,domicilioFiscal) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}')`);
                        resolve({           
                         message:"el registro en signup fue exitoso",
+                     })                       
+                //  }
+            //  })
+        //  }
 
-                     })
-                       
-                 }
-             })
-         }
-
-     })
-     
+    //  })     
  })   
 } 
 
