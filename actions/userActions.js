@@ -261,7 +261,7 @@ const getCotizacionesTabla  = ( data)  => {
 
     const insertProductoServicio = (data)=> { 
         return new Promise((resolve,reject)=>{                                  
-            client.query(`insert into productoServicio(tipo,concepto,precio,consecutivo,tipoLicenciamiento) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}')`) 
+            client.query(`insert into productoServicio(tipo,concepto,precio,consecutivo,tipoLicenciamiento,LineaProducto) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}')`) 
         resolve({message:"registro exitoso"})
         })
         }

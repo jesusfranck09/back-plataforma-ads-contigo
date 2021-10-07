@@ -160,6 +160,7 @@ type insertProductoServicio {
     precio:String , 
     consecutivo:String,
     tipoLicenciamiento:String,
+    LineaProducto:String,
     message:String
 
 }
