@@ -494,7 +494,7 @@ const getCotizacionesTabla  = ( data)  => {
                                         port: 587,
                                         auth: {
                                                 user: 'info@diagnostico035.com',
-                                                pass: 'jpY9f23#',                       
+                                                pass: 'zAvb54$3',                       
                                             },
                                         tls: {rejectUnauthorized: false},
                                         });
@@ -547,77 +547,77 @@ const getCotizacionesTabla  = ( data)  => {
                 })
             }
             
-        const LoginClientes = ( data)  => {
-            return new Promise((resolve,reject) =>{ 
-                client.query(`select * from clientesads where correo='${data[0]}'`,
-                  function(err,results,field){
-                      if(err){ reject(err)
-                      }
-                 var string = JSON.stringify(results)
-                 var resultados=JSON.parse(string);
-                 if(resultados[0]){
-                     bcrypt.compare(data[1],resultados[0].contraseña,function(error,result){
-                         if(result){
-                              resolve({
-                                id_cliente:resultados[0].id_cliente,
-                                rfc:resultados[0].rfc,
-                                razonSocial:resultados[0].razonSocial,
-                                tamanoEmpresa:resultados[0].tamanoEmpresa,
-                                giroEmpresarial:resultados[0].giroEmpresarial,
-                                telefono:resultados[0].telefono,
-                                paginaWeb:resultados[0].paginaWeb,
-                                domicilioFiscal:resultados[0].domicilioFiscal,
-                                message:"login exitoso",
-                                token:jsonwebtoken(resultados[0].correo) 
-                      })
-                         } else{ 
-                             resolve({message:"usuario y contraseña incorrecto", token:"no hay token"})
-                         }
-                     })       
-                 }else{
-                     resolve({
-                         message:"sin resultados",             
-                      })
-                 }   
-             })
-          } )
-        }
-        const TransactionClientes = ( data)  => {
-            return new Promise((resolve,reject)=>{
-               client.query(`insert into transaccionesClientes (id_cliente,rfc,fecha,hora) values ('${data[1]}','${data[0]}','${data[2]}','${data[3]}')`)
-               resolve({message:"actualización exitosa"})
-            })
-        }
-        const GetClienteByCorreo = ( data)  => {
-            return new Promise((resolve,reject)=>{
-                client.query(`select * from clientesads where correo='${data[0]}'`, function (err,results,fields ) {                
-                    var string = JSON.stringify(results)
-                    var resultados=JSON.parse(string);
-                    resolve(resultados)
+            const LoginClientes = ( data)  => {
+                return new Promise((resolve,reject) =>{ 
+                    client.query(`select * from clientesads where correo='${data[0]}'`,
+                      function(err,results,field){
+                          if(err){ reject(err)
+                          }
+                     var string = JSON.stringify(results)
+                     var resultados=JSON.parse(string);
+                     if(resultados[0]){
+                         bcrypt.compare(data[1],resultados[0].contraseña,function(error,result){
+                             if(result){
+                                  resolve({
+                                    id_cliente:resultados[0].id_cliente,
+                                    rfc:resultados[0].rfc,
+                                    razonSocial:resultados[0].razonSocial,
+                                    tamanoEmpresa:resultados[0].tamanoEmpresa,
+                                    giroEmpresarial:resultados[0].giroEmpresarial,
+                                    telefono:resultados[0].telefono,
+                                    paginaWeb:resultados[0].paginaWeb,
+                                    domicilioFiscal:resultados[0].domicilioFiscal,
+                                    message:"login exitoso",
+                                    token:jsonwebtoken(resultados[0].correo) 
+                          })
+                             } else{ 
+                                 resolve({message:"usuario y contraseña incorrecto", token:"no hay token"})
+                             }
+                         })       
+                     }else{
+                         resolve({
+                             message:"sin resultados",             
+                          })
+                     }   
+                 })
+              } )
+            }
+            const TransactionClientes = ( data)  => {
+                return new Promise((resolve,reject)=>{
+                   client.query(`insert into transaccionesClientes (id_cliente,rfc,fecha,hora) values ('${data[1]}','${data[0]}','${data[2]}','${data[3]}')`)
+                   resolve({message:"actualización exitosa"})
                 })
-            })
-        }
-        const UpdatePasswordCliente = ( data)  => {
-            console.log("data",data)
-            return new Promise((resolve,reject)=>{
-                bcrypt.genSalt(SALT_WORK_FACTOR,function(error,salt){
-                    if (error){    
-                         reject(error,{message:'error',token:error})
-                    } else{
-                        bcrypt.hash(data[1],salt, function(error,hash){
-                            if(error){
-                               throw error
-                            } else{
-                                client.query(`update clientesads set contraseña = '${hash}' where id_cliente  = '${data[0]}'`)
-                                resolve({message:"actualización exitosa"})
-                            }
-                        })
-                    }
-           
+            }
+            const GetClienteByCorreo = ( data)  => {
+                return new Promise((resolve,reject)=>{
+                    client.query(`select * from clientesads where correo='${data[0]}'`, function (err,results,fields ) {                
+                        var string = JSON.stringify(results)
+                        var resultados=JSON.parse(string);
+                        resolve(resultados)
+                    })
                 })
+            }
+            const UpdatePasswordCliente = ( data)  => {
+                console.log("data",data)
+                return new Promise((resolve,reject)=>{
+                    bcrypt.genSalt(SALT_WORK_FACTOR,function(error,salt){
+                        if (error){    
+                             reject(error,{message:'error',token:error})
+                        } else{
+                            bcrypt.hash(data[1],salt, function(error,hash){
+                                if(error){
+                                   throw error
+                                } else{
+                                    client.query(`update clientesads set contraseña = '${hash}' where id_cliente  = '${data[0]}'`)
+                                    resolve({message:"actualización exitosa"})
+                                }
+                            })
+                        }
                
-            })
-        }
+                    })
+                   
+                })
+            }
         
 
 module.exports={
