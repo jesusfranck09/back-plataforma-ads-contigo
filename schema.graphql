@@ -256,8 +256,7 @@ type getIdCotizacion{
    servicio:String,
    precio:String, 
    iva:String,
-   total:String,
-   promocion:String, 
+   total:String,   
    vendedor:String,
    fecha:String,   
    fk_adminalfa:String,
@@ -269,8 +268,7 @@ type getIdCotizacion{
 type getCotizacionesTabla{
     id_cotizaciones:String 
     fechaEmision:String
-    NumFolio:String
-    promocion:String
+    NumFolio:String    
     cantidad:String
     descuento:String
     descuentoAplicado:String
@@ -293,8 +291,7 @@ type getCotizacionesTabla{
 type insertCotizaciones{
   id_cotizaciones:String,
    fechaEmision:String,
-   NumFolio:String,
-   promocion:String,
+   NumFolio:String,   
    cantidad:String,
    descuento:String,
    descuentoAplicado:String,
