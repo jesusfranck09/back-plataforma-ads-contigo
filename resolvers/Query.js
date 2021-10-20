@@ -112,8 +112,14 @@ const loginClientes   =  (_ , data) =>{
     var variable = cadena.split(",")
 return actions.LoginClientes(variable)
 }
+const getCotizacionByFolio   =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.getCotizacionByFolio(variable)
+}
 
 module.exports={
+    getCotizacionByFolio,
     getClienteByCorreo,
     loginClientes,
     getCotizacionFk_Contactos,

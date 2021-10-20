@@ -43,7 +43,26 @@ getContactosId(data:[String]!):[getContactosId]
 getCotizacionFk_Contactos(data:[String]!):[getContactosId]
 getClienteByCorreo(data:[String]!):[getTablaClientesAlfa]
 loginClientes(data:[String]!):getTablaClientesAlfa
+getCotizacionByFolio(data:[String]!):[getCotizacionByFolio]
 }
+
+type getCotizacionByFolio{
+   id_cotizaciones:String,
+   fechaEmision:String,
+   NumFolio:String,   
+   cantidad:String,
+   descuento:String,
+   descuentoAplicado:String,
+   TotalPrecioProducto:String,
+   fk_cliente:String,
+   fk_productoServicio:String,
+   fk_adminalfa:String,
+   fk_empresa:String,   
+   fechaExpiracion:String, 
+   fk_contacto:String,
+   tipoSolicitud:String
+}
+
 type getContactosId{
     id_contacto:String,
     nombre:String,
@@ -241,6 +260,9 @@ type getClienteRFC {
    id_cliente:String
     razonSocial:String
     rfc:String
+    telefono:String
+    correo:String
+    nombreRepresentante:String
 }
 
 type getIdCotizacion{
