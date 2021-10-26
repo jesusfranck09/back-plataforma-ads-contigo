@@ -60,7 +60,15 @@ type getCotizacionByFolio{
    fk_empresa:String,   
    fechaExpiracion:String, 
    fk_contacto:String,
-   tipoSolicitud:String
+   tipoSolicitud:String,
+   id_productoServicio:String,
+   tipo:String,
+   tipoLicenciamiento:String
+   LineaProducto:String,
+   concepto:String,
+   precio:String,
+   consecutivo:String
+   
 }
 
 type getContactosId{

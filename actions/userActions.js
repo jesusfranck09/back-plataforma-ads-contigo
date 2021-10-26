@@ -578,9 +578,8 @@ const downloadsFolder = require('downloads-folder');
     }
 
     const getCotizacionByFolio = ( data)  => {
-        console.log("esto es getCotizacionByFolio",data)
-        return new Promise((resolve,reject)=>{                    
-            client.query(`select * from cotizaciones where NumFolio='${data[0]}'`, function (err,result,fields ) {                        
+        return new Promise((resolve,reject)=>{
+            client.query(`select * from cotizaciones inner join productoservicio on cotizaciones.fk_productoservicio = productoservicio.id_productoservicio where cotizaciones.NumFolio='${data[0]}'`, function (err,result,fields ) {                        
                 var string = JSON.stringify(result)
                 var resultados=JSON.parse(string); 
                 console.log("resultados",resultados)                     
