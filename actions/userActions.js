@@ -444,7 +444,7 @@ const downloadsFolder = require('downloads-folder');
                         if(error){
                             throw error
                         } else{
-                            client.query(`update clientesads set acceso = "true", contraseña = '${hash}' where  id_cliente = '${data[0]}'`)     
+                            client.query(`update clientesads set acceso = "true", contraseña = '${hash}', fk_contactoAcceso = '${data[2]}'  where  id_cliente = '${data[0]}'`)     
                             var transporter = nodemailer.createTransport({  
                                 secure: false,
                                 host: 'mail.diagnostico035.com',
@@ -557,7 +557,6 @@ const downloadsFolder = require('downloads-folder');
     }
 
     const UpdatePasswordCliente = ( data)  => {
-        console.log("data",data)
         return new Promise((resolve,reject)=>{
             bcrypt.genSalt(SALT_WORK_FACTOR,function(error,salt){
                 if (error){    
@@ -587,9 +586,16 @@ const downloadsFolder = require('downloads-folder');
             }) 
         })
     }
+    const QuitarAccesoSistema = ( data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`update clientesads set acceso = 'false' where id_cliente  = '${data[0]}'`)
+            resolve({message:"acceso removido"})
+        })
+    }
         
 
 module.exports={
+    QuitarAccesoSistema,
     getCotizacionByFolio,
     UpdatePasswordCliente,
     GetClienteByCorreo,

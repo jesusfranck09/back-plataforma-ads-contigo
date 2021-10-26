@@ -106,9 +106,15 @@ const actions = require('../actions/userActions')
         var variable = cadena.split(",")
         return actions.UpdatePasswordCliente(variable)    
     }
+    const quitarAccesoSistema  =  (_ , data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.QuitarAccesoSistema(variable)    
+    }
 
 
 module.exports={
+    quitarAccesoSistema,
     updatePasswordCliente,
     transactionClientes,
     accesoSistema,

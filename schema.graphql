@@ -19,6 +19,7 @@ type Mutation {
      accesoSistema(data:[String]!):message
      transactionClientes(data:[String]!):message
      updatePasswordCliente(data:[String]!):message
+     quitarAccesoSistema(data:[String]!):message
    
 }
 
@@ -130,6 +131,7 @@ type getTablaContactos{
     telefono2:String,
     puesto:String,
     message:String
+    fk_clientesads:String
 }
 
 type getIdClientesAlfa{
