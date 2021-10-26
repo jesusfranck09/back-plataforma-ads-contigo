@@ -241,7 +241,7 @@ const downloadsFolder = require('downloads-folder');
 
     const insertClientesAlfa = (data)=> { 
         return new Promise((resolve,reject)=>{ 
-            client.query(`insert into clientesads(rfc,razonSocial,tamanoEmpresa,giroEmpresarial,telefono,domicilioFiscal,paginaWeb,acceso,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','false','${data[7]}')`) 
+            client.query(`insert into clientesads(rfc,razonSocial,tamanoEmpresa,giroEmpresarial,domicilioFiscal,paginaWeb,acceso,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','false','${data[6]}')`) 
             resolve({message:"registro exitoso"})            
         })
     }

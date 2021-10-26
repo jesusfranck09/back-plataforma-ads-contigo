@@ -174,7 +174,6 @@ type insertClientesAlfa{
      razonSocial:String,
      tamanoEmpresa:String,
      giroEmpresarial:String,
-     telefono:String,
      paginaWeb:String,
      domicilioFiscal:String,
      fk_empresa:String, 
