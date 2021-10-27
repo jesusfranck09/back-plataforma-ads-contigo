@@ -177,7 +177,7 @@ const downloadsFolder = require('downloads-folder');
   
     const getClienteRFC = ( data)  => {
         return new Promise((resolve,reject)=>{                    
-            client.query(`select * from clientesads where rfc='${data[0]}' OR razonSocial='${data[0]}' OR correo='${data[0]}' OR telefono='${data[0]}'`, function (err,result,fields ) {                        
+            client.query(`select * from clientesads where rfc='${data[0]}' OR razonSocial='${data[0]}'`, function (err,result,fields ) {                        
                 var string = JSON.stringify(result)
                 var resultados=JSON.parse(string);                      
                 resolve(resultados) 
