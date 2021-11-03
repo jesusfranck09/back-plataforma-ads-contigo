@@ -20,6 +20,7 @@ type Mutation {
      transactionClientes(data:[String]!):message
      updatePasswordCliente(data:[String]!):message
      quitarAccesoSistema(data:[String]!):message
+     insertURLVideos(data:[String]!):insertURLVideos
    
 }
 
@@ -46,6 +47,12 @@ getClienteByCorreo(data:[String]!):[getTablaClientesAlfa]
 loginClientes(data:[String]!):getTablaClientesAlfa
 getCotizacionByFolio(data:[String]!):[getCotizacionByFolio]
 }
+type insertURLVideos{
+    descripcion:String,
+    autor:String,
+    urlVideos:String,
+    fechaExpiracion:String
+    }
 
 type getCotizacionByFolio{
    id_cotizaciones:String,

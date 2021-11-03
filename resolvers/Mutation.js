@@ -111,9 +111,15 @@ const actions = require('../actions/userActions')
         var variable = cadena.split(",")
         return actions.QuitarAccesoSistema(variable)    
     }
+    const insertURLVideos  =  (_ , data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.insertURLVideos(variable)    
+    }
 
 
 module.exports={
+    insertURLVideos,
     quitarAccesoSistema,
     updatePasswordCliente,
     transactionClientes,

@@ -592,9 +592,27 @@ const downloadsFolder = require('downloads-folder');
             client.query(`update clientesads set acceso = 'false' where id_cliente  = '${data[0]}'`)
             resolve({message:"acceso removido"})
         })
-    }        
+    }   
+    const insertURLVideos = (data)=> { 
+        return new Promise((resolve,reject)=>{ 
+            client.query(`insert into videosPrivados(descripcion,autor,urlVideos,fechaExpiracion,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}')`) 
+            resolve({message:"registro exitoso"})            
+        })
+    }
+    
+    // const GetURLVideos = ( data)  => {
+    //     return new Promise((resolve,reject)=>{
+    //         client.query(`select * from videosPrivados where id_admin ='${data[0]}'`, function (err,results,fields ) {                
+    //             var string = JSON.stringify(results)
+    //             var resultados=JSON.parse(string);
+    //             console.log("resultados",resultados)
+    //             resolve(resultados)
+    //         })
+    //     })
+    // }     
 
 module.exports={
+    insertURLVideos,
     QuitarAccesoSistema,
     getCotizacionByFolio,
     UpdatePasswordCliente,
