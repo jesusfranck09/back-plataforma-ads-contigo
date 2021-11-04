@@ -117,8 +117,14 @@ const getCotizacionByFolio   =  (_ , data) =>{
     var variable = cadena.split(",")
 return actions.getCotizacionByFolio(variable)
 }
+const getAdminAlfa  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.GetAdminAlfa(variable)
+}
 
 module.exports={
+    getAdminAlfa,
     getCotizacionByFolio,
     getClienteByCorreo,
     loginClientes,

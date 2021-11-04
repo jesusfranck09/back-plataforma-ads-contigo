@@ -20,6 +20,7 @@ type Mutation {
      transactionClientes(data:[String]!):message
      updatePasswordCliente(data:[String]!):message
      quitarAccesoSistema(data:[String]!):message
+     registerSupport(data:[String]!):message
      insertURLVideos(data:[String]!):insertURLVideos
    
 }
@@ -46,12 +47,18 @@ getCotizacionFk_Contactos(data:[String]!):[getContactosId]
 getClienteByCorreo(data:[String]!):[getTablaClientesAlfa]
 loginClientes(data:[String]!):getTablaClientesAlfa
 getCotizacionByFolio(data:[String]!):[getCotizacionByFolio]
+getAdminAlfa(data:[String]!):[loginAdminAlfa]
 }
-type insertURLVideos{
-    descripcion:String,
-    autor:String,
-    urlVideos:String,
-    fechaExpiracion:String
+type insertURLVideos{   
+    id_videos:String 
+     descripcion:String 
+     autor:String 
+     urlVideos:String,
+     fechaInicio:String,
+     fechaExpiracion:String,
+     fk_empresa:String,
+     message:String,
+    
     }
 
 type getCotizacionByFolio{
@@ -139,6 +146,7 @@ type getTablaContactos{
     puesto:String,
     message:String
     fk_clientesads:String
+    fk_contactoAcceso:String
 }
 
 type getIdClientesAlfa{
@@ -148,6 +156,8 @@ type getIdClientesAlfa{
 }
 
 type getTablaClientesAlfa{
+    nombreRepresantante:String
+    apellidosRepresantante:String  
     message:String,
     id_cliente:String,
     rfc:String,
@@ -160,6 +170,7 @@ type getTablaClientesAlfa{
     paginaWeb:String
     domicilioFiscal:String
     acceso:String,
+    fk_contactoAcceso:String
     token:String
 }
 
@@ -302,6 +313,7 @@ type getIdCotizacion{
 
 type getCotizacionesTabla{
     id_cotizaciones:String 
+    promocion:String
     fechaEmision:String
     NumFolio:String    
     cantidad:String
@@ -319,6 +331,7 @@ type getCotizacionesTabla{
     concepto:String
     message:String
     fechaExpiracion:String
+    fk_adminalfa:String
     fk_contacto:String
 }
 
@@ -378,7 +391,7 @@ type signupEmpresas{
     message:String
 }
 
-type loginAdminAlfa{
+type loginAdminAlfa{ 
     id_admin:String,
     nombre:String,
     apellido:String,
@@ -386,6 +399,7 @@ type loginAdminAlfa{
     telefono:String,
     extensionTelefonica:String,
     puesto:String,
+    celular:String,
     token:String,
     message:String,
     fk_empresa:String

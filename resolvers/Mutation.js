@@ -111,14 +111,21 @@ const actions = require('../actions/userActions')
         var variable = cadena.split(",")
         return actions.QuitarAccesoSistema(variable)    
     }
+    const registerSupport  =  (_ , data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.RegisterSupport(variable)    
+    }
     const insertURLVideos  =  (_ , data) =>{
         var cadena= data.data[0]
         var variable = cadena.split(",")
+        console.log("estos es variable", variable)
         return actions.insertURLVideos(variable)    
     }
 
 
 module.exports={
+    registerSupport,
     insertURLVideos,
     quitarAccesoSistema,
     updatePasswordCliente,
