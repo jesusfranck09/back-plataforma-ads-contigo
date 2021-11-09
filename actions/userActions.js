@@ -618,25 +618,26 @@ const downloadsFolder = require('downloads-folder');
         })
     }   
     const insertURLVideos = (data)=> { 
-        console.log("esta es la data",data)
-        return new Promise((resolve,reject)=>{ 
-            client.query(`insert into videosprivados(descripcion,autor,urlVideos,fechaInicio,fechaExpiracion,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}')`) 
-            resolve({message:"registro exitoso"})            
-        })
-    }
+            console.log("esta es la data",data)
+            return new Promise((resolve,reject)=>{ 
+                client.query(`insert into videosprivados(descripcion,autor,urlVideos,fechaInicio,fechaExpiracion,statusVideo,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','true','${data[5]}')`) 
+                resolve({message:"registro exitoso"})            
+            })
+        }
     
-    // const GetURLVideos = ( data)  => {
-    //     return new Promise((resolve,reject)=>{
-    //         client.query(`select * from videosPrivados where id_admin ='${data[0]}'`, function (err,results,fields ) {                
-    //             var string = JSON.stringify(results)
-    //             var resultados=JSON.parse(string);
-    //             console.log("resultados",resultados)
-    //             resolve(resultados)
-    //         })
-    //     })
-    // }     
+    const getURLVideos = ( data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`select * from videosPrivados`, function (err,results,fields ) {                
+                var string = JSON.stringify(results)
+                var resultados=JSON.parse(string);
+                console.log("resultados",resultados)
+                resolve(resultados)
+            })
+        })
+    }    
 
 module.exports={
+    getURLVideos,
     insertURLVideos,
     QuitarAccesoSistema,
     getCotizacionByFolio,

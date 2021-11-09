@@ -48,17 +48,29 @@ getClienteByCorreo(data:[String]!):[getTablaClientesAlfa]
 loginClientes(data:[String]!):getTablaClientesAlfa
 getCotizacionByFolio(data:[String]!):[getCotizacionByFolio]
 getAdminAlfa(data:[String]!):[loginAdminAlfa]
+getURLVideos(data:[String]!):[getURLVideos]
 }
-type insertURLVideos{   
-    id_videos:String 
-     descripcion:String 
-     autor:String 
+type getURLVideos{
+    id_videos:String, 
+     descripcion:String,
+     autor:String, 
      urlVideos:String,
      fechaInicio:String,
      fechaExpiracion:String,
+     statusVideo:String,
      fk_empresa:String,
-     message:String,
-    
+     message:String   
+}
+type insertURLVideos{   
+    id_videos:String ,
+     descripcion:String ,
+     autor:String, 
+     urlVideos:String,
+     fechaInicio:String,
+     fechaExpiracion:String,
+     statusVideo:String,
+     fk_empresa:String,
+     message:String    
     }
 
 type getCotizacionByFolio{
