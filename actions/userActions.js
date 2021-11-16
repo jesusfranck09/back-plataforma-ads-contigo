@@ -508,6 +508,7 @@ const downloadsFolder = require('downloads-folder');
                     }
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);
+                console.log("resultados",resultados)
                 if(resultados[0]){
                     client.query(`select * from clientesads where acceso = 'true' and id_cliente = '${resultados[0].fk_clientesads}'`,function(error,result,fields){
                         let string2 = JSON.stringify(result)
@@ -519,13 +520,14 @@ const downloadsFolder = require('downloads-folder');
                                 correo:resultados[0].correo1,
                                 rfc:resultados2[0].rfc,
                                 razonSocial:resultados2[0].razonSocial,
+                                fk_empresa:resultados2[0].fk_empresa,
                                 nombreRepresantante:resultados[0].nombre,
                                 apellidosRepresantante:resultados[0].apellidos,
                                 tamanoEmpresa:resultados2[0].tamanoEmpresa,
                                 giroEmpresarial:resultados2[0].giroEmpresarial,
                                 telefono:resultados2[0].telefono,
                                 paginaWeb:resultados2[0].paginaWeb,
-                                domicilioFiscal:resultados2[0].domicilioFiscal,
+                                domicilioFiscal:resultados2[0].domicilioFiscal,                               
                                 message:"login exitoso",
                                 token:jsonwebtoken(resultados2[0].correo) 
                         })
@@ -600,7 +602,10 @@ const downloadsFolder = require('downloads-folder');
 
     const getCotizacionByFolio = ( data)  => {
         return new Promise((resolve,reject)=>{
-            client.query(`select * from cotizaciones inner join productoservicio on cotizaciones.fk_productoservicio = productoservicio.id_productoservicio where cotizaciones.NumFolio='${data[0]}'`, function (err,result,fields ) {                        
+            client.query(`select * from cotizaciones inner join productoservicio on cotizaciones.fk_productoservicio = productoservicio.id_productoservicio 
+            inner join contacto on cotizaciones.fk_contacto = contacto.id_contacto
+            inner join clientesads on cotizaciones.fk_cliente = clientesads.id_cliente
+            where cotizaciones.NumFolio='${data[0]}'`, function (err,result,fields ) {                        
                 var string = JSON.stringify(result)
                 var resultados=JSON.parse(string); 
                 // console.log("resultados",resultados)                     
@@ -627,7 +632,7 @@ const downloadsFolder = require('downloads-folder');
     
     const getURLVideos = ( data)  => {
         return new Promise((resolve,reject)=>{
-            client.query(`select * from videosPrivados`, function (err,results,fields ) {                
+            client.query(`select * from videosPrivados where fk_empresa='${data[0]}'`, function (err,results,fields ) {                
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);
                 console.log("resultados",resultados)

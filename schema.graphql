@@ -94,7 +94,20 @@ type getCotizacionByFolio{
    LineaProducto:String,
    concepto:String,
    precio:String,
-   consecutivo:String
+   consecutivo:String,
+   id_contacto:String,
+   nombre:String,
+   apellidos:String,
+   correo1:String,
+   correo2:String
+   telefono1:String,
+   extensionTelefonica:String,
+   telefono2:String,
+   puesto:String,
+   rfc:String,
+   razonSocial:String
+
+
    
 }
 
@@ -174,7 +187,7 @@ type getTablaClientesAlfa{
     id_cliente:String,
     rfc:String,
     razonSocial:String,
-    fk_empresa:String
+    fk_empresa:String,
     tamanoEmpresa:String
     giroEmpresarial:String
     correo:String

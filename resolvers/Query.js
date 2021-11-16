@@ -58,6 +58,7 @@ const getProductoServicio   =  (_ , data) =>{
 const getTablaClientesAlfa   =  (_ , data) =>{
     var cadena= data.data[0]
     var variable = cadena.split(",")
+    console.log("esto es variable",variable)
  return actions.getTablaClientesAlfa(variable)
 }
 
