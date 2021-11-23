@@ -22,7 +22,7 @@ type Mutation {
      quitarAccesoSistema(data:[String]!):message
      registerSupport(data:[String]!):message
      insertURLVideos(data:[String]!):insertURLVideos
-   
+     insertVenta(data:[String]!):insertVenta   
 }
 
 type Query{
@@ -50,6 +50,28 @@ getCotizacionByFolio(data:[String]!):[getCotizacionByFolio]
 getAdminAlfa(data:[String]!):[loginAdminAlfa]
 getURLVideos(data:[String]!):[getURLVideos]
 }
+type insertVenta{
+    id_registroVentas:String,
+    numFolio:String,
+    cantidad:String,
+    descuento:String,
+    descuentoAplicado:String,
+    TotalPrecioProducto:String,
+    fechaPago:String, 
+    banco:String,
+    referenciaPago:String,
+    tipoPago:String,
+    importe:String,
+    fechaInicialPoliza:String,
+    statusPoliza:String,
+    fk_productoServicio:String,
+    fk_cliente:String,
+    fk_adminalfa:String,
+    fk_empresa:String,
+    fk_contacto:String,
+    message:String
+}
+
 type getURLVideos{
     id_videos:String, 
      descripcion:String,
@@ -62,7 +84,7 @@ type getURLVideos{
      message:String   
 }
 type insertURLVideos{   
-    id_videos:String ,
+     id_videos:String ,
      descripcion:String ,
      autor:String, 
      urlVideos:String,
@@ -121,6 +143,7 @@ type getContactosId{
     extensionTelefonica:String,
     telefono2:String,
     puesto:String, 
+    tipoContacto:String,
     fk_clientesads:String, 
     message:String
 }
@@ -134,7 +157,8 @@ type deliteContacto{
     telefono1:String,
     extensionTelefonica:String,
     telefono2:String,
-    puesto:String,  
+    puesto:String,
+    tipoContacto:String,  
     fk_clientesads:String,   
     message:String
 }
@@ -147,7 +171,8 @@ type updateContacto{
     telefono1:String,
     extensionTelefonica:String,
     telefono2:String,
-    puesto:String,     
+    puesto:String,   
+    tipoContacto:String,  
     message:String
 
 }
@@ -169,6 +194,7 @@ type getTablaContactos{
     extensionTelefonica:String
     telefono2:String,
     puesto:String,
+    tipoContacto:String
     message:String
     fk_clientesads:String
     fk_contactoAcceso:String
@@ -244,6 +270,7 @@ type insertContacto{
     extensionTelefonica:String,
     telefono2:String,
     puesto:String, 
+    tipoContacto:String,
     fk_clientesads:String, 
     message:String
 }

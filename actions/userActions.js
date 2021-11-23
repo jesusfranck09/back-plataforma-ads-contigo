@@ -227,7 +227,7 @@ const downloadsFolder = require('downloads-folder');
 
     const insertContacto = (data)=> { 
         return new Promise((resolve,reject)=>{
-            client.query(`insert into contacto(nombre,apellidos,correo1,correo2,telefono1,extensionTelefonica,telefono2,puesto,fk_clientesads) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}')`) 
+            client.query(`insert into contacto(nombre,apellidos,correo1,correo2,telefono1,extensionTelefonica,telefono2,puesto,tipoContacto,fk_clientesads) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}')`) 
             resolve({message:"registro exitoso"})
         })
     }  
@@ -385,7 +385,7 @@ const downloadsFolder = require('downloads-folder');
 
     const updateContacto = ( data)  => {
         return new Promise((resolve,reject)=>{
-            client.query(`update contacto set  nombre='${data[1]}',apellidos='${data[2]}',correo1='${data[3]}',correo2='${data[4]}',telefono1='${data[5]}',extensionTelefonica='${data[6]}',telefono2='${data[7]}',puesto='${data[8]}' where id_contacto='${data[0]}'`) 
+            client.query(`update contacto set  nombre='${data[1]}',apellidos='${data[2]}',correo1='${data[3]}',correo2='${data[4]}',telefono1='${data[5]}',extensionTelefonica='${data[6]}',telefono2='${data[7]}',puesto='${data[8]}',tipoContacto='${data[9]}' where id_contacto='${data[0]}'`) 
             resolve({message:"actualizacion exitosa"})
         })
     }
@@ -393,7 +393,8 @@ const downloadsFolder = require('downloads-folder');
     const deliteContacto   = ( data)  => {
         return new Promise((resolve,reject)=>{                        
             client.query(`delete from contacto where id_contacto='${data[0]}'`) 
-        })
+            // resolve({message:"Delite exitoso"})
+        })   
     }
 
     const CotizacionVencida   = ( data)  => {
@@ -639,9 +640,20 @@ const downloadsFolder = require('downloads-folder');
                 resolve(resultados)
             })
         })
-    }    
+    } 
+    
+    const insertVenta = (data)=> { 
+        console.log("esta es la data",data)
+        console.log("esto es data",data)
+        return new Promise((resolve,reject)=>{ 
+            client.query(`insert into registoVenta(id_registroVentas,numFolio,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,fechaPago,banco,referenciaPago,tipoPago,importe,fechaInicialPoliza,statusPoliza,fk_productoServicio,fk_cliente,fk_adminalfa,fk_empresa,fk_contacto) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[10]}','${data[11]}','${data[12]}','${data[13]}','${data[14]}','${data[15]}','${data[16]}')`) 
+            resolve({message:"registro exitoso"})            
+        })
+    }
+
 
 module.exports={
+    insertVenta,
     getURLVideos,
     insertURLVideos,
     QuitarAccesoSistema,
