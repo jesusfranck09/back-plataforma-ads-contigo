@@ -82,7 +82,7 @@ const actions = require('../actions/userActions')
 
     const deliteContacto  =  (_ , data) =>{
         var cadena= data.data[0]
-        var variable = cadena.split(",")
+        var variable = cadena.split(",")       
         return actions.deliteContacto(variable)    
     }
 

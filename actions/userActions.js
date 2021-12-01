@@ -147,7 +147,7 @@ const downloadsFolder = require('downloads-folder');
         }
 
     const insertCotizaciones = (data)=> { 
-        console.log("esto es data;",data)         
+        console.log("esto es data de cotizacion",data) 
         return new Promise( (resolve,reject)=>{  
             client.query(`insert into cotizaciones(fechaEmision,NumFolio,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,statusCotizacion,fk_cliente,fk_productoServicio,fk_adminalfa,fk_empresa,fechaExpiracion,vigencia,fk_contacto,tipoSolicitud) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','Enviada','${data[6]}','${data[7]}','${data[8]}','${data[9]}', '${data[10]}','activa','${data[11]}','${data[12]}')`);
             resolve({message:"registro exitoso"})
@@ -390,10 +390,10 @@ const downloadsFolder = require('downloads-folder');
         })
     }
 
-    const deliteContacto   = ( data)  => {
+    const deliteContacto  = ( data)  => {
         return new Promise((resolve,reject)=>{                        
             client.query(`delete from contacto where id_contacto='${data[0]}'`) 
-            // resolve({message:"Delite exitoso"})
+            // resolve({message:"delite exitoso"})
         })   
     }
 
