@@ -124,12 +124,20 @@ const actions = require('../actions/userActions')
     const insertVenta  =  (_ , data) =>{
         var cadena= data.data[0]
         var variable = cadena.split(",")
-        console.log("estos es variable", variable)
+        // console.log("estos es variable", variable)
+        return actions.insertVenta(variable)    
+    }
+
+    const ventas  =  (_ , data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        // console.log("estos es variable", variable)
         return actions.insertVenta(variable)    
     }
 
 
 module.exports={
+    ventas,
     insertVenta,
     registerSupport,
     insertURLVideos,

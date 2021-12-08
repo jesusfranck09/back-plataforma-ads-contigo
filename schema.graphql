@@ -22,7 +22,8 @@ type Mutation {
      quitarAccesoSistema(data:[String]!):message
      registerSupport(data:[String]!):message
      insertURLVideos(data:[String]!):insertURLVideos
-     insertVenta(data:[String]!):insertVenta   
+     insertVenta(data:[String]!):insertVenta 
+     ventas(data:[String]!):ventas
 }
 
 type Query{
@@ -50,25 +51,47 @@ getCotizacionByFolio(data:[String]!):[getCotizacionByFolio]
 getAdminAlfa(data:[String]!):[loginAdminAlfa]
 getURLVideos(data:[String]!):[getURLVideos]
 }
+
+ type ventas{
+    numFolio:String
+    cantidad:String
+    descuento:String
+    descuentoAplicado:String
+    TotalPrecioProducto:String
+    fechaPago:String
+    banco:String
+    referenciaPago:String
+    tipoPago:String
+    importe:String
+    fechaInicialPoliza:String
+    statusPoliza:String
+    fk_productoServicio:String
+    fk_cliente:String
+    fk_adminalfa:String
+    fk_empresa:String
+    fk_contacto:String
+    message:String
+ }
+
+ 
 type insertVenta{
-    id_registroVentas:String,
-    numFolio:String,
-    cantidad:String,
-    descuento:String,
-    descuentoAplicado:String,
-    TotalPrecioProducto:String,
-    fechaPago:String, 
-    banco:String,
-    referenciaPago:String,
-    tipoPago:String,
-    importe:String,
-    fechaInicialPoliza:String,
-    statusPoliza:String,
-    fk_productoServicio:String,
-    fk_cliente:String,
-    fk_adminalfa:String,
-    fk_empresa:String,
-    fk_contacto:String,
+   numFolio:String
+ cantidad:String
+ descuento:String
+ descuentoAplicado:String
+ TotalPrecioProducto:String
+ fechaPago:String
+ banco:String
+ referenciaPago:String
+ tipoPago:String
+ importe:String
+ fechaInicialPoliza:String
+ statusPoliza:String
+ fk_productoServicio:String
+ fk_cliente:String
+ fk_adminalfa:String
+ fk_empresa:String
+ fk_contacto:String
     message:String
 }
 
@@ -450,6 +473,7 @@ type loginAdminAlfa{
     correo:String,
     telefono:String,
     extensionTelefonica:String,
+    razonSocial:String,                          
     puesto:String,
     celular:String,
     token:String,

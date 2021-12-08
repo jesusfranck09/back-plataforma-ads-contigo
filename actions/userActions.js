@@ -5,6 +5,7 @@ const nodemailer = require("nodemailer")
 const {jsonwebtoken} = require('../utils/index');
 const SALT_WORK_FACTOR =10
 const downloadsFolder = require('downloads-folder');
+const { response } = require('express');
 
     const signupAlfa = (data) => {
     return new Promise((resolve,reject) =>{
@@ -65,17 +66,24 @@ const downloadsFolder = require('downloads-folder');
         if(resultados[0]){
             bcrypt.compare(data[1],resultados[0].contraseña,function(error,result){
                 if(result){
+                    client.query(`select * from empresas where id_empresa = '${resultados[0].fk_empresa}'`,function(err, resultEmpresa, fieldsEmpresa){
+                        var stringEmpresa =  JSON.stringify(resultEmpresa)
+                        var resultadosEmpresa = JSON.parse(stringEmpresa)
+                        // console.log("resultEmpresa",resultadosEmpresa)
                         resolve({
-                        id_admin:resultados[0].id_admin,
-                        nombre:resultados[0].nombre,
-                        apellido:resultados[0].apellido,                   
-                        correo:resultados[0].correo, 
-                        telefono:resultados[0].telefono,
-                        extensionTelefonica:resultados[0].extensionTelefonica,
-                        puesto:resultados[0].puesto,
-                        message:"login exitoso",
-                        token:jsonwebtoken(resultados[0].correo), //coreo data[0]]
-                        fk_empresa:resultados[0].fk_empresa,                  
+                            id_admin:resultados[0].id_admin,
+                            nombre:resultados[0].nombre,
+                            apellido:resultados[0].apellido,                   
+                            correo:resultados[0].correo, 
+                            telefono:resultados[0].telefono,
+                            extensionTelefonica:resultados[0].extensionTelefonica,
+                            puesto:resultados[0].puesto,
+                            message:"login exitoso",
+                            token:jsonwebtoken(resultados[0].correo), //coreo data[0]]
+                            fk_empresa:resultados[0].fk_empresa, 
+                            razonSocial:resultadosEmpresa[0].razonSocial
+
+                    })
                 })
                 } else{ 
                     resolve({message:"usuario y contraseña incorrecto", token:"no hay token"})
@@ -90,6 +98,8 @@ const downloadsFolder = require('downloads-folder');
     } )
 
     }
+
+    
 
     const loginEmpresas = async  data =>{
     return new Promise((resolve,reject) =>{  client.query(`select * from empresas where correo='${data[0]}'`,
@@ -149,7 +159,7 @@ const downloadsFolder = require('downloads-folder');
     const insertCotizaciones = (data)=> { 
         console.log("esto es data de cotizacion",data) 
         return new Promise( (resolve,reject)=>{  
-            client.query(`insert into cotizaciones(fechaEmision,NumFolio,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,statusCotizacion,fk_cliente,fk_productoServicio,fk_adminalfa,fk_empresa,fechaExpiracion,vigencia,fk_contacto,tipoSolicitud) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','Enviada','${data[6]}','${data[7]}','${data[8]}','${data[9]}', '${data[10]}','activa','${data[11]}','${data[12]}')`);
+            client.query(`insert into cotizaciones(fechaEmision,NumFolio,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,statusCotizacion,fk_cliente,fk_productoServicio,fk_adminalfa,fk_empresa,fechaExpiracion,vigencia,fk_contacto,tipoSolicitud) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','Enviada','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[10]}','activa','${data[11]}','${data[12]}')`);
             resolve({message:"registro exitoso"})
         })
     }
@@ -509,7 +519,7 @@ const downloadsFolder = require('downloads-folder');
                     }
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);
-                console.log("resultados",resultados)
+                // console.log("resultados",resultados)
                 if(resultados[0]){
                     client.query(`select * from clientesads where acceso = 'true' and id_cliente = '${resultados[0].fk_clientesads}'`,function(error,result,fields){
                         let string2 = JSON.stringify(result)
@@ -558,7 +568,7 @@ const downloadsFolder = require('downloads-folder');
             client.query(`select * from clientesads inner join contacto on contacto.fk_clientesads = clientesads.id_cliente where contacto.correo1='${data[0]}'`, function (err,results,fields ) {  
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);
-                console.log("resultados",resultados)              
+                // console.log("resultados",resultados)              
 
                 resolve(resultados)
             })
@@ -595,7 +605,7 @@ const downloadsFolder = require('downloads-folder');
             client.query(`select * from adminalfa where id_admin ='${data[0]}'`, function (err,results,fields ) {                
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);
-                console.log("resultados",resultados)
+                // console.log("resultados",resultados)
                 resolve(resultados)
             })
         })
@@ -618,13 +628,12 @@ const downloadsFolder = require('downloads-folder');
     const QuitarAccesoSistema = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`update clientesads set acceso = 'false', fk_contactoAcceso = ''  where id_cliente  = '${data[0]}'`)
-            client.query(`update contacto set contraseña = '' where  id_contacto = '${data[1]}'`)     
-
+            client.query(`update contacto set contraseña = '' where  id_contacto = '${data[1]}'`)  
             resolve({message:"acceso removido"})
         })
     }   
     const insertURLVideos = (data)=> { 
-            console.log("esta es la data",data)
+            // console.log("esta es la data",data)
             return new Promise((resolve,reject)=>{ 
                 client.query(`insert into videosprivados(descripcion,autor,urlVideos,fechaInicio,fechaExpiracion,statusVideo,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','true','${data[5]}')`) 
                 resolve({message:"registro exitoso"})            
@@ -636,23 +645,33 @@ const downloadsFolder = require('downloads-folder');
             client.query(`select * from videosPrivados where fk_empresa='${data[0]}'`, function (err,results,fields ) {                
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);
-                console.log("resultados",resultados)
+                // console.log("resultados",resultados)
                 resolve(resultados)
             })
         })
     } 
     
     const insertVenta = (data)=> { 
-        console.log("esta es la data",data)
         console.log("esto es data",data)
         return new Promise((resolve,reject)=>{ 
-            client.query(`insert into registoVenta(id_registroVentas,numFolio,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,fechaPago,banco,referenciaPago,tipoPago,importe,fechaInicialPoliza,statusPoliza,fk_productoServicio,fk_cliente,fk_adminalfa,fk_empresa,fk_contacto) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[10]}','${data[11]}','${data[12]}','${data[13]}','${data[14]}','${data[15]}','${data[16]}')`) 
-            resolve({message:"registro exitoso"})            
+            client.query(`insert into registroventas(numFolio,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,fechaPago,banco,referenciaPago,tipoPago,importe,fechaInicialPoliza,statusPoliza,fk_productoServicio,fk_cliente,fk_adminalfa,fk_empresa,fk_contacto) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[10]}','true','${data[11]}','${data[12]}','${data[13]}','${data[14]}','${data[15]}')`) 
+            resolve({message:"registro exitoso"})    
+                  
+        })
+       
+    }
+
+    const ventas = (data)=> { 
+        // console.log("esto es data de cotizacion",data) 
+        return new Promise( (resolve,reject)=>{  
+            client.query(`insert into ventas(numFolio,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,fechaPago,banco,referenciaPago,tipoPago,importe,fechaInicialPoliza,statusPoliza,fk_productoServicio,fk_cliente,fk_adminalfa,fk_empresa,fk_contacto) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[10]}','activa','${data[11]}','${data[12]}','${data[13]}','${data[14]}','${data[15]}')`);
+            resolve({message:"registro exitoso"})
         })
     }
 
 
 module.exports={
+    ventas,
     insertVenta,
     getURLVideos,
     insertURLVideos,
