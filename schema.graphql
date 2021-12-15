@@ -22,8 +22,10 @@ type Mutation {
      quitarAccesoSistema(data:[String]!):message
      registerSupport(data:[String]!):message
      insertURLVideos(data:[String]!):insertURLVideos
-     insertVenta(data:[String]!):insertVenta 
+    #  insertVenta(data:[String]!):insertVenta
      ventas(data:[String]!):ventas
+     insertTotalesVenta(data:[String]!):insertTotalesVenta
+
 }
 
 type Query{
@@ -51,49 +53,55 @@ getCotizacionByFolio(data:[String]!):[getCotizacionByFolio]
 getAdminAlfa(data:[String]!):[loginAdminAlfa]
 getURLVideos(data:[String]!):[getURLVideos]
 }
+ type insertTotalesVenta{
+     subTotal:String,
+     IVA:String,
+     total:String,
+     numFolioVEnta:String
+ }
 
- type ventas{
-    numFolio:String
-    cantidad:String
-    descuento:String
-    descuentoAplicado:String
-    TotalPrecioProducto:String
-    fechaPago:String
-    banco:String
-    referenciaPago:String
-    tipoPago:String
-    importe:String
-    fechaInicialPoliza:String
-    statusPoliza:String
-    fk_productoServicio:String
-    fk_cliente:String
-    fk_adminalfa:String
-    fk_empresa:String
-    fk_contacto:String
+ type ventas {
+    numFolio:String,
+    cantidad:String,
+    descuento:String,
+    descuentoAplicado:String,
+    TotalPrecioProducto:String,
+    fechaPago:String,
+    banco:String,
+    referenciaPago:String,
+    tipoPago:String,
+    importe:String,
+    fechaInicialPoliza:String,
+    statusPoliza:String,
+    fk_productoServicio:String,
+    fk_cliente:String,
+    fk_adminalfa:String,
+    fk_empresa:String,
+    fk_contacto:String,
     message:String
  }
 
  
-type insertVenta{
-   numFolio:String
- cantidad:String
- descuento:String
- descuentoAplicado:String
- TotalPrecioProducto:String
- fechaPago:String
- banco:String
- referenciaPago:String
- tipoPago:String
- importe:String
- fechaInicialPoliza:String
- statusPoliza:String
- fk_productoServicio:String
- fk_cliente:String
- fk_adminalfa:String
- fk_empresa:String
- fk_contacto:String
-    message:String
-}
+# type insertVenta{
+#    numFolio:String
+#  cantidad:String
+#  descuento:String
+#  descuentoAplicado:String
+#  TotalPrecioProducto:String
+#  fechaPago:String
+#  banco:String
+#  referenciaPago:String
+#  tipoPago:String
+#  importe:String
+#  fechaInicialPoliza:String
+#  statusPoliza:String
+#  fk_productoServicio:String
+#  fk_cliente:String
+#  fk_adminalfa:String
+#  fk_empresa:String
+#  fk_contacto:String
+#     message:String
+# }
 
 type getURLVideos{
     id_videos:String, 

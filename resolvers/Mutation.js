@@ -121,24 +121,32 @@ const actions = require('../actions/userActions')
         var variable = cadena.split(",")      
         return actions.insertURLVideos(variable)    
     }
-    const insertVenta  =  (_ , data) =>{
-        var cadena= data.data[0]
-        var variable = cadena.split(",")
-        // console.log("estos es variable", variable)
-        return actions.insertVenta(variable)    
-    }
+    // const insertVenta  =  (_ , data) =>{
+    //     var cadena= data.data[0]
+    //     var variable = cadena.split(",")
+    //     // console.log("estos es variable", variable)
+    //     return actions.insertVenta(variable)    
+    // }
 
     const ventas  =  (_ , data) =>{
         var cadena= data.data[0]
         var variable = cadena.split(",")
-        // console.log("estos es variable", variable)
-        return actions.insertVenta(variable)    
+        console.log("estos es variable", variable)
+        return actions.ventas(variable)    
+    }
+
+    const insertTotalesVenta =(_ , data)=>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        console.log("esto es variable",variable)
+        return actions.insertTotalesVenta(variable)
     }
 
 
 module.exports={
+    insertTotalesVenta,
     ventas,
-    insertVenta,
+    // insertVenta,
     registerSupport,
     insertURLVideos,
     quitarAccesoSistema,

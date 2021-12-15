@@ -594,6 +594,7 @@ const { response } = require('express');
             
         })
     }
+
     const RegisterSupport = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`insert into soporte (fechaSoporte,consola,numeroPoliza,asunto,fk_cliente) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}')`)
@@ -651,28 +652,33 @@ const { response } = require('express');
         })
     } 
     
-    const insertVenta = (data)=> { 
-        console.log("esto es data",data)
-        return new Promise((resolve,reject)=>{ 
-            client.query(`insert into registroventas(numFolio,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,fechaPago,banco,referenciaPago,tipoPago,importe,fechaInicialPoliza,statusPoliza,fk_productoServicio,fk_cliente,fk_adminalfa,fk_empresa,fk_contacto) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[10]}','true','${data[11]}','${data[12]}','${data[13]}','${data[14]}','${data[15]}')`) 
-            resolve({message:"registro exitoso"})    
-                  
-        })
-       
-    }
+    
 
-    const ventas = (data)=> { 
-        // console.log("esto es data de cotizacion",data) 
+    const ventas = (data)=> {        
+        // console.log("esto es data de ventas",`insert into ventas(numFolio,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,fechaPago,banco,referenciaPago,tipoPago,importe,fechaInicialPoliza,statusPoliza,fk_productoServicio,fk_cliente,fk_adminalfa,fk_empresa,fk_contacto) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[10]}','true', 'true','${data[11]}','${data[12]}','${data[13]}','${data[14]}')`) 
         return new Promise( (resolve,reject)=>{  
-            client.query(`insert into ventas(numFolio,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,fechaPago,banco,referenciaPago,tipoPago,importe,fechaInicialPoliza,statusPoliza,fk_productoServicio,fk_cliente,fk_adminalfa,fk_empresa,fk_contacto) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[10]}','activa','${data[11]}','${data[12]}','${data[13]}','${data[14]}','${data[15]}')`);
+            client.query(`insert into ventas(numFolio,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,fechaPago,banco,referenciaPago,tipoPago,importe,fechaInicialPoliza,statusPoliza,fk_productoServicio,fk_cliente,fk_adminalfa,fk_empresa,fk_contacto) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}','true', 'true','${data[10]}','${data[11]}','${data[12]}','${data[13]}','${data[14]}')`);
             resolve({message:"registro exitoso"})
         })
     }
 
+     
+
+       const insertTotalesVenta = ( data)  => {
+        return new Promise((resolve,reject)=>{
+            // client.query(`select MAX(id_cotizaciones) as maxid from cotizaciones`,function(err,results,fields){
+            //     var string =JSON.stringify(results)
+            //     var resultados = JSON.parse(string);   
+            // })
+            client.query(`insert into totalVenta(subTotal,IVA,total,numFolioVEnta) values('${data[1]}','${data[2]}','${data[3]}','${data[0]}')`)
+
+        })
+    } 
+
 
 module.exports={
+    insertTotalesVenta,
     ventas,
-    insertVenta,
     getURLVideos,
     insertURLVideos,
     QuitarAccesoSistema,
