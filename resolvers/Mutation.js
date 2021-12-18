@@ -131,14 +131,14 @@ const actions = require('../actions/userActions')
     const ventas  =  (_ , data) =>{
         var cadena= data.data[0]
         var variable = cadena.split(",")
-        console.log("estos es variable", variable)
+        // console.log("estos es variable", variable)
         return actions.ventas(variable)    
     }
 
     const insertTotalesVenta =(_ , data)=>{
         var cadena= data.data[0]
         var variable = cadena.split(",")
-        console.log("esto es variable",variable)
+        // console.log("esto es variable",variable)
         return actions.insertTotalesVenta(variable)
     }
 

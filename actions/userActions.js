@@ -157,7 +157,7 @@ const { response } = require('express');
         }
 
     const insertCotizaciones = (data)=> { 
-        console.log("esto es data de cotizacion",data) 
+        // console.log("esto es data de cotizacion",data) 
         return new Promise( (resolve,reject)=>{  
             client.query(`insert into cotizaciones(fechaEmision,NumFolio,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,statusCotizacion,fk_cliente,fk_productoServicio,fk_adminalfa,fk_empresa,fechaExpiracion,vigencia,fk_contacto,tipoSolicitud) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','Enviada','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[10]}','activa','${data[11]}','${data[12]}')`);
             resolve({message:"registro exitoso"})
@@ -225,16 +225,7 @@ const { response } = require('express');
         })
         }
 
-    const  getTablaProductoServicio  = ( data)  => {
-        return new Promise((resolve,reject)=>{                                
-            client.query(`select * from productoServicio`,  function (err,result,fields ) {                                    
-                var string = JSON.stringify(result)
-                var resultados=JSON.parse(string);                                
-                resolve(resultados)                                    
-            }) 
-        })
-    }   
-
+  
     const insertContacto = (data)=> { 
         return new Promise((resolve,reject)=>{
             client.query(`insert into contacto(nombre,apellidos,correo1,correo2,telefono1,extensionTelefonica,telefono2,puesto,tipoContacto,fk_clientesads) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}')`) 
@@ -242,12 +233,39 @@ const { response } = require('express');
         })
     }  
 
+    // const insertProductoServicio = (data)=> { 
+    //     return new Promise((resolve,reject)=>{                                  
+    //         client.query(`insert into productoServicio(tipo,concepto,precio,consecutivo,tipoLicenciamiento,LineaProducto) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}')`) 
+    //     resolve({message:"registro exitoso"})
+    //     })
+    // } 
+    // const getTablaProductoServicio  = ( data)  => {
+    //     return new Promise((resolve,reject)=>{                                
+    //         client.query(`select * from productoServicio`,  function (err,result,fields ) {                                    
+    //             var string = JSON.stringify(result)
+    //             var resultados=JSON.parse(string);                                
+    //             resolve(resultados)                                    
+    //         }) 
+    //     })
+    // }   
+
     const insertProductoServicio = (data)=> { 
         return new Promise((resolve,reject)=>{                                  
-            client.query(`insert into productoServicio(tipo,concepto,precio,consecutivo,tipoLicenciamiento,LineaProducto) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}')`) 
+            client.query(`insert into productoServicio(tipo,concepto,precio,consecutivo,tipoLicenciamiento,LineaProducto,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}')`) 
         resolve({message:"registro exitoso"})
         })
     }
+
+    const getTablaProductoServicio  = ( data)  => {
+        return new Promise((resolve,reject)=>{                                
+            client.query(`select * from productoServicio where fk_empresa ='${data[0]}'`,  function (err,result,fields ) {                                    
+                var string = JSON.stringify(result)
+                var resultados=JSON.parse(string);                                
+                resolve(resultados)                                    
+            }) 
+        })
+    }   
+
 
     const insertClientesAlfa = (data)=> { 
         return new Promise((resolve,reject)=>{ 
@@ -511,7 +529,7 @@ const { response } = require('express');
             }
         
     const LoginClientes = ( data)  => {
-        console.log("data",data)
+        // console.log("data",data)
         return new Promise((resolve,reject) =>{ 
             client.query(`select * from contacto where correo1= '${data[0]}'`,
                 function(err,results,field){
@@ -665,12 +683,13 @@ const { response } = require('express');
      
 
        const insertTotalesVenta = ( data)  => {
+        //    console.log("ttalesVenta",data)
         return new Promise((resolve,reject)=>{
             // client.query(`select MAX(id_cotizaciones) as maxid from cotizaciones`,function(err,results,fields){
             //     var string =JSON.stringify(results)
             //     var resultados = JSON.parse(string);   
             // })
-            client.query(`insert into totalVenta(subTotal,IVA,total,numFolioVEnta) values('${data[1]}','${data[2]}','${data[3]}','${data[0]}')`)
+            client.query(`insert into totalVenta(subTotal,IVA,total,numFolioVenta) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}')`);
 
         })
     } 

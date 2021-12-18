@@ -77,6 +77,7 @@ const getTablaContactos  =  (_ , data) =>{
 const getProductoServicioByFolio   =  (_ , data) =>{
     var cadena= data.data[0]
     var variable = cadena.split(",")
+    conosle.log("variable",variable)
 return actions.GetProductoServicioByFolio(variable)
 }
 

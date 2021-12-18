@@ -57,7 +57,8 @@ getURLVideos(data:[String]!):[getURLVideos]
      subTotal:String,
      IVA:String,
      total:String,
-     numFolioVEnta:String
+     numFolioVenta:String,
+     message:String
  }
 
  type ventas {
@@ -288,6 +289,7 @@ type insertProductoServicio {
     consecutivo:String,
     tipoLicenciamiento:String,
     LineaProducto:String,
+    fk_empresa:String,
     message:String
 
 }
@@ -318,10 +320,11 @@ type getTablaProductoServicio{
     tipo:String,
     concepto:String,
     precio:String , 
+    fk_empresa:String,
     consecutivo:String
 }
 
-type updateCliente{ 
+type updateCliente{
    id_cliente:String,
     empresa:String,
     rfc:String,
