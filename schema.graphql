@@ -68,6 +68,7 @@ getURLVideos(data:[String]!):[getURLVideos]
     descuentoAplicado:String,
     TotalPrecioProducto:String,
     fechaPago:String,
+    hora:String,
     banco:String,
     referenciaPago:String,
     tipoPago:String,
@@ -281,17 +282,16 @@ type insertClientesAlfa{
      message:String
 }
 
-type insertProductoServicio {
-   id_productoServicio:String,
+type insertProductoServicio{
+    id_productoServicio:String,
     tipo:String,
     concepto:String,
-    precio:String , 
+    precio:String, 
     consecutivo:String,
     tipoLicenciamiento:String,
     LineaProducto:String,
     fk_empresa:String,
     message:String
-
 }
 
 type insertContacto{
