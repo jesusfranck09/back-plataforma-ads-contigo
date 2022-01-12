@@ -377,13 +377,13 @@ const { response } = require('express');
 
     const getProductoServicioByFolio = ( data)  => {
         console.log("data",data)
-        console.log("select * from cotizaciones inner join productoservicio on cotizaciones.fk_productoservicio = productoservicio.id_productoServicio  where cotizaciones.NumFolio =",data[0])
+        // console.log("select * from cotizaciones inner join productoservicio on cotizaciones.fk_productoservicio = productoservicio.id_productoServicio  where cotizaciones.NumFolio =",data[0])
         return new Promise((resolve,reject)=>{
             client.query(`select * from cotizaciones inner join productoservicio on cotizaciones.fk_productoservicio = productoservicio.id_productoServicio  where cotizaciones.NumFolio ='${data[0]}'`,function(err,results,fields){
                 var string =JSON.stringify(results)
                 var resultados = JSON.parse(string);
                 resolve(resultados)
-                conosle.log("esto es resultados",resultados)
+                // conosle.log("esto es resultados",resultados)
             })
         })
     }
