@@ -28,7 +28,7 @@ const getEmpresas =  (_ , data) =>{
 const getCotizacionesTabla  =  (_ , data) =>{
     var cadena= data.data[0]
     var variable = cadena.split(",")
- return actions.getCotizacionesTabla  (variable)
+ return actions.getCotizacionesTabla(variable)
 
 }
 

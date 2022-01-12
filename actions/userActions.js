@@ -176,11 +176,13 @@ const { response } = require('express');
     }
 
     const getIdCotizacion  = ( data)  => {
+        console.log("data",data)
         return new Promise((resolve,reject)=>{
-            client.query(`select * from cotizaciones where fk_cliente='${data[0]}'` , function (err,results,fields ) {            
+            client.query(`select * from cotizaciones inner join clientesads on cotizaciones.fk_cliente= clientesads.id_cliente where fk_cliente='${data[0]}'` , function (err,results,fields ) {            
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);    
                 resolve(resultados)
+                console.log("resultados",resultados)
                 
             }) 
         })

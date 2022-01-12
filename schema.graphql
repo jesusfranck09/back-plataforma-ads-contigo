@@ -398,27 +398,27 @@ type getIdCotizacion{
 
 
 type getCotizacionesTabla{
-    id_cotizaciones:String 
-    promocion:String
-    fechaEmision:String
-    NumFolio:String    
-    cantidad:String
-    descuento:String
-    descuentoAplicado:String
-    TotalPrecioProducto:String
-    statusCotizacion:String   
-    subtotal:String
-    iva:String
-    total:String
-    empresa:String
-    rfc:String
-    fk_cliente:String
-    tipo:String
-    concepto:String
-    message:String
-    fechaExpiracion:String
-    fk_adminalfa:String
-    fk_contacto:String
+    id_cotizaciones:String, 
+    promocion:String,
+    fechaEmision:String,
+    NumFolio:String,   
+    cantidad:String,
+    descuento:String,
+    descuentoAplicado:String,
+    TotalPrecioProducto:String,
+    statusCotizacion:String,  
+    subtotal:String,
+    iva:String,
+    total:String,
+    empresa:String,
+    rfc:String,
+    fk_cliente:String,
+    tipo:String,
+    concepto:String,
+    message:String,
+    fechaExpiracion:String,
+    fk_adminalfa:String,
+    fk_contacto:String,
 }
 
 
