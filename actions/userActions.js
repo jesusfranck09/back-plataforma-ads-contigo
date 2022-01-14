@@ -681,9 +681,7 @@ const { response } = require('express');
     
 
     const ventas = (data)=> {   
-        // console.log("valor de data",data)     
-        // console.log("esto es data de ventas",`insert into ventas(numFolio,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,fechaPago,hora,banco,referenciaPago,tipoPago,importe,fechaInicialPoliza,statusPoliza,fk_productoServicio,fk_cliente,fk_adminalfa,fk_empresa,fk_contacto) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[10]}','true', 'true','${data[11]}','${data[12]}','${data[13]}','${data[14]}','${data[15]})`) 
-        return new Promise( (resolve,reject)=>{  
+         return new Promise( (resolve,reject)=>{  
             client.query(`insert into ventas(numFolio,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,ProductoPrecioUnitario,TotalPrecioProductoIVA,fechaPago,hora,banco,referenciaPago,tipoPago,importe,fechaInicialPoliza,statusPoliza,fk_productoServicio,fk_cliente,fk_adminalfa,fk_empresa,fk_contacto) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[10]}','${data[11]}','${data[12]}','true', 'true','${data[13]}','${data[14]}','${data[15]}','${data[16]}','${data[17]}')`);
             resolve({message:"registro exitoso"})
         })
