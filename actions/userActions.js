@@ -17,7 +17,7 @@ const { response } = require('express');
                     if(error){
                         throw error
                     } else{
-                        client.query(`insert into adminAlfa(nombre,apellido,correo,telefono,extensionTelefonica,celular,puesto,contraseña,fk_empresa) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${hash}','${data[8]}')`);                  
+                        client.query(`insert into adminAlfa(nombre,apellido,correo,telefono,extensionTelefonica,celular,puesto,contraseña,fk_empresa,fk_rolAdministrador) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${hash}','${data[8]}','${data[9]}')`);                  
                         resolve({           
                             message:"el registro en signup fue exitoso",
                         })
@@ -82,6 +82,7 @@ const { response } = require('express');
                             message:"login exitoso",
                             token:jsonwebtoken(resultados[0].correo), //coreo data[0]]
                             fk_empresa:resultados[0].fk_empresa, 
+                            fk_rolAdministrador:resultados[0].fk_rolAdministrador, 
                             razonSocial:resultadosEmpresa[0].razonSocial
 
                     })
@@ -683,7 +684,7 @@ const { response } = require('express');
         // console.log("valor de data",data)     
         // console.log("esto es data de ventas",`insert into ventas(numFolio,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,fechaPago,hora,banco,referenciaPago,tipoPago,importe,fechaInicialPoliza,statusPoliza,fk_productoServicio,fk_cliente,fk_adminalfa,fk_empresa,fk_contacto) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[10]}','true', 'true','${data[11]}','${data[12]}','${data[13]}','${data[14]}','${data[15]})`) 
         return new Promise( (resolve,reject)=>{  
-            client.query(`insert into ventas(numFolio,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,fechaPago,hora,banco,referenciaPago,tipoPago,importe,fechaInicialPoliza,statusPoliza,fk_productoServicio,fk_cliente,fk_adminalfa,fk_empresa,fk_contacto) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[10]}','true', 'true','${data[11]}','${data[12]}','${data[13]}','${data[14]}','${data[15]}')`);
+            client.query(`insert into ventas(numFolio,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,ProductoPrecioUnitario,TotalPrecioProductoIVA,fechaPago,hora,banco,referenciaPago,tipoPago,importe,fechaInicialPoliza,statusPoliza,fk_productoServicio,fk_cliente,fk_adminalfa,fk_empresa,fk_contacto) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[10]}','${data[11]}','${data[12]}','true', 'true','${data[13]}','${data[14]}','${data[15]}','${data[16]}','${data[17]}')`);
             resolve({message:"registro exitoso"})
         })
     }

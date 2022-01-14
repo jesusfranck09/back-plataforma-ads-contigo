@@ -67,6 +67,8 @@ getURLVideos(data:[String]!):[getURLVideos]
     descuento:String,
     descuentoAplicado:String,
     TotalPrecioProducto:String,
+    ProductoPrecioUnitario:String,
+    TotalPrecioProductoIVA:String,
     fechaPago:String,
     hora:String,
     banco:String,
@@ -490,6 +492,7 @@ type loginAdminAlfa{
     token:String,
     message:String,
     fk_empresa:String
+    fk_rolAdministrador:String
     
 }
 
