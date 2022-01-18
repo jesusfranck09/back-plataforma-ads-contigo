@@ -58,7 +58,6 @@ const getProductoServicio   =  (_ , data) =>{
 const getTablaClientesAlfa   =  (_ , data) =>{
     var cadena= data.data[0]
     var variable = cadena.split(",")
-    console.log("esto es variable",variable)
  return actions.getTablaClientesAlfa(variable)
 }
 
@@ -129,7 +128,20 @@ const getURLVideos  =  (_ , data) =>{
 return actions.getURLVideos(variable)
 }
 
+const getPolizas  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.GetPolizas(variable)
+}
+const getPoliza  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.GetPoliza(variable)
+}
+
 module.exports={
+    getPoliza,
+    getPolizas,
     getURLVideos,
     getAdminAlfa,
     getCotizacionByFolio,

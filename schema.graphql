@@ -25,7 +25,9 @@ type Mutation {
     #  insertVenta(data:[String]!):insertVenta
      ventas(data:[String]!):ventas
      insertTotalesVenta(data:[String]!):insertTotalesVenta
-
+     registerPoliza(data:[String]!):message
+     activarPoliza(data:[String]!):[message]
+     editarPoliza(data:[String]!):[message]
 }
 
 type Query{
@@ -52,6 +54,20 @@ loginClientes(data:[String]!):getTablaClientesAlfa
 getCotizacionByFolio(data:[String]!):[getCotizacionByFolio]
 getAdminAlfa(data:[String]!):[loginAdminAlfa]
 getURLVideos(data:[String]!):[getURLVideos]
+getPolizas(data:[String]!):[polizas]
+getPoliza(data:[String]!):[polizas]
+}
+
+type polizas {
+    fk_cliente:String
+    id_polizas:String
+    fechaInicial:String
+    statusPoliza:String
+    razonSocial:String
+    tipo:String
+    concepto:String
+    lineaProducto:String
+    rfc:String
 }
  type insertTotalesVenta{
      subTotal:String,

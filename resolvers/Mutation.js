@@ -15,7 +15,6 @@ const actions = require('../actions/userActions')
     const insertCotizaciones = (_,data) =>{
         var cadena = data.data[0]
         var variable = cadena.split(",")
-        console.log("esto es variable",variable)
     return actions.insertCotizaciones(variable)
         }
   
@@ -141,9 +140,29 @@ const actions = require('../actions/userActions')
         // console.log("esto es variable",variable)
         return actions.insertTotalesVenta(variable)
     }
-
+    const registerPoliza =(_ , data)=>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        // console.log("esto es variable",variable)
+        return actions.RegisterPoliza(variable)
+    }
+    const activarPoliza =(_ , data)=>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        // console.log("esto es variable",variable)
+        return actions.ActivarPoliza(variable)
+    }
+    const editarPoliza =(_ , data)=>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        // console.log("esto es variable",variable)
+        return actions.EditarPoliza(variable)
+    }
 
 module.exports={
+    editarPoliza,
+    activarPoliza,
+    registerPoliza,
     insertTotalesVenta,
     ventas,
     // insertVenta,

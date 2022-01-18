@@ -56,7 +56,6 @@ const { response } = require('express');
 
 
     const loginAdminAlfa  = async  data =>{ 
-        console.log("data de loginAlfa",data)
     return new Promise((resolve,reject) =>{ 
         client.query(`select * from adminAlfa where correo='${data[0]}'`,
             function(err,results,field){
@@ -182,9 +181,7 @@ const { response } = require('express');
             client.query(`select * from cotizaciones inner join clientesads on cotizaciones.fk_cliente= clientesads.id_cliente where fk_cliente='${data[0]}'` , function (err,results,fields ) {            
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);    
-                resolve(resultados)
-                console.log("resultados",resultados)
-                
+                resolve(resultados)                
             }) 
         })
     }
@@ -254,7 +251,6 @@ const { response } = require('express');
     // }   
 
     const insertProductoServicio = (data)=> { 
-        console.log("esto es data",data)
         return new Promise((resolve,reject)=>{                                  
             client.query(`insert into productoServicio(tipo,concepto,precio,consecutivo,tipoLicenciamiento,LineaProducto,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}')`) 
         resolve({message:"registro exitoso"})
@@ -379,7 +375,6 @@ const { response } = require('express');
     }
 
     const getProductoServicioByFolio = ( data)  => {
-        console.log("data",data)
         // console.log("select * from cotizaciones inner join productoservicio on cotizaciones.fk_productoservicio = productoservicio.id_productoServicio  where cotizaciones.NumFolio =",data[0])
         return new Promise((resolve,reject)=>{
             client.query(`select * from cotizaciones inner join productoservicio on cotizaciones.fk_productoservicio = productoservicio.id_productoServicio  where cotizaciones.NumFolio ='${data[0]}'`,function(err,results,fields){
@@ -672,7 +667,6 @@ const { response } = require('express');
             client.query(`select * from videosPrivados where fk_empresa='${data[0]}'`, function (err,results,fields ) {                
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);
-                // console.log("resultados",resultados)
                 resolve(resultados)
             })
         })
@@ -691,7 +685,6 @@ const { response } = require('express');
      
 
        const insertTotalesVenta = ( data)  => {
-           console.log("insertTotalesVenta",data)
         return new Promise((resolve,reject)=>{
             // client.query(`select MAX(id_cotizaciones) as maxid from cotizaciones`,function(err,results,fields){
             //     var string =JSON.stringify(results)
@@ -701,10 +694,50 @@ const { response } = require('express');
 
         })
     } 
-
-
+    const RegisterPoliza = ( data)  => {
+     return new Promise((resolve,reject)=>{
+        client.query(`insert into polizas (fechaInicial,statusPoliza,fk_productoServicio,fk_cliente,fk_contacto) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}')`)
+        resolve({message:"Registro exitoso"})
+     })
+    } 
+    const GetPolizas = ( data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`select * from polizas inner join clientesads on polizas.fk_cliente = clientesads.id_cliente inner join productoServicio on polizas.fk_productoServicio = productoServicio.id_productoServicio where clientesads.fk_empresa = '${data[0]}'`,function(err,results,fields){
+                var string = JSON.stringify(results)
+                var resultados=JSON.parse(string);
+                resolve(resultados)
+            })
+        })
+    } 
+    const ActivarPoliza = ( data)  => {
+        return new Promise((resolve,reject)=>{
+           client.query(`update polizas set fechaInicial = '${data[0]}', statusPoliza = 'activa' where id_polizas = '${data[1]}'`)
+           resolve({message:"Activacion exitosa"})
+        })
+    } 
+    const EditarPoliza = ( data)  => {
+        return new Promise((resolve,reject)=>{
+           client.query(`update polizas set fechaInicial = '${data[0]}', statusPoliza = 'activa' where id_polizas = '${data[1]}'`)
+           resolve({message:"Activacion exitosa"})
+        })
+    } 
+    const GetPoliza = ( data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`select * from polizas inner join productoServicio on polizas.fk_productoServicio = productoServicio.id_productoServicio where polizas.fk_cliente = '${data[0]}'`,function(err,results,fields){
+                var string = JSON.stringify(results)
+                var resultados=JSON.parse(string);
+                console.log("resultados poliza",resultados)
+                resolve(resultados)
+            })
+        })
+    } 
 module.exports={
-    insertTotalesVenta,
+    GetPoliza,
+    EditarPoliza,
+    ActivarPoliza,
+    GetPolizas,
+    RegisterPoliza,
+    RegisterPoliza,
     ventas,
     getURLVideos,
     insertURLVideos,
