@@ -675,7 +675,7 @@ const { response } = require('express');
     
 
     const ventas = (data)=> {   
-        // console.log("valor de data",data)     
+        console.log("valor de data venta",data)     
         // console.log("esto es data de ventas",`insert into ventas(numFolio,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,fechaPago,hora,banco,referenciaPago,tipoPago,importe,fechaInicialPoliza,statusPoliza,fk_productoServicio,fk_cliente,fk_adminalfa,fk_empresa,fk_contacto) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[10]}','${data[11]}','${data[12]}','true','${data[13]}','${data[14]}','${data[15]}','${data[16]}','${data[17]},'${data[18]}')`);
         return new Promise( (resolve,reject)=>{  
             client.query(`insert into ventas(numFolio,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,ProductoPrecioUnitario,TotalPrecioProductoIVA,fechaPago,hora,banco,referenciaPago,tipoPago,importe,fechaInicialPoliza,statusPoliza,fk_productoServicio,fk_cliente,fk_adminalfa,fk_empresa,fk_contacto)values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[10]}','${data[11]}','${data[12]}','true','${data[13]}','${data[14]}','${data[15]}','${data[16]}','${data[17]}','${data[18]}')`);
@@ -685,12 +685,13 @@ const { response } = require('express');
      
 
        const insertTotalesVenta = ( data)  => {
+           console.log("insertTotalesVenta",data)
         return new Promise((resolve,reject)=>{
             // client.query(`select MAX(id_cotizaciones) as maxid from cotizaciones`,function(err,results,fields){
             //     var string =JSON.stringify(results)
             //     var resultados = JSON.parse(string);   
             // })
-            client.query(`insert into totalVenta(subTotal,IVA,total,numFolioVenta) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}')`);
+            client.query(`insert into totalVenta(subTotal,IVA,total,numFolioVenta)values('${data[0]}','${data[1]}','${data[2]}','${data[3]}')`);
 
         })
     } 
@@ -732,6 +733,7 @@ const { response } = require('express');
         })
     } 
 module.exports={
+    insertTotalesVenta,
     GetPoliza,
     EditarPoliza,
     ActivarPoliza,
