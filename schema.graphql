@@ -91,7 +91,7 @@ type polizas {
     referenciaPago:String,
     tipoPago:String,
     importe:String,
-    fechaInicialPoliza:String,
+    fechaEmisionVenta:String,
     statusPoliza:String,
     fk_productoServicio:String,
     fk_cliente:String,
@@ -134,6 +134,7 @@ type getURLVideos{
      fk_empresa:String,
      message:String   
 }
+
 type insertURLVideos{   
      id_videos:String ,
      descripcion:String ,
