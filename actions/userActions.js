@@ -158,7 +158,6 @@ const { response } = require('express');
         }
 
     const insertCotizaciones = (data)=> { 
-        // console.log("esto es data de cotizacion",data) 
         return new Promise( (resolve,reject)=>{  
             client.query(`insert into cotizaciones(fechaEmision,NumFolio,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,statusCotizacion,fk_cliente,fk_productoServicio,fk_adminalfa,fk_empresa,fechaExpiracion,vigencia,fk_contacto,tipoSolicitud) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','Enviada','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[10]}','activa','${data[11]}','${data[12]}')`);
             resolve({message:"registro exitoso"})
@@ -176,7 +175,6 @@ const { response } = require('express');
     }
 
     const getIdCotizacion  = ( data)  => {
-        console.log("data",data)
         return new Promise((resolve,reject)=>{
             client.query(`select * from cotizaciones inner join clientesads on cotizaciones.fk_cliente= clientesads.id_cliente where fk_cliente='${data[0]}'` , function (err,results,fields ) {            
                 var string = JSON.stringify(results)
@@ -588,8 +586,7 @@ const { response } = require('express');
         return new Promise((resolve,reject)=>{
             client.query(`select * from clientesads inner join contacto on contacto.fk_clientesads = clientesads.id_cliente where contacto.correo1='${data[0]}'`, function (err,results,fields ) {  
                 var string = JSON.stringify(results)
-                var resultados=JSON.parse(string);
-                // console.log("resultados",resultados)              
+                var resultados=JSON.parse(string);             
 
                 resolve(resultados)
             })
@@ -627,7 +624,6 @@ const { response } = require('express');
             client.query(`select * from adminalfa where id_admin ='${data[0]}'`, function (err,results,fields ) {                
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);
-                // console.log("resultados",resultados)
                 resolve(resultados)
             })
         })
@@ -640,8 +636,7 @@ const { response } = require('express');
             inner join clientesads on cotizaciones.fk_cliente = clientesads.id_cliente
             where cotizaciones.NumFolio='${data[0]}'`, function (err,result,fields ) {                        
                 var string = JSON.stringify(result)
-                var resultados=JSON.parse(string); 
-                // console.log("resultados",resultados)                     
+                var resultados=JSON.parse(string);                    
                 resolve(resultados) 
             }) 
         })
@@ -705,9 +700,9 @@ const { response } = require('express');
     const GetPolizas = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`select * from polizas inner join clientesads on polizas.fk_cliente = clientesads.id_cliente inner join productoServicio on polizas.fk_productoServicio = productoServicio.id_productoServicio where clientesads.fk_empresa = '${data[0]}'`,function(err,results,fields){
-                var string = JSON.stringify(results)
-                var resultados=JSON.parse(string);
-                resolve(resultados)
+            var string = JSON.stringify(results)
+            var resultados=JSON.parse(string);
+            resolve(resultados)
             })
         })
     } 
@@ -726,10 +721,9 @@ const { response } = require('express');
     const GetPoliza = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`select * from polizas inner join productoServicio on polizas.fk_productoServicio = productoServicio.id_productoServicio where polizas.fk_cliente = '${data[0]}'`,function(err,results,fields){
-                var string = JSON.stringify(results)
-                var resultados=JSON.parse(string);
-                // console.log("resultados poliza",resultados)
-                resolve(resultados)
+            var string = JSON.stringify(results)
+            var resultados=JSON.parse(string);
+            resolve(resultados)
             })
         })
     } 
