@@ -175,6 +175,7 @@ const { response } = require('express');
     }
 
     const getIdCotizacion  = ( data)  => {
+        console.log("getIdCotizacion",data)
         return new Promise((resolve,reject)=>{
             client.query(`select * from cotizaciones inner join clientesads on cotizaciones.fk_cliente= clientesads.id_cliente where fk_cliente='${data[0]}'` , function (err,results,fields ) {            
                 var string = JSON.stringify(results)
@@ -670,7 +671,7 @@ const { response } = require('express');
     
 
     const ventas = (data)=> {   
-        // console.log("valor de data venta",data)     
+        console.log("valor de data venta",data)     
         // console.log("numFolio:", data[0],"cantidad:",data[1],"descuento:",data[2],"descuentoAplicado:",data[3],"TotalPrecioProducto:",data[4],
         // "ProductoPrecioUnitario:",data[5],"TotalPrecioProductoIVA:",data[6],"fechaPago:",data[7],"hora:",data[8],"banco:",data[9],"referenciaPago:",data[10],"tipoPago:",data[11],"importe:",data[12],"fechaInicialPoliza:",data[13],"statusPoliza:",data[14],"fk_productoServicio:",data[15],"fk_cliente:",data[16],"fk_adminalfa",data[17],"fk_empresa:",data[18],"fk_contacto:",data[19]);   
             return new Promise( (resolve,reject)=>{  
@@ -727,7 +728,155 @@ const { response } = require('express');
             })
         })
     } 
+    const polizaVencida  = ( data)  => {
+        console.log("esto es data de polizas vencidas",data)
+        return new Promise((resolve,reject)=>{                        
+            client.query(`update polizas set statusPoliza = "inactiva"  where id_polizas='${data[0]}'`);
+            resolve({message:`folio ${data[0]} vencida`})
+        })
+    }
+    const GetTableInicioSesion = ( data)  => {
+        return new Promise((resolve,reject)=>{
+
+            client.query(`select * from transaccionesClientes inner join clientesads on transaccionesClientes.id_cliente = clientesads.id_cliente where transaccionesClientes.id_cliente = '${data[0]}'`,
+            function(err,results,fields){
+                var string = JSON.stringify(results)
+                var resultados=JSON.parse(string);
+                console.log("resultados",resultados)
+
+                resolve(resultados)
+                
+            })
+        })
+    } 
+
+    const getVentasTablaIndicadores  = ( data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`select * from ventas inner join productoServicio on ventas.fk_productoServicio = productoServicio.id_productoServicio where ventas.fk_adminalfa='${data[0]}'` , function (err,results,fields ) {            
+                var string = JSON.stringify(results)
+                var resultados=JSON.parse(string);
+                resolve(resultados)                   
+            }) 
+    })
+}
+
+//     const getventasTabla  = ( data)  => {
+//         return new Promise((resolve,reject)=>{
+//             client.query(`select * from ventas  where  fk_adminalfa='${data[0]}'` , function (err,results,fields ) {            
+//                 var string = JSON.stringify(results)
+//                 var resultados=JSON.parse(string);
+//                 resolve(resultados)                   
+//             }) 
+//     })
+// }
+    // const getVentasTabla  = ( data)  => {
+    //     console.log("getVentasTabla",data)
+    //     return new Promise((resolve,reject)=>{
+    //         client.query(`select * from ventas where fk_adminalfa='${data[0]}'` , 
+    //         function (err,results,fields ) {            
+    //             var string = JSON.stringify(results)
+    //             var resultados=JSON.parse(string);
+    //             resolve(resultados)  
+    //             conosole.log("resultado de getVentasTabla",resultados)                 
+    //         }) 
+    // })
+    // }
+
+    // const getIdVenta  = ( data)  => {
+    // console.log("esto es getIdVentas",data)
+    // return new Promise((resolve,reject)=>{
+    //     client.query(`select * from ventas inner join clientesads on ventas.fk_cliente= clientesads.id_cliente where fk_cliente='${data[0]}'` , function (err,results,fields ) {            
+    //         var string = JSON.stringify(results)
+    //         var resultados=JSON.parse(string);    
+    //         resolve(resultados)
+    //         console.log("resultados",resultados)
+            
+    //     }) 
+    // })
+    // }
+
+    // const getTotalesByFolioVenta = ( data)  => {
+    // console.log("getTotalesByFolioVenta",data)
+    // return new Promise((resolve,reject)=>{
+    //     client.query(`select * from totalventa where numFolioVenta= '${data[0]}'`,function(err,results,fields){
+    //         var string =JSON.stringify(results)
+    //         var resultados = JSON.parse(string);
+    //         resolve(resultados) 
+    //         console.log("resultados de getTotalesByFolioVenta", resultados)           
+    //     })    
+    // })
+    // }    
+
+    // const getProductoServicioByFolioVenta = ( data)  => {
+    //     // console.log("select * from cotizaciones inner join productoservicio on cotizaciones.fk_productoservicio = productoservicio.id_productoServicio  where cotizaciones.NumFolio =",data[0])
+    //     return new Promise((resolve,reject)=>{
+    //         client.query(`select * from ventas inner join productoservicio on ventas.fk_productoservicio = productoservicio.id_productoServicio  where ventas.numFolio ='${data[0]}'`,
+    //         function(err,results,fields){
+    //             var string =JSON.stringify(results)
+    //             var resultados = JSON.parse(string);
+    //             resolve(resultados)
+    //             // conosle.log("esto es resultados",resultados)
+    //         })
+    //     })
+    // }
+    const getVentasTabla  = ( data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`select * from ventas where fk_adminalfa='${data[0]}'` , function (err,results,fields ) {            
+                var string = JSON.stringify(results)
+                var resultados=JSON.parse(string);
+                resolve(resultados)                   
+            }) 
+    })
+}
+
+const getIdVenta  = ( data)  => {
+    console.log("esto es getIdVentas",data)
+    return new Promise((resolve,reject)=>{
+        client.query(`select * from ventas inner join clientesads on ventas.fk_cliente=clientesads.id_cliente where fk_cliente='${data[0]}'` , function (err,results,fields ) {            
+            var string = JSON.stringify(results)
+            var resultados=JSON.parse(string);    
+            resolve(resultados)
+            console.log("resultados",resultados)
+            
+        }) 
+    })
+}
+
+const getTotalesByFolioVenta = ( data)  => {
+    console.log("getTotalesByFolioVenta",data)
+    return new Promise((resolve,reject)=>{
+        client.query(`select * from totalventa where numFolioVenta= '${data[0]}'`,function(err,results,fields){
+            var string =JSON.stringify(results)
+            var resultados = JSON.parse(string);
+            resolve(resultados) 
+            console.log("resultados de getTotalesByFolioVenta", resultados)           
+        })    
+    })
+}
+
+const getProductoServicioByFolioVentas = ( data)  => {
+    console.log("getProductoServicioByFolioVentas",data)
+    return new Promise((resolve,reject)=>{
+        client.query(`select * from ventas inner join productoservicio on ventas.fk_productoservicio = productoservicio.id_productoServicio  where ventas.numFolio = '${data[0]}'`,
+        function(err,results,fields){
+            var string =JSON.stringify(results)
+            var resultados = JSON.parse(string);
+            resolve(resultados)
+        })
+    })
+}
+  
+  
+   
 module.exports={
+    getVentasTablaIndicadores,
+    getProductoServicioByFolioVentas,
+    getCotizacionesTabla,
+    getTotalesByFolioVenta,
+    getIdVenta,
+    getVentasTabla,
+    GetTableInicioSesion,
+    polizaVencida,
     insertTotalesVenta,
     GetPoliza,
     EditarPoliza,

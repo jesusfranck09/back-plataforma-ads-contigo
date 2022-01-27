@@ -28,6 +28,7 @@ type Mutation {
      registerPoliza(data:[String]!):message
      activarPoliza(data:[String]!):[message]
      editarPoliza(data:[String]!):[message]
+     polizaVencida(data:[String]!):message
 }
 
 type Query{
@@ -56,6 +57,85 @@ getAdminAlfa(data:[String]!):[loginAdminAlfa]
 getURLVideos(data:[String]!):[getURLVideos]
 getPolizas(data:[String]!):[polizas]
 getPoliza(data:[String]!):[polizas]
+getTableInicioSesion(data:[String]!):[transaccionesClientes]
+getVentasTabla(data:[String]!):[getIdVenta]
+getIdVenta(data:[String]!):[getIdVenta]
+getTotalesByFolioVenta(data:[String]!):[insertTotalesVenta]
+getProductoServicioByFolioVentas(data:[String]!):[getProductoServicioByFolioVentas]
+getVentasTablaIndicadores(data:[String]!):[ventas]
+}
+
+type getProductoServicioByFolioVentas{
+    id_venta:String,
+    numFolio:String,
+    cantidad:String,
+    descuento:String,
+    descuentoAplicado:String,
+    TotalPrecioProducto:String,
+    ProductoPrecioUnitario:String,
+    TotalPrecioProductoIVA:String,
+    fechaPago:String,
+    hora:String,
+    banco:String,
+    referenciaPago:String,
+    tipoPago:String,
+    importe:String,
+    fechaEmisionVenta:String,
+    statusPoliza:String,
+    fk_productoServicio:String,
+    fk_cliente:String,
+    fk_adminalfa:String,
+    fk_empresa:String,
+    fk_contacto:String,    
+    id_productoServicio:String,
+    tipo:String,
+    tipoLicenciamiento:String,
+    lineaProducto:String,
+    concepto:String,
+    precio:String,
+    consecutivo:String,
+
+}
+type getIdVenta{
+    id_venta:String,
+    numFolio:String,
+    cantidad:String,
+    descuento:String,
+    descuentoAplicado:String,
+    TotalPrecioProducto:String,
+    ProductoPrecioUnitario:String,
+    TotalPrecioProductoIVA:String,
+    fechaPago:String,
+    hora:String,
+    banco:String,
+    referenciaPago:String,
+    tipoPago:String,
+    importe:String,
+    fechaEmisionVenta:String,
+    statusPoliza:String,
+    fk_productoServicio:String,
+    fk_cliente:String,
+    fk_adminalfa:String,
+    fk_empresa:String,
+    fk_contacto:String,
+    rfc:String,
+    razonSocial:String,
+    tamanoEmpresa:String,
+    giroEmpresarial:String,
+    paginaWeb:String,
+    domicilioFiscal:String,
+    message:String
+
+}
+type transaccionesClientes{
+    id_transacciones:String
+    id_cliente:String
+    rfc:String
+    fecha:String
+    hora:String
+    nombreRepresantante:String
+    apellidosRepresantante:String  
+    razonSocial:String
 }
 
 type polizas {
@@ -78,9 +158,11 @@ type polizas {
  }
 
  type ventas {
+    # id_venta:String,
     numFolio:String,
     cantidad:String,
     descuento:String,
+    fechaEmisionVenta:String,
     descuentoAplicado:String,
     TotalPrecioProducto:String,
     ProductoPrecioUnitario:String,
@@ -91,13 +173,18 @@ type polizas {
     referenciaPago:String,
     tipoPago:String,
     importe:String,
-    fechaEmisionVenta:String,
+    fechaInicialPoliza:String,
     statusPoliza:String,
     fk_productoServicio:String,
     fk_cliente:String,
     fk_adminalfa:String,
     fk_empresa:String,
     fk_contacto:String,
+     id_productoServicio:String,
+    tipo:String,
+    concepto:String,
+    precio:String , 
+    consecutivo:String
     message:String
  }
 

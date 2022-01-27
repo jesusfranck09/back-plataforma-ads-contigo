@@ -138,8 +138,45 @@ const getPoliza  =  (_ , data) =>{
     var variable = cadena.split(",")
 return actions.GetPoliza(variable)
 }
+const getTableInicioSesion  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.GetTableInicioSesion(variable)
+}
+const getVentasTablaIndicadores  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.getVentasTablaIndicadores(variable)
+}
+const getVentasTabla  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.getVentasTabla(variable)
+}
+
+const getIdVenta  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.getIdVenta(variable)
+}
+const getTotalesByFolioVenta  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.getTotalesByFolioVenta(variable)
+}
+const getProductoServicioByFolioVentas  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.getProductoServicioByFolioVentas(variable)
+}
 
 module.exports={
+    getVentasTablaIndicadores,
+    getProductoServicioByFolioVentas,
+    getTotalesByFolioVenta,
+    getIdVenta,
+    getVentasTabla,
+    getTableInicioSesion,
     getPoliza,
     getPolizas,
     getURLVideos,
