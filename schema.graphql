@@ -60,10 +60,19 @@ getPoliza(data:[String]!):[polizas]
 getTableInicioSesion(data:[String]!):[transaccionesClientes]
 getVentasTabla(data:[String]!):[getIdVenta]
 getIdVenta(data:[String]!):[getIdVenta]
-getTotalesByFolioVenta(data:[String]!):[insertTotalesVenta]
+getTotalesByFolioVenta(data:[String]!):[getTotalesByFolioVenta]
 getProductoServicioByFolioVentas(data:[String]!):[getProductoServicioByFolioVentas]
 getVentasTablaIndicadores(data:[String]!):[ventas]
-}
+} 
+type getTotalesByFolioVenta{
+    id_totalVenta:String,
+    subTotal:String,
+     IVA:String,
+     total:String,
+     numFolioVenta:String,
+     message:String
+
+} 
 
 type getProductoServicioByFolioVentas{
     id_venta:String,
