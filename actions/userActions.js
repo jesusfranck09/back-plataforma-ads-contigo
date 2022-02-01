@@ -421,9 +421,10 @@ const { response } = require('express');
     }
 
     const deliteContacto  = ( data)  => {
+        console.log("data",data)
         return new Promise((resolve,reject)=>{                        
             client.query(`delete from contacto where id_contacto='${data[0]}'`) 
-            // resolve({message:"delite exitoso"})
+            resolve({message:"delite exitoso"})
         })   
     }
 
@@ -760,65 +761,7 @@ const { response } = require('express');
     })
 }
 
-//     const getventasTabla  = ( data)  => {
-//         return new Promise((resolve,reject)=>{
-//             client.query(`select * from ventas  where  fk_adminalfa='${data[0]}'` , function (err,results,fields ) {            
-//                 var string = JSON.stringify(results)
-//                 var resultados=JSON.parse(string);
-//                 resolve(resultados)                   
-//             }) 
-//     })
-// }
-    // const getVentasTabla  = ( data)  => {
-    //     console.log("getVentasTabla",data)
-    //     return new Promise((resolve,reject)=>{
-    //         client.query(`select * from ventas where fk_adminalfa='${data[0]}'` , 
-    //         function (err,results,fields ) {            
-    //             var string = JSON.stringify(results)
-    //             var resultados=JSON.parse(string);
-    //             resolve(resultados)  
-    //             conosole.log("resultado de getVentasTabla",resultados)                 
-    //         }) 
-    // })
-    // }
 
-    // const getIdVenta  = ( data)  => {
-    // console.log("esto es getIdVentas",data)
-    // return new Promise((resolve,reject)=>{
-    //     client.query(`select * from ventas inner join clientesads on ventas.fk_cliente= clientesads.id_cliente where fk_cliente='${data[0]}'` , function (err,results,fields ) {            
-    //         var string = JSON.stringify(results)
-    //         var resultados=JSON.parse(string);    
-    //         resolve(resultados)
-    //         console.log("resultados",resultados)
-            
-    //     }) 
-    // })
-    // }
-
-    // const getTotalesByFolioVenta = ( data)  => {
-    // console.log("getTotalesByFolioVenta",data)
-    // return new Promise((resolve,reject)=>{
-    //     client.query(`select * from totalventa where numFolioVenta= '${data[0]}'`,function(err,results,fields){
-    //         var string =JSON.stringify(results)
-    //         var resultados = JSON.parse(string);
-    //         resolve(resultados) 
-    //         console.log("resultados de getTotalesByFolioVenta", resultados)           
-    //     })    
-    // })
-    // }    
-
-    // const getProductoServicioByFolioVenta = ( data)  => {
-    //     // console.log("select * from cotizaciones inner join productoservicio on cotizaciones.fk_productoservicio = productoservicio.id_productoServicio  where cotizaciones.NumFolio =",data[0])
-    //     return new Promise((resolve,reject)=>{
-    //         client.query(`select * from ventas inner join productoservicio on ventas.fk_productoservicio = productoservicio.id_productoServicio  where ventas.numFolio ='${data[0]}'`,
-    //         function(err,results,fields){
-    //             var string =JSON.stringify(results)
-    //             var resultados = JSON.parse(string);
-    //             resolve(resultados)
-    //             // conosle.log("esto es resultados",resultados)
-    //         })
-    //     })
-    // }
     const getVentasTabla  = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`select * from ventas where fk_adminalfa='${data[0]}'` , function (err,results,fields ) {            
@@ -830,7 +773,6 @@ const { response } = require('express');
 }
 
 const getIdVenta  = ( data)  => {
-    console.log("esto es getIdVentas",data)
     return new Promise((resolve,reject)=>{
         client.query(`select * from ventas inner join clientesads on ventas.fk_cliente=clientesads.id_cliente where fk_cliente='${data[0]}'` , function (err,results,fields ) {            
             var string = JSON.stringify(results)
@@ -843,7 +785,6 @@ const getIdVenta  = ( data)  => {
 }
 
 const getTotalesByFolioVenta = ( data)  => {
-    console.log("getTotalesByFolioVenta",data)
     return new Promise((resolve,reject)=>{
         client.query(`select * from totalventa where numFolioVenta= '${data[0]}'`,function(err,results,fields){
             var string =JSON.stringify(results)
@@ -855,7 +796,6 @@ const getTotalesByFolioVenta = ( data)  => {
 }
 
 const getProductoServicioByFolioVentas = ( data)  => {
-    console.log("getProductoServicioByFolioVentas",data)
     return new Promise((resolve,reject)=>{
         client.query(`select * from ventas inner join productoservicio on ventas.fk_productoservicio = productoservicio.id_productoServicio  where ventas.numFolio = '${data[0]}'`,
         function(err,results,fields){
