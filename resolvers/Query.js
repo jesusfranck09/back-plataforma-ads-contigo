@@ -169,8 +169,20 @@ const getProductoServicioByFolioVentas  =  (_ , data) =>{
     var variable = cadena.split(",")
 return actions.getProductoServicioByFolioVentas(variable)
 }
+const getMaxProductoServicio  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.getMaxProductoServicio(variable)
+}
+const getProductoServicioActualizado  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.GetProductoServicioActualizado(variable)
+}
 
 module.exports={
+    getProductoServicioActualizado,
+    getMaxProductoServicio,
     getVentasTablaIndicadores,
     getProductoServicioByFolioVentas,
     getTotalesByFolioVenta,

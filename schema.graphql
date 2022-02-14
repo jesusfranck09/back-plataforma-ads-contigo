@@ -29,6 +29,7 @@ type Mutation {
      activarPoliza(data:[String]!):[message]
      editarPoliza(data:[String]!):[message]
      polizaVencida(data:[String]!):message
+     updateInsertProductoServicio(data:[String]!):updateInsertProductoServicio
 }
 
 type Query{
@@ -63,7 +64,29 @@ getIdVenta(data:[String]!):[getIdVenta]
 getTotalesByFolioVenta(data:[String]!):[getTotalesByFolioVenta]
 getProductoServicioByFolioVentas(data:[String]!):[getProductoServicioByFolioVentas]
 getVentasTablaIndicadores(data:[String]!):[ventas]
+getMaxProductoServicio(data:[String]!):[getMaxProductoServicio]
+getProductoServicioActualizado(data:[String]!):[getTablaProductoServicio]
 } 
+
+ type getMaxProductoServicio{
+    id_maximo:String
+    }
+
+ type updateInsertProductoServicio { 
+     id_productoServicio:String,
+     tipo:String,
+     tipoLicenciamiento:String,
+     LineaProducto:String,
+     concepto:String,
+     precio:String,
+     consecutivo:String,
+     id_actualizacion:String, 
+     asignacion:String,    
+     fechaRegistro:String,
+     fk_empresa:String,    
+     message:String
+}
+
 type getTotalesByFolioVenta{
     id_totalVenta:String,
     subTotal:String,
@@ -405,7 +428,10 @@ type insertProductoServicio{
     consecutivo:String,
     tipoLicenciamiento:String,
     LineaProducto:String,
-    fk_empresa:String,
+    id_actualizacion:String,
+    asignacion:String,    
+    fechaRegistro:String,
+    fk_empresa:String,    
     message:String
 }
 
@@ -433,10 +459,16 @@ type getProductoServicio{
 type getTablaProductoServicio{
     id_productoServicio:String,
     tipo:String,
+    tipoLicenciamiento:String,
+    lineaProducto:String,
     concepto:String,
-    precio:String , 
+    precio:String, 
+    consecutivo:String,
+    id_actualizacion:String,
+    asignacion:String,
+    fechaRegistro:String,
     fk_empresa:String,
-    consecutivo:String
+    message:String
 }
 
 type updateCliente{

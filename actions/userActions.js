@@ -233,32 +233,44 @@ const { response } = require('express');
         })
     }  
 
-    // const insertProductoServicio = (data)=> { 
-    //     return new Promise((resolve,reject)=>{                                  
-    //         client.query(`insert into productoServicio(tipo,concepto,precio,consecutivo,tipoLicenciamiento,LineaProducto) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}')`) 
-    //     resolve({message:"registro exitoso"})
-    //     })
-    // } 
-    // const getTablaProductoServicio  = ( data)  => {
-    //     return new Promise((resolve,reject)=>{                                
-    //         client.query(`select * from productoServicio`,  function (err,result,fields ) {                                    
-    //             var string = JSON.stringify(result)
-    //             var resultados=JSON.parse(string);                                
-    //             resolve(resultados)                                    
-    //         }) 
-    //     })
-    // }   
+     
 
-    const insertProductoServicio = (data)=> { 
-        return new Promise((resolve,reject)=>{                                  
-            client.query(`insert into productoServicio(tipo,concepto,precio,consecutivo,tipoLicenciamiento,LineaProducto,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}')`) 
-        resolve({message:"registro exitoso"})
+    const updateInsertProductoServicio = (data)=> { 
+        console.log("updateInsertProductoServicio DATA",data)
+        return new Promise((resolve,reject)=>{          
+                client.query(`insert into productoServicio(tipo,concepto,precio,consecutivo,tipoLicenciamiento,LineaProducto,id_actualizacion,asignacion,fechaRegistro,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}')`) 
+                resolve({message:"registro exitoso"})           
         })
     }
+    // ******************
 
+      const insertProductoServicio =  async data=> { 
+        console.log('esto es la data',data)
+        return new Promise((resolve,reject) =>{ 
+      
+        //  console.log(' esta es la query',`select * from productoServicio where fk_empresa='${data[9]}' and concepto='${data[1]}'`)
+        
+        //  select * from productoServicio where fk_empresa='${data[9]}' and concepto='${data[1]}'  or  consecutivo='${data[3]}'
+         client.query(`select * from productoServicio where fk_empresa='${data[9]}' and concepto='${data[1]}' `,
+         function(err,results,field){
+          var string = JSON.stringify(results)
+          var resultados=JSON.parse(string);
+          if (resultados[0]){
+              resolve({message:"El concepto ya fue registrado"})
+            //   console.log("resolve",resultados[0])   
+        //   }else{   
+        //       console.log("insert into productoServicio(tipo,concepto,precio,consecutivo,tipoLicenciamiento,LineaProducto,id_actualizacion,asignacion,fechaRegistro,fk_empresa",data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[8],data[9])                         
+            client.query(`insert into productoServicio(tipo,concepto,precio,consecutivo,tipoLicenciamiento,LineaProducto,id_actualizacion,asignacion,fechaRegistro,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}')`) 
+            resolve({message:"registro exitoso"})
+             }        
+      })
+      })
+    }
+
+// *****************
     const getTablaProductoServicio  = ( data)  => {
         return new Promise((resolve,reject)=>{                                
-            client.query(`select * from productoServicio where fk_empresa ='${data[0]}'`,  function (err,result,fields ) {                                    
+            client.query(`select * from productoServicio where id_actualizacion = '1' and fk_empresa ='${data[0]}'`,  function (err,result,fields ) {                                    
                 var string = JSON.stringify(result)
                 var resultados=JSON.parse(string);                                
                 resolve(resultados)                                    
@@ -805,10 +817,35 @@ const getProductoServicioByFolioVentas = ( data)  => {
         })
     })
 }
+
+const getMaxProductoServicio = ( data)  => {
+    return new Promise((resolve,reject)=>{
+        client.query(`select max(id_productoServicio) as id_maximo from productoservicio where asignacion = '${data[0]}'`,
+        function(err,results,fields){
+            var string =JSON.stringify(results)
+                var resultados = JSON.parse(string);
+                resolve(resultados)          
+        })
+    })
+}
   
-  
+    const GetProductoServicioActualizado = ( data)  => {
+
+        return new Promise((resolve,reject)=>{
+        client.query(`select * from productoServicio where id_productoServicio = '${data[0]}'`,
+        function(err,results,fields){
+            var string =JSON.stringify(results)
+                var resultados = JSON.parse(string);
+                // console.log("resultados",resultados)
+                resolve(resultados)          
+        })
+    })
+}
    
 module.exports={
+    GetProductoServicioActualizado,
+    getMaxProductoServicio,
+    updateInsertProductoServicio,
     getVentasTablaIndicadores,
     getProductoServicioByFolioVentas,
     getCotizacionesTabla,

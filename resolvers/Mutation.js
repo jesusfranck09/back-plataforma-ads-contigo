@@ -163,8 +163,14 @@ const actions = require('../actions/userActions')
         var variable = cadena.split(",")
         return actions.polizaVencida(variable)    
     }
+    const updateInsertProductoServicio  =  (_ , data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.updateInsertProductoServicio(variable)    
+    }
 
 module.exports={
+    updateInsertProductoServicio,
     polizaVencida,
     editarPoliza,
     activarPoliza,
