@@ -179,8 +179,14 @@ const getProductoServicioActualizado  =  (_ , data) =>{
     var variable = cadena.split(",")
 return actions.GetProductoServicioActualizado(variable)
 }
+const getCotizacionesFolio  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.getCotizacionesFolio(variable)
+}
 
 module.exports={
+    getCotizacionesFolio,
     getProductoServicioActualizado,
     getMaxProductoServicio,
     getVentasTablaIndicadores,

@@ -66,7 +66,38 @@ getProductoServicioByFolioVentas(data:[String]!):[getProductoServicioByFolioVent
 getVentasTablaIndicadores(data:[String]!):[ventas]
 getMaxProductoServicio(data:[String]!):[getMaxProductoServicio]
 getProductoServicioActualizado(data:[String]!):[getTablaProductoServicio]
+getCotizacionesFolio(data:[String]!):[getCotizacionesFolio]
 } 
+
+ type getCotizacionesFolio{
+     id_cotizaciones:String,
+     fechaEmision:String,
+     NumFolio:String,
+     cantidad:String,
+     descuento:String,
+     descuentoAplicado:String,
+     TotalPrecioProducto:String,
+     statusCotizacion:String,
+     fk_cliente:String,     
+     fk_adminalfa:String,
+     fk_empresa:String,
+     fechaExpiracion:String,
+     vigencia:String,
+     fk_contacto:String,
+     tipoSolicitud:String,
+    id_productoServicio:String,
+    tipo:String,
+    tipoLicenciamiento:String,
+    lineaProducto:String,
+    concepto:String,
+    precio:String  
+    consecutivo:String,
+    id_actualizacion:String,
+    asignacion:String,
+    fechaRegistro:String,
+    message:String
+ }
+
 
  type getMaxProductoServicio{
     id_maximo:String
