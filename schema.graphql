@@ -6,7 +6,7 @@ type Mutation {
      insertCotizaciones(data:[String]!):insertCotizaciones
      insertClientes(data:[String]!):insertClientes
      deleteCliente(data:[String]!):deleteCliente
-     updateCliente(data:[String]!):updateCliente    
+    #  updateCliente(data:[String]!):updateCliente    
      insertContacto(data:[String]!):insertContacto
      insertProductoServicio(data:[String]!):insertProductoServicio 
      insertClientesAlfa(data:[String]!):insertClientesAlfa
@@ -30,6 +30,7 @@ type Mutation {
      editarPoliza(data:[String]!):[message]
      polizaVencida(data:[String]!):message
      updateInsertProductoServicio(data:[String]!):updateInsertProductoServicio
+     updateCliente(data:[String]!):updateCliente
 }
 
 type Query{
@@ -68,6 +69,16 @@ getMaxProductoServicio(data:[String]!):[getMaxProductoServicio]
 getProductoServicioActualizado(data:[String]!):[getTablaProductoServicio]
 getCotizacionesFolio(data:[String]!):[getCotizacionesFolio]
 } 
+type updateCliente{
+     rfc:String,
+     razonSocial:String,
+     tipoEmpresa:String,
+     tamanoEmpresa:String,
+     giroEmpresarial:String,
+     paginaWeb:String,
+     domicilioFiscal:String,
+     message:String
+}
 
  type getCotizacionesFolio{
      id_cotizaciones:String,
@@ -416,6 +427,7 @@ type getTablaClientesAlfa{
     rfc:String,
     razonSocial:String,
     fk_empresa:String,
+    tipoEmpresa:String,
     tamanoEmpresa:String
     giroEmpresarial:String
     correo:String
@@ -443,6 +455,7 @@ type message{
 type insertClientesAlfa{
      rfc:String,
      razonSocial:String,
+     tipoEmpresa:String,
      tamanoEmpresa:String,
      giroEmpresarial:String,
      paginaWeb:String,
@@ -502,19 +515,19 @@ type getTablaProductoServicio{
     message:String
 }
 
-type updateCliente{
-   id_cliente:String,
-    empresa:String,
-    rfc:String,
-    nombre:String,
-    apellido:String,
-    correo1:String,
-    correo2:String,
-    telefono1:String,
-    telefono2:String,    
-    message:String
+# type updateCliente{
+#    id_cliente:String,
+#     empresa:String,
+#     rfc:String,
+#     nombre:String,
+#     apellido:String,
+#     correo1:String,
+#     correo2:String,
+#     telefono1:String,
+#     telefono2:String,    
+#     message:String
 
-}
+# }
 
 type deleteCliente{ 
    id_cliente:String,

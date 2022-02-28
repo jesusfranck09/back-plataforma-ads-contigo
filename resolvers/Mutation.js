@@ -31,11 +31,11 @@ const actions = require('../actions/userActions')
         return actions.deleteCliente(variable)
     
     }
-    const updateCliente =  (_ , data) =>{
-        var cadena= data.data[0]
-        var variable = cadena.split(",")
-        return actions.updateCliente  (variable)    
-    }
+    // const updateCliente =  (_ , data) =>{
+    //     var cadena= data.data[0]
+    //     var variable = cadena.split(",")
+    //     return actions.updateCliente  (variable)    
+    // }
  
     const insertContacto = (_,data) =>{
         var cadena= data.data[0]
@@ -168,8 +168,14 @@ const actions = require('../actions/userActions')
         var variable = cadena.split(",")
         return actions.updateInsertProductoServicio(variable)    
     }
+    const updateCliente =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.updateCliente(variable)
+    }
 
 module.exports={
+    updateCliente,
     updateInsertProductoServicio,
     polizaVencida,
     editarPoliza,
@@ -193,7 +199,7 @@ module.exports={
     insertClientesAlfa,
     insertProductoServicio,
     insertContacto,
-    updateCliente,
+    // updateCliente,
     deleteCliente,
     signupAlfa,
     signupEmpresas,
