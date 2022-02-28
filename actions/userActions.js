@@ -858,9 +858,9 @@ const getMaxProductoServicio = ( data)  => {
 }
 
   const updateCliente = ( data)  => {
-      console.log("esto es datde clientes",data)
+    //   console.log("data[0]:",data[0],"data[1]:",data[1],"data[2]:",data[2],"data[3]:",data[3],"data[4]:",data[4],"data[5]:",data[5],"data[6]:",data[6],"data[7]:",data[7])
         return new Promise((resolve,reject)=>{
-            client.query(`update clientesads set  rfc='${data[1]}',razonSocial='${data[2]}',tipoEmpresa='${data[3]}',tamanoEmpresa='${data[4]}',giroEmpresarial='${data[5]}',paginaWeb='${data[6]}',domicilioFiscal='${data[7]}'`) 
+            client.query(`update clientesads set  rfc='${data[4]}',razonSocial='${data[3]}',tipoEmpresa='${data[6]}',tamanoEmpresa='${data[5]}',giroEmpresarial='${data[2]}',paginaWeb='${data[7]}',domicilioFiscal='${data[1]}' where id_cliente='${data[0]}'`) 
             resolve({message:"actualizacion exitosa"})
         })
     }
