@@ -216,6 +216,7 @@ type polizas {
     fk_cliente:String
     id_polizas:String
     fechaInicial:String
+    fechaFinal:String
     statusPoliza:String
     razonSocial:String
     tipo:String

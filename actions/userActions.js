@@ -267,16 +267,26 @@ const { response } = require('express');
       })
     }
 
-// *****************
-    const getTablaProductoServicio  = ( data)  => {
+// ********* Actualizar despues a esta cuando este funcionando la tabla de productos y servicios********
+    // const getTablaProductoServicio  = ( data)  => {
+    //     return new Promise((resolve,reject)=>{                                
+    //         client.query(`select * from productoServicio where id_actualizacion = '1' and fk_empresa ='${data[0]}'`,  function (err,result,fields ) {                                    
+    //             var string = JSON.stringify(result)
+    //             var resultados=JSON.parse(string);                                
+    //             resolve(resultados)                                    
+    //         }) 
+    //     })
+    // }   
+
+       const getTablaProductoServicio  = ( data)  => {
         return new Promise((resolve,reject)=>{                                
-            client.query(`select * from productoServicio where id_actualizacion = '1' and fk_empresa ='${data[0]}'`,  function (err,result,fields ) {                                    
+            client.query(`select * from productoServicio where  fk_empresa ='${data[0]}'`,  function (err,result,fields ) {                                    
                 var string = JSON.stringify(result)
                 var resultados=JSON.parse(string);                                
                 resolve(resultados)                                    
             }) 
         })
-    }   
+    } 
 
 
     const insertClientesAlfa = (data)=> { 
@@ -721,8 +731,9 @@ const { response } = require('express');
         })
     } 
     const RegisterPoliza = ( data)  => {
+        console.log("data",data)
      return new Promise((resolve,reject)=>{
-        client.query(`insert into polizas (fechaInicial,statusPoliza,fk_productoServicio,fk_cliente,fk_contacto) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}')`)
+        client.query(`insert into polizas (fechaInicial,fechaFinal,statusPoliza,fk_productoServicio,fk_cliente,fk_contacto) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}')`)
         resolve({message:"Registro exitoso"})
      })
     } 
