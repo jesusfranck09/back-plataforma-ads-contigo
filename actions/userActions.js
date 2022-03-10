@@ -30,7 +30,6 @@ const { response } = require('express');
         
     })   
     } 
-
     const signupEmpresas = (data) => {
     return new Promise((resolve,reject) =>{
         //  bcrypt.genSalt(SALT_WORK_FACTOR,function(error,salt){
@@ -53,8 +52,6 @@ const { response } = require('express');
         //  })     
     })   
     } 
-
-
     const loginAdminAlfa  = async  data =>{ 
     return new Promise((resolve,reject) =>{ 
         client.query(`select * from adminAlfa where correo='${data[0]}'`,
@@ -98,10 +95,7 @@ const { response } = require('express');
     })
     } )
 
-    }
-
-    
-
+    }  
     const loginEmpresas = async  data =>{
     return new Promise((resolve,reject) =>{  client.query(`select * from empresas where correo='${data[0]}'`,
     function(err,results,field){
@@ -135,7 +129,6 @@ const { response } = require('express');
     })
     } )
     }
-
     const getTablaClientes   = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`select * from clientesads where fk_empresa='${data[0]}'`, function (err,results,fields ) {            
@@ -145,8 +138,6 @@ const { response } = require('express');
             }) 
         })
     }
-
-
     const getEmpresas   = ( data)  => {
         return new Promise((resolve,reject)=>{        
             client.query(`select * from empresas where rfc='${data[0]}'`, function (err,result,fields ) {            
@@ -155,15 +146,13 @@ const { response } = require('express');
                 resolve(resultados)
             }) 
         })
-        }
-
+    }
     const insertCotizaciones = (data)=> { 
         return new Promise( (resolve,reject)=>{  
             client.query(`insert into cotizaciones(fechaEmision,NumFolio,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,statusCotizacion,fk_cliente,fk_productoServicio,fk_adminalfa,fk_empresa,fechaExpiracion,vigencia,fk_contacto,tipoSolicitud) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','Enviada','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[10]}','activa','${data[11]}','${data[12]}')`);
             resolve({message:"registro exitoso"})
         })
     }
-
     const getCotizacionesTabla  = ( data)  => {
                 return new Promise((resolve,reject)=>{
                     client.query(`select * from cotizaciones  where  fk_adminalfa='${data[0]}'` , function (err,results,fields ) {            
@@ -173,7 +162,6 @@ const { response } = require('express');
                     }) 
             })
     }
-
     const getIdCotizacion  = ( data)  => {
         console.log("getIdCotizacion",data)
         return new Promise((resolve,reject)=>{
@@ -183,8 +171,7 @@ const { response } = require('express');
                 resolve(resultados)                
             }) 
         })
-    }
-  
+    }  
     const getClienteRFC = ( data)  => {
         return new Promise((resolve,reject)=>{                    
             client.query(`select * from clientesads where rfc='${data[0]}' OR razonSocial='${data[0]}'`, function (err,result,fields ) {                        
@@ -194,14 +181,12 @@ const { response } = require('express');
             }) 
         })
     }
-
     const insertClientes = (data)=> { 
         return new Promise((resolve,reject)=>{  
             client.query(`insert into clientes (rfc,empresa,nombre,apellido,correo1,correo2,telefono1,telefono2) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}')`) 
         resolve({message:"registro exitoso"})
         })
     }
-
     const deleteCliente   = ( data)  => {
         return new Promise((resolve,reject)=>{                        
             client.query(`delete from clientes where id_cliente='${data[0]}'`) 
@@ -223,18 +208,13 @@ const { response } = require('express');
                 
             }) 
         })
-        }
-
-  
+    }  
     const insertContacto = (data)=> { 
         return new Promise((resolve,reject)=>{
             client.query(`insert into contacto(nombre,apellidos,correo1,correo2,telefono1,extensionTelefonica,telefono2,puesto,tipoContacto,fk_clientesads) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}')`) 
             resolve({message:"registro exitoso"})
         })
-    }  
-
-     
-
+    }   
     const updateInsertProductoServicio = (data)=> { 
         console.log("updateInsertProductoServicio DATA",data)
         return new Promise((resolve,reject)=>{          
@@ -287,8 +267,6 @@ const { response } = require('express');
             }) 
         })
     } 
-
-
     const insertClientesAlfa = (data)=> { 
         console.log("data",data)
         return new Promise((resolve,reject)=>{ 
@@ -296,7 +274,6 @@ const { response } = require('express');
             resolve({message:"registro exitoso"})            
         })
     }
-
     const getTablaClientesAlfa = ( data)  => {
         console.log("getTablaClientes",data)
         return new Promise((resolve,reject)=>{
@@ -307,10 +284,7 @@ const { response } = require('express');
                 resolve(resultados)
             }) 
         })
-    }
-
-
-    
+    }    
     const SendEmailCotizacion   = ( data)  => {
 
         let directorio = downloadsFolder()
@@ -365,8 +339,7 @@ const { response } = require('express');
                 });
             resolve({message:"Correo Enviado"})      
         })
-    } 
-                
+    }                 
     const insertTotales = ( data)  => {
         return new Promise((resolve,reject)=>{
             // client.query(`select MAX(id_cotizaciones) as maxid from cotizaciones`,function(err,results,fields){
@@ -377,7 +350,6 @@ const { response } = require('express');
 
         })
     } 
-
     const getIdClientesAlfa = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`select * from clientesads where id_cliente='${data[0]}'`, function (err,results,fields ) {                
@@ -386,8 +358,7 @@ const { response } = require('express');
                 resolve(resultados)
             }) 
         })
-    }
-    
+    }    
     const getTablaContactos = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`select * from contacto where fk_clientesads='${data[0]}' ORDER BY apellidos ASC`, function (err,results,fields ) {                
@@ -397,7 +368,6 @@ const { response } = require('express');
             }) 
         })
     }
-
     const getProductoServicioByFolio = ( data)  => {
         console.log("select * from cotizaciones inner join productoservicio on cotizaciones.fk_productoservicio = productoservicio.id_productoServicio  where cotizaciones.NumFolio =",data[0])
         return new Promise((resolve,reject)=>{
@@ -408,8 +378,7 @@ const { response } = require('express');
                 console.log("esto es resultados",resultados)
             })
         })
-    }
-    
+    }    
     const getCotizacionesFolio  = ( data)  => {
         console.log("select * from cotizaciones inner join productoservicio on cotizaciones.fk_productoservicio = productoservicio.id_productoServicio  where cotizaciones.NumFolio =",data)
         return new Promise((resolve,reject)=>{
@@ -421,7 +390,6 @@ const { response } = require('express');
             })
         })
     }
-
     const GetTotalesByFolio = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`select * from totales where NumFolio = '${data[0]}'`,function(err,results,fields){
@@ -431,14 +399,12 @@ const { response } = require('express');
             })    
         })
     }
-
     const UpdateStatusCotizacion = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`update cotizaciones set statusCotizacion = '${data[1]}' where NumFolio ='${data[0]}'`)
             resolve({message:"actualizacion exitosa"})
         })
-    }
-    
+    }    
     const GetClienteId = ( data)  => {
         return new Promise((resolve,reject)=>{             
             client.query(`select * from clientesads where id_cliente ='${data[0]}'`, function (err,results,fields ) {                
@@ -448,15 +414,12 @@ const { response } = require('express');
             }) 
         })
     }  
-
-
     const updateContacto = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`update contacto set  nombre='${data[1]}',apellidos='${data[2]}',correo1='${data[3]}',correo2='${data[4]}',telefono1='${data[5]}',extensionTelefonica='${data[6]}',telefono2='${data[7]}',puesto='${data[8]}',tipoContacto='${data[9]}' where id_contacto='${data[0]}'`) 
             resolve({message:"actualizacion exitosa"})
         })
     }
-
     const deliteContacto  = ( data)  => {
         console.log("data",data)
         return new Promise((resolve,reject)=>{                        
@@ -464,14 +427,12 @@ const { response } = require('express');
             resolve({message:"delite exitoso"})
         })   
     }
-
     const CotizacionVencida   = ( data)  => {
         return new Promise((resolve,reject)=>{                        
             client.query(`update cotizaciones set vigencia = "vencida"  where NumFolio='${data[0]}'`);
             resolve({message:`folio ${data[0]} vencida`})
         })
     }
-
     const getContactosId   = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`select * from contacto where fk_clientesads='${data[0]}'`, function (err,results,fields ) {                
@@ -481,7 +442,6 @@ const { response } = require('express');
             }) 
         })
     }
-
     const getCotizacionFk_Contactos = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`select * from contacto where id_contacto='${data[0]}'`, function (err,results,fields ) {                
@@ -491,8 +451,7 @@ const { response } = require('express');
             }) 
         })
     }
-
-   const AccesoSistema = ( data)  => {
+    const AccesoSistema = ( data)  => {
                 return new Promise((resolve,reject)=>{
                     let año  = new Date().getFullYear()
                     function generateUUID() {
@@ -569,7 +528,6 @@ const { response } = require('express');
             }
         
     const LoginClientes = ( data)  => {
-        // console.log("data",data)
         return new Promise((resolve,reject) =>{ 
             client.query(`select * from contacto where correo1= '${data[0]}'`,
                 function(err,results,field){
@@ -577,7 +535,6 @@ const { response } = require('express');
                     }
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);
-                // console.log("resultados",resultados)
                 if(resultados[0]){
                     client.query(`select * from clientesads where acceso = 'true' and id_cliente = '${resultados[0].fk_clientesads}'`,function(error,result,fields){
                         let string2 = JSON.stringify(result)
@@ -620,7 +577,6 @@ const { response } = require('express');
             resolve({message:"actualización exitosa"})
         })
     }
-
     const GetClienteByCorreo = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`select * from clientesads inner join contacto on contacto.fk_clientesads = clientesads.id_cliente where contacto.correo1='${data[0]}'`, function (err,results,fields ) {  
@@ -631,7 +587,6 @@ const { response } = require('express');
             })
         })
     }
-
     const UpdatePasswordCliente = ( data)  => {
         return new Promise((resolve,reject)=>{
             bcrypt.genSalt(SALT_WORK_FACTOR,function(error,salt){
@@ -651,7 +606,6 @@ const { response } = require('express');
             
         })
     }
-
     const RegisterSupport = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`insert into soporte (fechaSoporte,consola,numeroPoliza,asunto,fk_cliente) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}')`)
@@ -667,7 +621,6 @@ const { response } = require('express');
             })
         })
     }
-
     const getCotizacionByFolio = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`select * from cotizaciones inner join productoservicio on cotizaciones.fk_productoservicio = productoservicio.id_productoservicio 
@@ -680,7 +633,6 @@ const { response } = require('express');
             }) 
         })
     }
-
     const QuitarAccesoSistema = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`update clientesads set acceso = 'false', fk_contactoAcceso = ''  where id_cliente  = '${data[0]}'`)
@@ -693,9 +645,8 @@ const { response } = require('express');
             return new Promise((resolve,reject)=>{ 
                 client.query(`insert into videosprivados(descripcion,autor,urlVideos,fechaInicio,fechaExpiracion,statusVideo,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','true','${data[5]}')`) 
                 resolve({message:"registro exitoso"})            
-            })
-        }
-    
+        })
+    }    
     const getURLVideos = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`select * from videosPrivados where fk_empresa='${data[0]}'`, function (err,results,fields ) {                
@@ -705,9 +656,6 @@ const { response } = require('express');
             })
         })
     } 
-    
-    
-
     const ventas = (data)=> {   
         console.log("valor de data venta",data)     
         // console.log("numFolio:", data[0],"cantidad:",data[1],"descuento:",data[2],"descuentoAplicado:",data[3],"TotalPrecioProducto:",data[4],
@@ -716,17 +664,15 @@ const { response } = require('express');
             client.query(`insert into ventas(numFolio,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,ProductoPrecioUnitario,TotalPrecioProductoIVA,fechaPago,hora,banco,referenciaPago,tipoPago,importe,fechaEmisionVenta,statusPoliza,fk_productoServicio,fk_cliente,fk_adminalfa,fk_empresa,fk_contacto)values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[10]}','${data[11]}','${data[12]}','${data[13]}','${data[14]}','${data[15]}','${data[16]}','${data[17]}','${data[18]}','${data[19]}')`);
             resolve({message:"registro exitoso"})
         })
-    }
-     
-
-       const insertTotalesVenta = ( data)  => {
-        //    console.log("insertTotalesVenta",data)
-        return new Promise((resolve,reject)=>{
-            // client.query(`select MAX(id_cotizaciones) as maxid from cotizaciones`,function(err,results,fields){
-            //     var string =JSON.stringify(results)
-            //     var resultados = JSON.parse(string);   
-            // })
-            client.query(`insert into totalVenta(subTotal,IVA,total,numFolioVenta)values('${data[0]}','${data[1]}','${data[2]}','${data[3]}')`);
+    } 
+    const insertTotalesVenta = ( data)  => {
+    //    console.log("insertTotalesVenta",data)
+    return new Promise((resolve,reject)=>{
+        // client.query(`select MAX(id_cotizaciones) as maxid from cotizaciones`,function(err,results,fields){
+        //     var string =JSON.stringify(results)
+        //     var resultados = JSON.parse(string);   
+        // })
+        client.query(`insert into totalVenta(subTotal,IVA,total,numFolioVenta)values('${data[0]}','${data[1]}','${data[2]}','${data[3]}')`);
 
         })
     } 
@@ -736,7 +682,7 @@ const { response } = require('express');
         client.query(`insert into polizas (fechaInicial,fechaFinal,statusPoliza,fk_productoServicio,fk_cliente,fk_contacto) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}')`)
         resolve({message:"Registro exitoso"})
      })
-    } 
+    }     
     const GetPolizas = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`select * from polizas inner join clientesads on polizas.fk_cliente = clientesads.id_cliente inner join productoServicio on polizas.fk_productoServicio = productoServicio.id_productoServicio where clientesads.fk_empresa = '${data[0]}'`,function(err,results,fields){
@@ -767,13 +713,13 @@ const { response } = require('express');
             })
         })
     } 
-    const polizaVencida  = ( data)  => {
-        console.log("esto es data de polizas vencidas",data)
-        return new Promise((resolve,reject)=>{                        
-            client.query(`update polizas set statusPoliza = "inactiva"  where id_polizas='${data[0]}'`);
-            resolve({message:`folio ${data[0]} vencida`})
-        })
-    }
+    // const polizaVencida  = ( data)  => {
+    //     console.log("esto es data de polizas vencidas",data)
+    //     return new Promise((resolve,reject)=>{                        
+    //         client.query(`update polizas set statusPoliza = "inactiva"  where id_polizas='${data[0]}'`);
+    //         resolve({message:`folio ${data[0]} vencida`})
+    //     })
+    // }
     const GetTableInicioSesion = ( data)  => {
         return new Promise((resolve,reject)=>{
 
@@ -788,7 +734,6 @@ const { response } = require('express');
             })
         })
     } 
-
     const getVentasTablaIndicadores  = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`select * from ventas inner join productoServicio on ventas.fk_productoServicio = productoServicio.id_productoServicio where ventas.fk_adminalfa='${data[0]}'` , function (err,results,fields ) {            
@@ -796,10 +741,8 @@ const { response } = require('express');
                 var resultados=JSON.parse(string);
                 resolve(resultados)                   
             }) 
-    })
-}
-
-
+        })
+    }
     const getVentasTabla  = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`select * from ventas where fk_adminalfa='${data[0]}'` , function (err,results,fields ) {            
@@ -807,76 +750,76 @@ const { response } = require('express');
                 var resultados=JSON.parse(string);
                 resolve(resultados)                   
             }) 
-    })
-}
-
-const getIdVenta  = ( data)  => {
-    return new Promise((resolve,reject)=>{
-        client.query(`select * from ventas inner join clientesads on ventas.fk_cliente=clientesads.id_cliente where fk_cliente='${data[0]}'` , function (err,results,fields ) {            
-            var string = JSON.stringify(results)
-            var resultados=JSON.parse(string);    
-            resolve(resultados)
-            console.log("resultados",resultados)
-            
-        }) 
-    })
-}
-
-const getTotalesByFolioVenta = ( data)  => {
-    return new Promise((resolve,reject)=>{
-        client.query(`select * from totalventa where numFolioVenta= '${data[0]}'`,function(err,results,fields){
-            var string =JSON.stringify(results)
-            var resultados = JSON.parse(string);
-            resolve(resultados) 
-            console.log("resultados de getTotalesByFolioVenta", resultados)           
-        })    
-    })
-}
-
-const getProductoServicioByFolioVentas = ( data)  => {
-    return new Promise((resolve,reject)=>{
-        client.query(`select * from ventas inner join productoservicio on ventas.fk_productoservicio = productoservicio.id_productoServicio  where ventas.numFolio = '${data[0]}'`,
-        function(err,results,fields){
-            var string =JSON.stringify(results)
-            var resultados = JSON.parse(string);
-            resolve(resultados)
         })
-    })
-}
-
-const getMaxProductoServicio = ( data)  => {
-    return new Promise((resolve,reject)=>{
-        client.query(`select max(id_productoServicio) as id_maximo from productoservicio where asignacion = '${data[0]}'`,
-        function(err,results,fields){
-            var string =JSON.stringify(results)
-                var resultados = JSON.parse(string);
-                resolve(resultados)          
-        })
-    })
-}
-  
-    const GetProductoServicioActualizado = ( data)  => {
-
+    }
+    const getIdVenta  = ( data)  => {
         return new Promise((resolve,reject)=>{
+            client.query(`select * from ventas inner join clientesads on ventas.fk_cliente=clientesads.id_cliente where fk_cliente='${data[0]}'` , function (err,results,fields ) {            
+                var string = JSON.stringify(results)
+                var resultados=JSON.parse(string);    
+                resolve(resultados)
+                console.log("resultados",resultados)
+                
+            }) 
+        })
+    }
+    const getTotalesByFolioVenta = ( data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`select * from totalventa where numFolioVenta= '${data[0]}'`,function(err,results,fields){
+                var string =JSON.stringify(results)
+                var resultados = JSON.parse(string);
+                resolve(resultados) 
+                console.log("resultados de getTotalesByFolioVenta", resultados)           
+            })    
+        })
+    }
+    const getProductoServicioByFolioVentas = ( data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`select * from ventas inner join productoservicio on ventas.fk_productoservicio = productoservicio.id_productoServicio  where ventas.numFolio = '${data[0]}'`,
+            function(err,results,fields){
+                var string =JSON.stringify(results)
+                var resultados = JSON.parse(string);
+                resolve(resultados)
+            })
+        })
+    }
+    const getMaxProductoServicio = ( data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`select max(id_productoServicio) as id_maximo from productoservicio where asignacion = '${data[0]}'`,
+            function(err,results,fields){
+                var string =JSON.stringify(results)
+                    var resultados = JSON.parse(string);
+                    resolve(resultados)          
+            })
+        })
+    }  
+    const GetProductoServicioActualizado = ( data)  => {
+       return new Promise((resolve,reject)=>{
         client.query(`select * from productoServicio where id_productoServicio = '${data[0]}'`,
         function(err,results,fields){
             var string =JSON.stringify(results)
                 var resultados = JSON.parse(string);
                 // console.log("resultados",resultados)
                 resolve(resultados)          
+            })
         })
-    })
-}
-
-  const updateCliente = ( data)  => {
-    //   console.log("data[0]:",data[0],"data[1]:",data[1],"data[2]:",data[2],"data[3]:",data[3],"data[4]:",data[4],"data[5]:",data[5],"data[6]:",data[6],"data[7]:",data[7])
-        return new Promise((resolve,reject)=>{
-            client.query(`update clientesads set  rfc='${data[4]}',razonSocial='${data[3]}',tipoEmpresa='${data[6]}',tamanoEmpresa='${data[5]}',giroEmpresarial='${data[2]}',paginaWeb='${data[7]}',domicilioFiscal='${data[1]}' where id_cliente='${data[0]}'`) 
-            resolve({message:"actualizacion exitosa"})
+    }
+    const updateCliente = ( data)  => {
+        //   console.log("data[0]:",data[0],"data[1]:",data[1],"data[2]:",data[2],"data[3]:",data[3],"data[4]:",data[4],"data[5]:",data[5],"data[6]:",data[6],"data[7]:",data[7])
+            return new Promise((resolve,reject)=>{
+                client.query(`update clientesads set  rfc='${data[4]}',razonSocial='${data[3]}',tipoEmpresa='${data[6]}',tamanoEmpresa='${data[5]}',giroEmpresarial='${data[2]}',paginaWeb='${data[7]}',domicilioFiscal='${data[1]}' where id_cliente='${data[0]}'`) 
+                resolve({message:"actualizacion exitosa"})
+        })
+     }
+    const polizaVencida   = ( data)  => {
+        return new Promise((resolve,reject)=>{                        
+            client.query(`update polizas set StatusPoliza = "vencida"  where id_polizas='${data[0]}'`);
+            resolve({message:`folio ${data[0]} vencida`})
         })
     }
    
 module.exports={
+    polizaVencida,
     updateCliente,
     getCotizacionesFolio,
     GetProductoServicioActualizado,

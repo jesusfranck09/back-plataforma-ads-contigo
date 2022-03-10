@@ -28,9 +28,10 @@ type Mutation {
      registerPoliza(data:[String]!):message
      activarPoliza(data:[String]!):[message]
      editarPoliza(data:[String]!):[message]
-     polizaVencida(data:[String]!):message
+    #  polizaVencida(data:[String]!):message
      updateInsertProductoServicio(data:[String]!):updateInsertProductoServicio
      updateCliente(data:[String]!):updateCliente
+     polizaVencida(data:[String]!):polizas
 }
 
 type Query{
@@ -222,7 +223,8 @@ type polizas {
     tipo:String
     concepto:String
     lineaProducto:String
-    rfc:String
+    rfc:String,
+    message:String
 }
  type insertTotalesVenta{
      subTotal:String,
