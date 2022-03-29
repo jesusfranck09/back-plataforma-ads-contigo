@@ -69,6 +69,7 @@ getVentasTablaIndicadores(data:[String]!):[ventas]
 getMaxProductoServicio(data:[String]!):[getMaxProductoServicio]
 getProductoServicioActualizado(data:[String]!):[getTablaProductoServicio]
 getCotizacionesFolio(data:[String]!):[getCotizacionesFolio]
+getAllTablaProductoServicio(data:[String]!):[getTablaProductoServicio]
 } 
 type updateCliente{
      rfc:String,
@@ -113,6 +114,17 @@ type updateCliente{
 
  type getMaxProductoServicio{
     id_maximo:String
+    id_productoServicio:String,
+    tipo:String,
+    tipoLicenciamiento:String,
+    lineaProducto:String,
+    concepto:String,
+    precio:String, 
+    consecutivo:String,
+    id_actualizacion:String,
+    asignacion:String,
+    fechaRegistro:String,
+    fk_empresa:String,
     }
 
  type updateInsertProductoServicio { 
