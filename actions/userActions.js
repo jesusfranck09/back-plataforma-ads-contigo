@@ -251,7 +251,7 @@ const { response } = require('express');
 // ********* Actualizar despues a esta cuando este funcionando la tabla de productos y servicios********
     const getTablaProductoServicio  = ( data)  => {
         return new Promise((resolve,reject)=>{     
-            client.query(`select * from productoServicio where id_actualizacion = '1'  and fk_empresa ='${data[0]}'  `, function (err,result,fields ) {                                    
+            client.query(`select * from productoServicio where fk_empresa ='${data[0]}'  `, function (err,result,fields ) {                                    
                 var string = JSON.stringify(result)
                 var resultados=JSON.parse(string);   
                 resolve(resultados)                                    
@@ -786,7 +786,7 @@ const { response } = require('express');
     }
     const getMaxProductoServicio = ( data)  => {
         return new Promise((resolve,reject)=>{
-            client.query(`select max(id_productoServicio) as id_maximo, id_productoServicio, tipo, tipoLicenciamiento, lineaProducto, concepto, precio, consecutivo, id_actualizacion, asignacion, fechaRegistro from productoservicio where asignacion = '${data[0]}'`,            function(err,results,fields){
+            client.query(`select max(id_productoServicio) as id_maximo, tipo, tipoLicenciamiento, lineaProducto, concepto, precio, consecutivo, id_actualizacion, asignacion, fechaRegistro from productoservicio where asignacion = '${data[0]}'`, function(err,results,fields){
                 var string =JSON.stringify(results)
                     var resultados = JSON.parse(string);
                     resolve(resultados)          
