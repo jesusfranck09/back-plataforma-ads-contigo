@@ -229,17 +229,18 @@ const { response } = require('express');
         console.log('esto es la data',data)
         return new Promise((resolve,reject) =>{ 
       
-        //  console.log(' esta es la query',`select * from productoServicio where fk_empresa='${data[9]}' and concepto='${data[1]}'`)
+         console.log(' esta es la query',`select * from productoServicio where fk_empresa='${data[9]}' and concepto='${data[1]}'`)
         
         //  select * from productoServicio where fk_empresa='${data[9]}' and concepto='${data[1]}'  or  consecutivo='${data[3]}'
          client.query(`select * from productoServicio where fk_empresa='${data[9]}' and concepto='${data[1]}' `,
          function(err,results,field){
           var string = JSON.stringify(results)
           var resultados=JSON.parse(string);
+          console.log("resolve",resultados[0])   
           if (resultados[0]){
               resolve({message:"El concepto ya fue registrado"})
             //   console.log("resolve",resultados[0])   
-        //   }else{   
+          }else{   
         //       console.log("insert into productoServicio(tipo,concepto,precio,consecutivo,tipoLicenciamiento,LineaProducto,id_actualizacion,asignacion,fechaRegistro,fk_empresa",data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[8],data[9])                         
             client.query(`insert into productoServicio(tipo,concepto,precio,consecutivo,tipoLicenciamiento,LineaProducto,id_actualizacion,asignacion,fechaRegistro,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}')`) 
             resolve({message:"registro exitoso"})

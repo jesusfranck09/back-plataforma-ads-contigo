@@ -513,7 +513,8 @@ type getProductoServicio{
     id_productoServicio:String,
     tipo:String,
     concepto:String,
-    precio:String  
+    precio:String, 
+    lineaProducto:String 
 }
 type getTablaProductoServicio{
     id_productoServicio:String,
