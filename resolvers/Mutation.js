@@ -173,8 +173,44 @@ const actions = require('../actions/userActions')
         var variable = cadena.split(",")
         return actions.polizaVencida(variable)
     }
+    const registerCupones =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.RegisterCupones(variable)
+    }
+    const updateCupones =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.UpdateCupones(variable)
+    }
+    const deleteCupones =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.DeleteCupones(variable)
+    }
+    const registerSolictudCotizacion =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.RegisterSolictudCotizacion(variable)
+    }
+    const sendMailSolicitudCotizacion =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.SendMailSolicitudCotizacion(variable)
+    }
+    const cancelSolicitud =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.CancelSolicitud(variable)
+    }
 
 module.exports={
+    cancelSolicitud,
+    sendMailSolicitudCotizacion,
+    registerSolictudCotizacion,
+    deleteCupones,
+    updateCupones,
+    registerCupones,
     polizaVencida,
     updateCliente,
     updateInsertProductoServicio,

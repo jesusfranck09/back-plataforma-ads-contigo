@@ -32,6 +32,12 @@ type Mutation {
      updateInsertProductoServicio(data:[String]!):updateInsertProductoServicio
      updateCliente(data:[String]!):updateCliente
      polizaVencida(data:[String]!):polizas
+     registerCupones(data:[String]!):message
+     updateCupones(data:[String]!):message
+     deleteCupones(data:[String]!):message
+     registerSolictudCotizacion(data:[String]!):message
+     sendMailSolicitudCotizacion(data:[String]!):message
+     cancelSolicitud(data:[String]!):message
 }
 
 type Query{
@@ -70,7 +76,40 @@ getMaxProductoServicio(data:[String]!):[getMaxProductoServicio]
 getProductoServicioActualizado(data:[String]!):[getTablaProductoServicio]
 getCotizacionesFolio(data:[String]!):[getCotizacionesFolio]
 getAllTablaProductoServicio(data:[String]!):[getTablaProductoServicio]
+getCupones(data:[String]!):[cupones]
+getSolicitudes(data:[String]!):[solicitudes]
+getSolicitudesByFkEmpresa(data:[String]!):[solicitudes]
 } 
+
+type solicitudes {
+    id_solicitudCotizacion:String
+    folioSolicitud:String
+    asesorAsignado:String
+    fechaEmision:String
+    fechaValidacion:String
+    fechaExpiracion:String
+    statusSolicitud:String
+    fk_productoServicio:String
+    id_productoServicio:String,
+    tipo:String,
+    tipoLicenciamiento:String,
+    lineaProducto:String,
+    concepto:String,
+    precio:String, 
+}
+
+type cupones {
+    id_cupones:String
+    codigo:String
+    descripcion:String
+    descuento:String
+    polizaActivaVencida:String
+    cuponActivo:String
+    fechaRegistro:String
+    fechaExpiracion:String
+    id_Evento:String
+    url:String
+}
 type updateCliente{
      rfc:String,
      razonSocial:String,

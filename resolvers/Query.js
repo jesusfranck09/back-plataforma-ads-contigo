@@ -190,8 +190,26 @@ const getAllTablaProductoServicio  =  (_ , data) =>{
     var variable = cadena.split(",")
 return actions.getAllTablaProductoServicio(variable)
 }
+const getCupones  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.GetCupones(variable)
+}
+const getSolicitudes  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.GetSolicitudes(variable)
+}
+const getSolicitudesByFkEmpresa  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.GetSolicitudesByFkEmpresa(variable)
+}
 
 module.exports={
+    getSolicitudesByFkEmpresa,
+    getSolicitudes,
+    getCupones,
     getAllTablaProductoServicio,
     getCotizacionesFolio,
     getProductoServicioActualizado,

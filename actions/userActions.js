@@ -820,8 +820,135 @@ const { response } = require('express');
             resolve({message:`folio ${data[0]} vencida`})
         })
     }
+
+    // ************************
+    const RegisterCupones = ( data)  => {
+        return new Promise((resolve,reject)=>{
+          client.query(`select * from cupones where id_Evento = '${data[5]}' and cuponActivo="true"`,function(err,result,fields){
+              var string = JSON.stringify(result)
+              var resultados = JSON.parse(string)
+              if(resultados[0]){
+                  resolve({message:"cupon existente"})
+              }else{
+                  client.query(`insert into cupones (codigo,descripcion,descuento,polizaActivaVencida,cuponActivo,fechaRegistro,fechaExpiracion,id_Evento,url,fk_empresa) values ('${data[8]}','${data[0]}','${data[1]}','${data[2]}','true','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}')`) 
+                  resolve({message:"registro exitoso"})
+              }
+          })
+          
+        })
+    }
+    
+  const GetCupones = ( data)  => {
+      return new Promise((resolve,reject)=>{
+          client.query(`select * from cupones where fk_empresa = '${data[0]}'`,function(err,result,fields){
+              var string = JSON.stringify(result)
+              var resultados = JSON.parse(string)
+              resolve(resultados)
+          })
+      })
+  }
+  const UpdateCupones = ( data)  => {
+      return new Promise((resolve,reject)=>{
+          client.query(`update cupones set codigo = '${data[7]}', descripcion = '${data[0]}', descuento = '${data[1]}',polizaActivaVencida = '${data[2]}',cuponActivo = 'true',fechaExpiracion= '${data[3]}',id_Evento = '${data[4]}',url = '${data[5]}' where id_cupones = '${data[6]}'`) 
+          resolve({message:"actualizacion exitoso"})
+      })
+  }
+  const DeleteCupones = ( data)  => {
+      return new Promise((resolve,reject)=>{
+          client.query(`update cupones set cuponActivo = 'false' where id_cupones = '${data[0]}'`) 
+          resolve({message:"actualizacion exitosa"})
+      })
+  }
+  const RegisterSolictudCotizacion = ( data)  => {
+      return new Promise((resolve,reject)=>{
+          client.query(`insert into solicitudCotizacion (folioSolicitud, asesorAsignado, fechaEmision, fechaValidacion, fechaExpiracion, statusSolicitud,fk_productoServicio, fk_cliente,fk_empresa) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[12]}')`)
+          resolve({message:"registro exitoso"}) 
+      })
+  }
+  const SendMailSolicitudCotizacion = ( data)  => {
+      return new Promise((resolve,reject)=>{
+          var transporter = nodemailer.createTransport({  
+              secure: false,
+              host: 'mail.diagnostico035.com',
+              port: 587,
+              auth: {
+                      user: 'info@diagnostico035.com',
+                      pass: 'zAvb54$3',                       
+              },
+              tls: {rejectUnauthorized: false},
+              });
+              const mailOptions = {
+                  from: 'info@diagnostico035.com', // sender address
+              to: `${data[6]}, jesus.francisco@ads.com.mx`, // list of receivers
+              // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
+              subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
+              text: 'Solicitud de Cotización',
+              html: `<p>Alfa y Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
+                  que ha recibido el reconocimiento como el Primer Lugar en Ventas por 16 Años consecutivos en la
+                  Ciudad de México.
+                  <br/>
+                  <br/>
+                      Solicitud de cotizacion con el folio <strong> ${data[0]} </strong> de la empresa ${data[7]}, RFC ${data[8]}, <br/><br/><br/>
+                  
+                  <br/>
+                      El documento expira el <strong>${data[9]}</strong>. 
+                  <br/>
+                  <br/>
+                    Consulte el módulo de solicitudes para más detalles y no olvide aplicar los cambios necesarios.
+                  <br/>
+                  <br/>
+                  Saludos cordiales, 
+                  <center><br/><br/><br/>
+                  El equipo de desarrollo de <br/>
+                  ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
+                  www.ads.com.mx<br/></center>
+              </p> `
+              };
+              transporter.sendMail(mailOptions, function (err, info) {
+                  if("este es el error" , err)
+                  console.log(err)
+                  else
+                  console.log("esta es la info" ,  info);
+          
+              }); 
+              resolve({message:"envio exitoso"}) 
+          })
+  }
+  const GetSolicitudes = ( data)  => {
+      return new Promise((resolve,reject)=>{
+          client.query(`select * from solicitudCotizacion inner join productoServicio on solicitudCotizacion.fk_productoServicio = productoServicio.id_productoServicio where solicitudCotizacion.fk_cliente = '${data[0]}'`,function(err,result,field){
+              var string = JSON.stringify(result)
+              var resultados =  JSON.parse(string)
+              resolve(resultados)
+          }) 
+      })
+  }
+  const CancelSolicitud = ( data)  => {
+      return new Promise((resolve,reject)=>{
+          client.query(`update solicitudCotizacion set statusSolicitud = 'Cancelada', fechaValidacion = '${data[1]}' where folioSolicitud = '${data[0]}'`);
+          resolve({message:"solicitud cancelada"})
+      })
+  }
+  const GetSolicitudesByFkEmpresa = ( data)  => {
+      return new Promise((resolve,reject)=>{
+          client.query(`select * from solicitudCotizacion inner join productoServicio on solicitudCotizacion.fk_productoServicio = productoServicio.id_productoServicio where solicitudCotizacion.fk_Empresa = '${data[0]}'`,function(err,result,field){
+              var string = JSON.stringify(result)
+              var resultados =  JSON.parse(string)
+              resolve(resultados)
+          }) 
+      })
+  }
    
 module.exports={
+    GetSolicitudesByFkEmpresa,
+    CancelSolicitud,
+    GetSolicitudes,
+    SendMailSolicitudCotizacion,
+    RegisterSolictudCotizacion,
+    DeleteCupones,
+    UpdateCupones,
+    GetCupones,
+    RegisterCupones,
     getAllTablaProductoServicio,
     polizaVencida,
     updateCliente,
