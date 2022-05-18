@@ -500,6 +500,8 @@ const { response } = require('express');
                                             Correo: ${data[1]}<br/>
                                             Contraseña:${folio}<br/>
                                             <br/>
+                                                No olvide ingresar el path "/loginCliente" en su navegador para acceder alsistema de clientes
+                                            <br/>
                                             Estimado cliente se le sugiere cambiar su <strong>contraseña</strong> para la seguridad de su sesión.
                                             <br/>
                                             <br/>
@@ -610,7 +612,75 @@ const { response } = require('express');
     }
     const RegisterSupport = ( data)  => {
         return new Promise((resolve,reject)=>{
-            client.query(`insert into soporte (fechaSoporte,consola,numeroPoliza,asunto,fk_cliente) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}')`)
+            var consecutivo;
+             client.query(`select max(id_soporte) as maxid, folio from soporte`,function(err,results,fields){
+                var string = JSON.stringify(results) 
+                var resultados = JSON.parse(string)
+                if(resultados[0].folio){
+                    consecutivo  = data[7] + (resultados[0].folio.length - 1 + 1)
+                    console.log("Si",consecutivo)
+                    client.query(`insert into soporte (fechaSoporte,consola,numeroPoliza,asunto,idTeamviewer,passTeamviewer,folio,fk_cliente) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[5]}','${data[6]}','${consecutivo}','${data[4]}')`)
+                }else{
+                    consecutivo = data[7] + 1
+                    client.query(`insert into soporte (fechaSoporte,consola,numeroPoliza,asunto,idTeamviewer,passTeamviewer,folio,fk_cliente) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[5]}','${data[6]}','${consecutivo}','${data[4]}')`)
+                    console.log("No",consecutivo)
+                }
+                console.log("resultados",resultados)
+            })
+            client.query(`select * from clientesads where id_cliente = '${data[4]}'`,function(err,result,field ){
+                var string =  JSON.stringify(result)
+                var resultados = JSON.parse(string)
+                console.log("resultados",resultados)
+                let folio =  data[7]
+            var transporter = nodemailer.createTransport({  
+                secure: false,
+                host: 'mail.diagnostico035.com',
+                port: 587,
+                auth: {
+                        user: 'info@diagnostico035.com',
+                        pass: 'zAvb54$3',                       
+                    },
+                tls: {rejectUnauthorized: false},
+                });
+                const mailOptions = {
+                    from: 'info@diagnostico035.com', // sender address
+                to: `jesus.francisco@ads.com.mx`, // list of receivers
+                // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
+                subject: 'Solicitud de soporte a Alfa Diseño de Sistemas', // Subject line
+                text: 'Datos Obtenidos',
+                html: `<p>Alfa y Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
+                    que ha recibido el reconocimiento como el Primer Lugar en Ventas por 16 Años consecutivos en la
+                    Ciudad de México.
+                    <br/>
+                    Basado en la solicitud de soporte, Se le Proporcionan los datos del clinte<br/><br/><br/>
+                    Cliente: ${resultados[0].razonSocial}<br/>
+                    RFC: ${resultados[0].rfc}<br/>
+                    Fecha de solicitud: ${data[0]}<br/>
+                    Consola: ${data[1]}<br/>
+                    Número de póliza: ${data[2]}<br/>
+                    Asunto del soporte: ${data[3]}<br/>
+                    Id del Teamviewer : ${data[5]}<br/>
+                    Contraseña de acceso: ${data[6]}<br/>
+                    Folio de la solicitud: ${folio}<br/>
+                    <br/>
+                    <strong>Nota: Se requiere seguimiento del proceso de soporte y contactar al cliente.</strong>
+                    <br/>
+                    <br/>
+                    Saludos cordiales, 
+                    <center><br/><br/><br/>
+                El equipo de desarrollo de <br/>
+                ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
+                www.ads.com.mx<br/></center>
+                </p> `
+                };
+                transporter.sendMail(mailOptions, function (err, info) {
+                    if("este es el error" , err)
+                    console.log(err)
+                    else
+                    console.log("esta es la info" ,  info);
+            
+                });
+            })
             resolve({message:"actualización exitosa"})                
         })
     }
