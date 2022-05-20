@@ -217,7 +217,6 @@ const { response } = require('express');
         })
     }   
     const updateInsertProductoServicio = (data)=> { 
-        console.log("updateInsertProductoServicio DATA",data)
         return new Promise((resolve,reject)=>{          
                 client.query(`insert into productoServicio(tipo,concepto,precio,consecutivo,tipoLicenciamiento,LineaProducto,id_actualizacion,asignacion,fechaRegistro,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}')`) 
                 resolve({message:"registro exitoso"})           
@@ -226,11 +225,8 @@ const { response } = require('express');
     // ******************
 
       const insertProductoServicio =  async data=> { 
-        console.log('esto es la data',data)
         return new Promise((resolve,reject) =>{ 
-      
-         console.log(' esta es la query',`select * from productoServicio where fk_empresa='${data[9]}' and concepto='${data[1]}'`)
-        
+        //  console.log(' esta es la query',`select * from productoServicio where fk_empresa='${data[9]}' and concepto='${data[1]}'`)
         //  select * from productoServicio where fk_empresa='${data[9]}' and concepto='${data[1]}'  or  consecutivo='${data[3]}'
          client.query(`select * from productoServicio where fk_empresa='${data[9]}' and concepto='${data[1]}' `,
          function(err,results,field){
@@ -296,16 +292,16 @@ const { response } = require('express');
             let fecha = date.toLocaleString('es')            
             var transporter = nodemailer.createTransport({  
                 secure: false,
-                host: 'mail.diagnostico035.com',
-                port: 587,
+                host: 'mailc75.carrierzone.com',
+                port: 1025,
                 auth: {
-                        user: 'info@diagnostico035.com',
-                        pass: 'jpY9f23#',                       
-                    },
+                        user: 'ventas@ads.com.mx',
+                        pass: 'drSXbXX77#',                       
+                },
                 tls: {rejectUnauthorized: false},
                 });
                 const mailOptions = {
-                    from: 'info@diagnostico035.com', // sender address
+                    from: 'ventas@ads.com.mx',  // sender address
                 to: `lizbeth.cuevas@ads.com.mx`, // list of receivers
                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
                 subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
@@ -478,16 +474,16 @@ const { response } = require('express');
                                     client.query(`update contacto set contraseña = '${hash}' where  id_contacto = '${data[2]}'`)     
                                     var transporter = nodemailer.createTransport({  
                                         secure: false,
-                                        host: 'mail.diagnostico035.com',
-                                        port: 587,
+                                        host: 'mailc75.carrierzone.com',
+                                        port: 1025,
                                         auth: {
-                                                user: 'info@diagnostico035.com',
-                                                pass: 'zAvb54$3',                       
-                                            },
+                                                user: 'ventas@ads.com.mx',
+                                                pass: 'drSXbXX77#',                       
+                                        },
                                         tls: {rejectUnauthorized: false},
                                         });
                                         const mailOptions = {
-                                            from: 'info@diagnostico035.com', // sender address
+                                            from: 'ventas@ads.com.mx',  // sender address
                                         to: `${data[1]}`, // list of receivers
                                         // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
                                         subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
@@ -625,25 +621,23 @@ const { response } = require('express');
                     client.query(`insert into soporte (fechaSoporte,consola,numeroPoliza,asunto,idTeamviewer,passTeamviewer,folio,fk_cliente) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[5]}','${data[6]}','${consecutivo}','${data[4]}')`)
                     console.log("No",consecutivo)
                 }
-                console.log("resultados",resultados)
             })
             client.query(`select * from clientesads where id_cliente = '${data[4]}'`,function(err,result,field ){
                 var string =  JSON.stringify(result)
                 var resultados = JSON.parse(string)
-                console.log("resultados",resultados)
                 let folio =  data[7]
-            var transporter = nodemailer.createTransport({  
-                secure: false,
-                host: 'mail.diagnostico035.com',
-                port: 587,
-                auth: {
-                        user: 'info@diagnostico035.com',
-                        pass: 'zAvb54$3',                       
+                var transporter = nodemailer.createTransport({  
+                    secure: false,
+                    host: 'mailc75.carrierzone.com',
+                    port: 1025,
+                    auth: {
+                            user: 'ventas@ads.com.mx',
+                            pass: 'drSXbXX77#',                       
                     },
-                tls: {rejectUnauthorized: false},
-                });
-                const mailOptions = {
-                    from: 'info@diagnostico035.com', // sender address
+                    tls: {rejectUnauthorized: false},
+                    });
+                    const mailOptions = {
+                        from: 'ventas@ads.com.mx', // sender address
                 to: `jesus.francisco@ads.com.mx`, // list of receivers
                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
                 subject: 'Solicitud de soporte a Alfa Diseño de Sistemas', // Subject line
@@ -749,7 +743,6 @@ const { response } = require('express');
         })
     } 
     const RegisterPoliza = ( data)  => {
-        console.log("data",data)
      return new Promise((resolve,reject)=>{
         client.query(`insert into polizas (fechaInicial,fechaFinal,statusPoliza,fk_productoServicio,fk_cliente,fk_contacto) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}')`)
         resolve({message:"Registro exitoso"})
@@ -766,13 +759,13 @@ const { response } = require('express');
     } 
     const ActivarPoliza = ( data)  => {
         return new Promise((resolve,reject)=>{
-           client.query(`update polizas set fechaInicial = '${data[0]}', statusPoliza = 'activa' where id_polizas = '${data[1]}'`)
+           client.query(`update polizas set fechaInicial = '${data[0]}',fechaFinal = '${data[2]}', statusPoliza = 'activa' where id_polizas = '${data[1]}'`)
            resolve({message:"Activacion exitosa"})
         })
     } 
     const EditarPoliza = ( data)  => {
         return new Promise((resolve,reject)=>{
-           client.query(`update polizas set fechaInicial = '${data[0]}', statusPoliza = 'activa' where id_polizas = '${data[1]}'`)
+           client.query(`update polizas set fechaInicial = '${data[0]}',fechaFinal = '${data[2]}', statusPoliza = 'activa' where id_polizas = '${data[1]}'`)
            resolve({message:"Activacion exitosa"})
         })
     } 
@@ -939,16 +932,16 @@ const { response } = require('express');
       return new Promise((resolve,reject)=>{
           var transporter = nodemailer.createTransport({  
               secure: false,
-              host: 'mail.diagnostico035.com',
-              port: 587,
+              host: 'mailc75.carrierzone.com',
+              port: 1025,
               auth: {
-                      user: 'info@diagnostico035.com',
-                      pass: 'zAvb54$3',                       
+                      user: 'ventas@ads.com.mx',
+                      pass: 'drSXbXX77#',                       
               },
               tls: {rejectUnauthorized: false},
               });
               const mailOptions = {
-                  from: 'info@diagnostico035.com', // sender address
+                  from: 'ventas@ads.com.mx', // sender address
               to: `${data[6]}, jesus.francisco@ads.com.mx`, // list of receivers
               // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
               subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
