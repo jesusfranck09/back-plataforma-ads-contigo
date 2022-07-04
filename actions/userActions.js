@@ -163,7 +163,6 @@ const { response } = require('express');
             })
     }
     const getIdCotizacion  = ( data)  => {
-        console.log("getIdCotizacion",data)
         return new Promise((resolve,reject)=>{
             client.query(`select * from cotizaciones inner join clientesads on cotizaciones.fk_cliente= clientesads.id_cliente where fk_cliente='${data[0]}'` , function (err,results,fields ) {            
                 var string = JSON.stringify(results)
@@ -178,7 +177,6 @@ const { response } = require('express');
                 var string = JSON.stringify(result)
                 var resultados=JSON.parse(string);                      
                 resolve(resultados) 
-                console.log("resultados",resultados)
             }) 
         })
     }
@@ -232,7 +230,6 @@ const { response } = require('express');
          function(err,results,field){
           var string = JSON.stringify(results)
           var resultados=JSON.parse(string);
-          console.log("resolve",resultados[0])   
           if (resultados[0]){
               resolve({message:"El concepto ya fue registrado"})
             //   console.log("resolve",resultados[0])   
@@ -266,19 +263,16 @@ const { response } = require('express');
         })
     } 
     const insertClientesAlfa = (data)=> { 
-        console.log("data",data)
         return new Promise((resolve,reject)=>{ 
             client.query(`insert into clientesads(rfc,razonSocial,tipoEmpresa,tamanoEmpresa,giroEmpresarial,domicilioFiscal,paginaWeb,acceso,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','false','${data[7]}')`) 
             resolve({message:"registro exitoso"})            
         })
     }
     const getTablaClientesAlfa = ( data)  => {
-        console.log("getTablaClientes",data)
         return new Promise((resolve,reject)=>{
             client.query(`select * from clientesads where fk_empresa='${data[0]}' ORDER BY razonSocial ASC`, function (err,results,fields ) {                
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);   
-                console.log("resulve resultados",resultados)
                 resolve(resultados)
             }) 
         })
@@ -302,7 +296,7 @@ const { response } = require('express');
                 });
                 const mailOptions = {
                     from: 'ventas@ads.com.mx',  // sender address
-                to: `lizbeth.cuevas@ads.com.mx`, // list of receivers
+                to: `jesus.francisco@ads.com.mx`, // list of receivers
                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
                 subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
                 text: 'Archivo de cotización PDF',
@@ -367,18 +361,15 @@ const { response } = require('express');
         })
     }
     const getProductoServicioByFolio = ( data)  => {
-        console.log("select * from cotizaciones inner join productoservicio on cotizaciones.fk_productoservicio = productoservicio.id_productoServicio  where cotizaciones.NumFolio =",data[0])
         return new Promise((resolve,reject)=>{
             client.query(`select * from cotizaciones inner join productoservicio on cotizaciones.fk_productoservicio = productoservicio.id_productoServicio  where cotizaciones.NumFolio ='${data[0]}'`,function(err,results,fields){
                 var string =JSON.stringify(results)
                 var resultados = JSON.parse(string);
                 resolve(resultados)
-                console.log("esto es resultados",resultados)
             })
         })
     }    
     const getCotizacionesFolio  = ( data)  => {
-        console.log("select * from cotizaciones inner join productoservicio on cotizaciones.fk_productoservicio = productoservicio.id_productoServicio  where cotizaciones.NumFolio =",data)
         return new Promise((resolve,reject)=>{
             client.query(`select * from cotizaciones inner join productoservicio on cotizaciones.fk_productoservicio = productoservicio.id_productoServicio  where cotizaciones.NumFolio ='${data[0]}'`,function(err,results,fields){
                 var string =JSON.stringify(results)
@@ -419,7 +410,6 @@ const { response } = require('express');
         })
     }
     const deliteContacto  = ( data)  => {
-        console.log("data",data)
         return new Promise((resolve,reject)=>{                        
             client.query(`delete from contacto where id_contacto='${data[0]}'`) 
             resolve({message:"delite exitoso"})
@@ -614,12 +604,10 @@ const { response } = require('express');
                 var resultados = JSON.parse(string)
                 if(resultados[0].folio){
                     consecutivo  = data[7] + (resultados[0].folio.length - 1 + 1)
-                    console.log("Si",consecutivo)
-                    client.query(`insert into soporte (fechaSoporte,consola,numeroPoliza,asunto,idTeamviewer,passTeamviewer,folio,fk_cliente) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[5]}','${data[6]}','${consecutivo}','${data[4]}')`)
+                    client.query(`insert into soporte (fechaSoporte,consola,numeroPoliza,asunto,idTeamviewer,passTeamviewer,folio,fk_cliente,fk_empresa) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[5]}','${data[6]}','${consecutivo}','${data[4]}','${data[8]}')`)
                 }else{
                     consecutivo = data[7] + 1
-                    client.query(`insert into soporte (fechaSoporte,consola,numeroPoliza,asunto,idTeamviewer,passTeamviewer,folio,fk_cliente) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[5]}','${data[6]}','${consecutivo}','${data[4]}')`)
-                    console.log("No",consecutivo)
+                    client.query(`insert into soporte (fechaSoporte,consola,numeroPoliza,asunto,idTeamviewer,passTeamviewer,folio,fk_cliente,fk_empresa) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[5]}','${data[6]}','${consecutivo}','${data[4]}','${data[8]}')`)
                 }
             })
             client.query(`select * from clientesads where id_cliente = '${data[4]}'`,function(err,result,field ){
@@ -723,7 +711,6 @@ const { response } = require('express');
         })
     } 
     const ventas = (data)=> {   
-        console.log("valor de data venta",data)     
         // console.log("numFolio:", data[0],"cantidad:",data[1],"descuento:",data[2],"descuentoAplicado:",data[3],"TotalPrecioProducto:",data[4],
         // "ProductoPrecioUnitario:",data[5],"TotalPrecioProductoIVA:",data[6],"fechaPago:",data[7],"hora:",data[8],"banco:",data[9],"referenciaPago:",data[10],"tipoPago:",data[11],"importe:",data[12],"fechaInicialPoliza:",data[13],"statusPoliza:",data[14],"fk_productoServicio:",data[15],"fk_cliente:",data[16],"fk_adminalfa",data[17],"fk_empresa:",data[18],"fk_contacto:",data[19]);   
             return new Promise( (resolve,reject)=>{  
@@ -792,8 +779,6 @@ const { response } = require('express');
             function(err,results,fields){
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);
-                console.log("resultados",resultados)
-
                 resolve(resultados)
                 
             })
@@ -822,9 +807,7 @@ const { response } = require('express');
             client.query(`select * from ventas inner join clientesads on ventas.fk_cliente=clientesads.id_cliente where fk_cliente='${data[0]}'` , function (err,results,fields ) {            
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);    
-                resolve(resultados)
-                console.log("resultados",resultados)
-                
+                resolve(resultados)                
             }) 
         })
     }
@@ -834,7 +817,6 @@ const { response } = require('express');
                 var string =JSON.stringify(results)
                 var resultados = JSON.parse(string);
                 resolve(resultados) 
-                console.log("resultados de getTotalesByFolioVenta", resultados)           
             })    
         })
     }
@@ -858,7 +840,6 @@ const { response } = require('express');
         })
     }  
     const GetProductoServicioActualizado = ( data)  => {
-        console.log("data",data)  
        return new Promise((resolve,reject)=>{
         client.query(`select * from productoServicio where id_productoServicio = '${data[0]}'`,
         function(err,results,fields){
@@ -866,7 +847,6 @@ const { response } = require('express');
                 var resultados = JSON.parse(string);
              
                 resolve(resultados)  
-                console.log("resultados",resultados)        
             })
         })
     }
@@ -1001,8 +981,18 @@ const { response } = require('express');
           }) 
       })
   }
-   
+  const GetSupport = ( data)  => {
+    return new Promise((resolve,reject)=>{
+        client.query(`select * from soporte inner join clientesads on soporte.fk_cliente = clientesads.id_cliente where soporte.fk_empresa = '${data[0]}'`,function(err,results,fields){
+           var string = JSON.stringify(results);
+           var resultados = JSON.parse(string); 
+           console.log("resultados",resultados)
+           resolve(resultados)
+        })
+    })
+}
 module.exports={
+    GetSupport,
     GetSolicitudesByFkEmpresa,
     CancelSolicitud,
     GetSolicitudes,

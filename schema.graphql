@@ -79,8 +79,23 @@ getAllTablaProductoServicio(data:[String]!):[getTablaProductoServicio]
 getCupones(data:[String]!):[cupones]
 getSolicitudes(data:[String]!):[solicitudes]
 getSolicitudesByFkEmpresa(data:[String]!):[solicitudes]
+getSupport(data:[String]!):[support]
 } 
 
+type support {
+    id_soporte:String
+    fechaSoporte:String
+    consola:String
+    numeroPoliza:String
+    asunto:String
+    idTeamviewer:String
+    passTeamviewer:String
+    folio:String
+    status:String
+    ejecutivo:String
+    rfc:String
+    razonSocial:String
+}
 type solicitudes {
     id_solicitudCotizacion:String
     folioSolicitud:String

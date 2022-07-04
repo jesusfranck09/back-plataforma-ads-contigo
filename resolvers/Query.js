@@ -206,7 +206,14 @@ const getSolicitudesByFkEmpresa  =  (_ , data) =>{
 return actions.GetSolicitudesByFkEmpresa(variable)
 }
 
+const getSupport  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.GetSupport(variable)
+}
+
 module.exports={
+    getSupport,
     getSolicitudesByFkEmpresa,
     getSolicitudes,
     getCupones,
