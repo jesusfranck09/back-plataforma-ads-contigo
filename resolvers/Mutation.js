@@ -203,8 +203,13 @@ const actions = require('../actions/userActions')
         var variable = cadena.split(",")
         return actions.CancelSolicitud(variable)
     }
-
+    const sendSupport =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.SendSupport(variable)
+    }
 module.exports={
+    sendSupport,
     cancelSolicitud,
     sendMailSolicitudCotizacion,
     registerSolictudCotizacion,

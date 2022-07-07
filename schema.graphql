@@ -38,6 +38,7 @@ type Mutation {
      registerSolictudCotizacion(data:[String]!):message
      sendMailSolicitudCotizacion(data:[String]!):message
      cancelSolicitud(data:[String]!):message
+     sendSupport(data:[String]!):message
 }
 
 type Query{

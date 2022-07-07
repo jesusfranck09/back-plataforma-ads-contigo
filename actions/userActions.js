@@ -441,79 +441,88 @@ const { response } = require('express');
     }
     const AccesoSistema = ( data)  => {
                 return new Promise((resolve,reject)=>{
-                    let año  = new Date().getFullYear()
-                    function generateUUID() {
-                        var d = new Date().getTime();
-                        var uuid = 'xCxxyx'.replace(/[xy]/g, function (c) {
-                            var r = (d + Math.random() * 16) % 16 | 0;
-                            d = Math.floor(d / 16);
-                            return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-                        });
-                        return uuid;
-                    }
-                    let folio = (generateUUID()).toUpperCase() + año;
-                    bcrypt.genSalt(SALT_WORK_FACTOR,function(error,salt){
-                        if (error){    
-                             reject(error,{message:'error',token:error})
-                        } else{
-                            bcrypt.hash(folio,salt, function(error,hash){
-                                if(error){
-                                   throw error
+                    client.query(`select * from clientesAds where fk_contactoAcceso = '${data[2]}'`,function(err,result,field){
+                        var string = JSON.stringify(result)
+                        var resultado = JSON.parse(string)
+                        if(resultado[0]){
+                            resolve({message:"Contacto ya asignado"})
+                        }else{
+                            let año  = new Date().getFullYear()
+                            function generateUUID() {
+                                var d = new Date().getTime();
+                                var uuid = 'xCxxyx'.replace(/[xy]/g, function (c) {
+                                    var r = (d + Math.random() * 16) % 16 | 0;
+                                    d = Math.floor(d / 16);
+                                    return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+                                });
+                                return uuid;
+                            }
+                            let folio = (generateUUID()).toUpperCase() + año;
+                            bcrypt.genSalt(SALT_WORK_FACTOR,function(error,salt){
+                                if (error){    
+                                     reject(error,{message:'error',token:error})
                                 } else{
-                                    client.query(`update clientesads set acceso = "true", fk_contactoAcceso = '${data[2]}' where  id_cliente = '${data[0]}'`)     
-                                    client.query(`update contacto set contraseña = '${hash}' where  id_contacto = '${data[2]}'`)     
-                                    var transporter = nodemailer.createTransport({  
-                                        secure: false,
-                                        host: 'mailc75.carrierzone.com',
-                                        port: 1025,
-                                        auth: {
-                                                user: 'ventas@ads.com.mx',
-                                                pass: 'drSXbXX77#',                       
-                                        },
-                                        tls: {rejectUnauthorized: false},
-                                        });
-                                        const mailOptions = {
-                                            from: 'ventas@ads.com.mx',  // sender address
-                                        to: `${data[1]}`, // list of receivers
-                                        // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
-                                        subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
-                                        text: 'Datos de acceso',
-                                        html: `<p>Alfa y Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
-                                            que ha recibido el reconocimiento como el Primer Lugar en Ventas por 16 Años consecutivos en la
-                                            Ciudad de México.
-                                            <br/>
-                                            Basado en su solicitud de acceso, Se le otorgan los siguientes datos para que usted disfrute de los beneficios de la plataforma de ADS en el sitio https://www.google.com<br/><br/><br/>
-                                            Correo: ${data[1]}<br/>
-                                            Contraseña:${folio}<br/>
-                                            <br/>
-                                                No olvide ingresar el path "/loginCliente" en su navegador para acceder alsistema de clientes
-                                            <br/>
-                                            Estimado cliente se le sugiere cambiar su <strong>contraseña</strong> para la seguridad de su sesión.
-                                            <br/>
-                                            <br/>
-                                            Saludos cordiales, 
-                                            <center><br/><br/><br/>
-                                        El equipo de desarrollo de <br/>
-                                        ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
-                                        www.ads.com.mx<br/></center>
-                                        </p> `
-                                        };
-                                        transporter.sendMail(mailOptions, function (err, info) {
-                                            if("este es el error" , err)
-                                            console.log(err)
-                                            else
-                                            console.log("esta es la info" ,  info);
-                                    
-                                        });
-                                      resolve({           
-                                       message:"acceso permitido",
+                                    bcrypt.hash(folio,salt, function(error,hash){
+                                        if(error){
+                                           throw error
+                                        } else{
+                                            client.query(`update clientesads set acceso = "true", fk_contactoAcceso = '${data[2]}' where  id_cliente = '${data[0]}'`)     
+                                            client.query(`update contacto set contraseña = '${hash}' where  id_contacto = '${data[2]}'`)     
+                                            var transporter = nodemailer.createTransport({  
+                                                secure: false,
+                                                host: 'mailc75.carrierzone.com',
+                                                port: 1025,
+                                                auth: {
+                                                        user: 'ventas@ads.com.mx',
+                                                        pass: 'drSXbXX77#',                       
+                                                },
+                                                tls: {rejectUnauthorized: false},
+                                                });
+                                                const mailOptions = {
+                                                    from: 'ventas@ads.com.mx',  // sender address
+                                                to: `${data[1]},jesus.francisco@ads.com.mx`, // list of receivers
+                                                // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
+                                                subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
+                                                text: 'Datos de acceso',
+                                                html: `<p>Alfa y Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
+                                                    que ha recibido el reconocimiento como el Primer Lugar en Ventas por 16 Años consecutivos en la
+                                                    Ciudad de México.
+                                                    <br/>
+                                                    Basado en su solicitud de acceso, Se le otorgan los siguientes datos para que usted disfrute de los beneficios de la plataforma de ADS en el sitio https://www.google.com<br/><br/><br/>
+                                                    Correo: ${data[1]}<br/>
+                                                    Contraseña:${folio}<br/>
+                                                    <br/>
+                                                        No olvide ingresar el path "/loginCliente" en su navegador para acceder alsistema de clientes
+                                                    <br/>
+                                                    Estimado cliente se le sugiere cambiar su <strong>contraseña</strong> para la seguridad de su sesión.
+                                                    <br/>
+                                                    <br/>
+                                                    Saludos cordiales, 
+                                                    <center><br/><br/><br/>
+                                                El equipo de desarrollo de <br/>
+                                                ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
+                                                www.ads.com.mx<br/></center>
+                                                </p> `
+                                                };
+                                                transporter.sendMail(mailOptions, function (err, info) {
+                                                    if("este es el error" , err)
+                                                    console.log(err)
+                                                    else
+                                                    console.log("esta es la info" ,  info);
+                                            
+                                                });
+                                              resolve({           
+                                               message:"acceso permitido",
+                                            })
+                                              
+                                        }
                                     })
-                                      
                                 }
+                       
                             })
                         }
-               
                     })
+                    
                 })
             }
         
@@ -991,7 +1000,79 @@ const { response } = require('express');
         })
     })
 }
+const SendSupport = ( data)  => {
+    return new Promise((resolve,reject)=>{
+        client.query(`update soporte set status = 'En proceso', ejecutivo = '${data[10]}' where id_soporte = '${data[4]}'`)
+        var transporter = nodemailer.createTransport({  
+            secure: false,
+            host: 'mailc75.carrierzone.com',
+            port: 1025,
+            auth: {
+                    user: 'ventas@ads.com.mx',
+                    pass: 'drSXbXX77#',                       
+            },
+            tls: {rejectUnauthorized: false},
+            });
+            const mailOptions = {
+                from: 'ventas@ads.com.mx', // sender address
+            to: `${data[11]}, jesus.francisco@ads.com.mx`, // list of receivers
+            // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
+            subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
+            text: 'Solicitud Soporte',
+            html: `<p>Alfa y Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
+                que ha recibido el reconocimiento como el Primer Lugar en Ventas por 16 Años consecutivos en la
+                Ciudad de México.
+                <br/>
+                <br/>
+                    Solicitud de soporte con el folio <strong> ${data[3]} </strong> de la empresa ${data[8]}, RFC ${data[9]}, <br/><br/><br/>
+                
+                <br/>
+                    Fecha de solicitud  <strong>${data[2]}</strong>. 
+                <br/>
+                <br/>
+                    Asesor asignado  <strong>${data[10]}</strong>. 
+                <br/>
+                <br/>
+                    Asunto  <strong>${data[0]}</strong>. 
+                <br/>
+                <br/>
+                    No. Póliza  <strong>${data[7]}</strong>. 
+                <br/>
+                <br/>
+                    Folio  <strong>${data[3]}</strong>. 
+                <br/>
+                <br/>
+                    Consola  <strong>${data[1]}</strong>. 
+                <br/>
+                <br/>
+                    Id Acceso  <strong>${data[5]}</strong>. 
+                <br/>
+                <br/>
+                    Contraseña  <strong>${data[6]}</strong>. 
+                <br/>
+                <br/>
+                  Consulte el módulo de solicitudes para más detalles y no olvide aplicar los cambios necesarios.
+                <br/>
+                <br/>
+                Saludos cordiales, 
+                <center><br/><br/><br/>
+                El equipo de desarrollo de <br/>
+                ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
+                www.ads.com.mx<br/></center>
+            </p> `
+            };
+            transporter.sendMail(mailOptions, function (err, info) {
+                if("este es el error" , err)
+                console.log(err)
+                else
+                console.log("esta es la info" ,  info);
+        
+            }); 
+        resolve({message:"Asesor asignado"});
+    })
+}
 module.exports={
+    SendSupport,
     GetSupport,
     GetSolicitudesByFkEmpresa,
     CancelSolicitud,
