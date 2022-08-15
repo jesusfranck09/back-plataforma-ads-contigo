@@ -739,9 +739,17 @@ const { response } = require('express');
         })
     } 
     const RegisterPoliza = ( data)  => {
-     return new Promise((resolve,reject)=>{
-        client.query(`insert into polizas (fechaInicial,fechaFinal,statusPoliza,fk_productoServicio,fk_cliente,fk_contacto) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}')`)
-        resolve({message:"Registro exitoso"})
+     return new Promise(async(resolve,reject)=>{
+        client.query(`insert into polizas (fechaInicial,fechaFinal,statusPoliza,fk_productoServicio,fk_cliente,fk_contacto) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}')`,function(err,results){
+        
+            var string = JSON.stringify(results)
+            var resultados =  JSON.parse(string)
+            console.log("resultados",resultados)
+            
+            if(resultados.insertId){
+                resolve({message:"registro exitoso",maxid:resultados.insertId})
+            }
+        })
      })
     }     
     const GetPolizas = ( data)  => {
@@ -1071,7 +1079,18 @@ const SendSupport = ( data)  => {
         resolve({message:"Asesor asignado"});
     })
 }
+const GetPolizasById = ( data)  => {
+    console.log("data",data)
+    return new Promise((resolve,reject)=>{
+        client.query(`select * from polizas inner join productoServicio on polizas.fk_productoServicio = productoServicio.id_productoServicio where id_polizas = '${data[0]}'`,function(err,results,fields){
+           var string = JSON.stringify(results);
+           var resultados = JSON.parse(string); 
+           resolve(resultados)
+        })
+    })
+}
 module.exports={
+    GetPolizasById,
     SendSupport,
     GetSupport,
     GetSolicitudesByFkEmpresa,

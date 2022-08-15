@@ -25,8 +25,8 @@ type Mutation {
     #  insertVenta(data:[String]!):insertVenta
      ventas(data:[String]!):ventas
      insertTotalesVenta(data:[String]!):insertTotalesVenta
-     registerPoliza(data:[String]!):message
-     activarPoliza(data:[String]!):[message]
+     registerPoliza(data:[String]!):polizas
+     activarPoliza(data:[String]!):message
      editarPoliza(data:[String]!):[message]
     #  polizaVencida(data:[String]!):message
      updateInsertProductoServicio(data:[String]!):updateInsertProductoServicio
@@ -81,6 +81,7 @@ getCupones(data:[String]!):[cupones]
 getSolicitudes(data:[String]!):[solicitudes]
 getSolicitudesByFkEmpresa(data:[String]!):[solicitudes]
 getSupport(data:[String]!):[support]
+getPolizasById(data:[String]!):[polizas]
 } 
 
 type support {
@@ -292,6 +293,7 @@ type polizas {
     lineaProducto:String
     rfc:String,
     message:String
+    maxid:String
 }
  type insertTotalesVenta{
      subTotal:String,
