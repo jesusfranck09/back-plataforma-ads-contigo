@@ -210,14 +210,31 @@ const { response } = require('express');
     }  
     const insertContacto = (data)=> { 
         return new Promise((resolve,reject)=>{
-            client.query(`insert into contacto(nombre,apellidos,correo1,correo2,telefono1,extensionTelefonica,telefono2,puesto,tipoContacto,fk_clientesads) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}')`) 
-            resolve({message:"registro exitoso"})
+            client.query(`select * from contacto where correo1 ='${data[2]}'`,  function (err,result,fields ) {                                    
+                var string = JSON.stringify(result)
+                var resultados=JSON.parse(string);                                
+                if(resultados[0]){
+                    resolve({message:"correo existente"})
+                }else{
+                    client.query(`insert into contacto(nombre,apellidos,correo1,correo2,telefono1,extensionTelefonica,telefono2,puesto,tipoContacto,fk_clientesads) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}')`) 
+                    resolve({message:"registro exitoso"})
+                }
+            }) 
         })
     }   
     const updateInsertProductoServicio = (data)=> { 
-        return new Promise((resolve,reject)=>{          
-                client.query(`insert into productoServicio(tipo,concepto,precio,consecutivo,tipoLicenciamiento,LineaProducto,id_actualizacion,asignacion,fechaRegistro,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}')`) 
-                resolve({message:"registro exitoso"})           
+        return new Promise((resolve,reject)=>{  
+            client.query(`select * from productoServicio where consecutivo ='${data[3]}'`,  function (err,result,fields ) {                                    
+                var string = JSON.stringify(result)
+                var resultados=JSON.parse(string);                                
+                if(resultados[0]){
+                    resolve({message:"clave existente"})
+                }else{
+                    client.query(`insert into productoServicio(tipo,concepto,precio,consecutivo,tipoLicenciamiento,LineaProducto,id_actualizacion,asignacion,fechaRegistro,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}')`) 
+                    resolve({message:"registro exitoso"})      
+                }
+            })         
+                     
         })
     }
     // ******************
@@ -264,8 +281,17 @@ const { response } = require('express');
     } 
     const insertClientesAlfa = (data)=> { 
         return new Promise((resolve,reject)=>{ 
-            client.query(`insert into clientesads(rfc,razonSocial,tipoEmpresa,tamanoEmpresa,giroEmpresarial,domicilioFiscal,paginaWeb,acceso,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','false','${data[7]}')`) 
-            resolve({message:"registro exitoso"})            
+            client.query(`select * from clientesads where rfc = '${data[0]}'`,function(err,results,fields){
+                var string = JSON.stringify(results)
+                var resultados=JSON.parse(string);   
+                if(resultados[0]){
+                    resolve({message:"rfc ya registrado"})   
+                }else{
+                    client.query(`insert into clientesads(rfc,razonSocial,tipoEmpresa,tamanoEmpresa,giroEmpresarial,domicilioFiscal,paginaWeb,acceso,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','false','${data[7]}')`) 
+                    resolve({message:"registro exitoso"})   
+                }
+            })
+                    
         })
     }
     const getTablaClientesAlfa = ( data)  => {
