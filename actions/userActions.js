@@ -316,7 +316,7 @@ const { response } = require('express');
                 port: 1025,
                 auth: {
                         user: 'ventas@ads.com.mx',
-                        pass: 'drSXbXX77#',                       
+                        pass: 'E7!84JnG',                       
                 },
                 tls: {rejectUnauthorized: false},
                 });
@@ -500,7 +500,7 @@ const { response } = require('express');
                                                 port: 1025,
                                                 auth: {
                                                         user: 'ventas@ads.com.mx',
-                                                        pass: 'drSXbXX77#',                       
+                                                        pass: 'E7!84JnG',                       
                                                 },
                                                 tls: {rejectUnauthorized: false},
                                                 });
@@ -655,7 +655,7 @@ const { response } = require('express');
                     port: 1025,
                     auth: {
                             user: 'ventas@ads.com.mx',
-                            pass: 'drSXbXX77#',                       
+                            pass: 'E7!84JnG',                       
                     },
                     tls: {rejectUnauthorized: false},
                     });
@@ -959,7 +959,7 @@ const { response } = require('express');
               port: 1025,
               auth: {
                       user: 'ventas@ads.com.mx',
-                      pass: 'drSXbXX77#',                       
+                      pass: 'E7!84JnG',                       
               },
               tls: {rejectUnauthorized: false},
               });
@@ -1043,7 +1043,7 @@ const SendSupport = ( data)  => {
             port: 1025,
             auth: {
                     user: 'ventas@ads.com.mx',
-                    pass: 'drSXbXX77#',                       
+                    pass: 'E7!84JnG',                       
             },
             tls: {rejectUnauthorized: false},
             });
