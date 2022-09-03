@@ -241,20 +241,21 @@ const { response } = require('express');
 
       const insertProductoServicio =  async data=> { 
         return new Promise((resolve,reject) =>{ 
-        //  console.log(' esta es la query',`select * from productoServicio where fk_empresa='${data[9]}' and concepto='${data[1]}'`)
-        //  select * from productoServicio where fk_empresa='${data[9]}' and concepto='${data[1]}'  or  consecutivo='${data[3]}'
-         client.query(`select * from productoServicio where fk_empresa='${data[9]}' and concepto='${data[1]}' `,
+         client.query(`select * from productoServicio where fk_empresa='${data[9]}' and concepto='${data[1]}' and consecutivo = '${data[3]}' `,
          function(err,results,field){
           var string = JSON.stringify(results)
           var resultados=JSON.parse(string);
           if (resultados[0]){
               resolve({message:"El concepto ya fue registrado"})
-            //   console.log("resolve",resultados[0])   
           }else{   
-        //       console.log("insert into productoServicio(tipo,concepto,precio,consecutivo,tipoLicenciamiento,LineaProducto,id_actualizacion,asignacion,fechaRegistro,fk_empresa",data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[8],data[9])                         
-            client.query(`insert into productoServicio(tipo,concepto,precio,consecutivo,tipoLicenciamiento,LineaProducto,id_actualizacion,asignacion,fechaRegistro,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}')`) 
+            client.query(`insert into productoServicio(tipo,concepto,precio,consecutivo,tipoLicenciamiento,LineaProducto,id_actualizacion,asignacion,fechaRegistro,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}')`,function(param1,param2){
+                console.log("param2",param2)
+                var stringParam = JSON.stringify(param2)
+                var resultadosParam =  JSON.parse(stringParam)
+                client.query(`update productoServicio set asignacion ='${resultadosParam.insertId}' where id_productoServicio = '${resultadosParam.insertId}'`)
+            }) 
             resolve({message:"registro exitoso"})
-             }        
+          }        
       })
       })
     }
@@ -767,10 +768,8 @@ const { response } = require('express');
     const RegisterPoliza = ( data)  => {
      return new Promise(async(resolve,reject)=>{
         client.query(`insert into polizas (fechaInicial,fechaFinal,statusPoliza,fk_productoServicio,fk_cliente,fk_contacto) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}')`,function(err,results){
-        
             var string = JSON.stringify(results)
             var resultados =  JSON.parse(string)
-            console.log("resultados",resultados)
             
             if(resultados.insertId){
                 resolve({message:"registro exitoso",maxid:resultados.insertId})
