@@ -640,10 +640,10 @@ const { response } = require('express');
                 var resultados = JSON.parse(string)
                 if(resultados[0].folio){
                     consecutivo  = data[7] + (resultados[0].folio.length - 1 + 1)
-                    client.query(`insert into soporte (fechaSoporte,consola,numeroPoliza,asunto,idTeamviewer,passTeamviewer,folio,fk_cliente,fk_empresa) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[5]}','${data[6]}','${consecutivo}','${data[4]}','${data[8]}')`)
+                    client.query(`insert into soporte (fechaSoporte,consola,numeroPoliza,asunto,idTeamviewer,passTeamviewer,folio,status,fk_cliente,fk_empresa) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[5]}','${data[6]}','${consecutivo}','Pendiente','${data[4]}','${data[8]}')`)
                 }else{
                     consecutivo = data[7] + 1
-                    client.query(`insert into soporte (fechaSoporte,consola,numeroPoliza,asunto,idTeamviewer,passTeamviewer,folio,fk_cliente,fk_empresa) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[5]}','${data[6]}','${consecutivo}','${data[4]}','${data[8]}')`)
+                    client.query(`insert into soporte (fechaSoporte,consola,numeroPoliza,asunto,idTeamviewer,passTeamviewer,folio,status,fk_cliente,fk_empresa) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[5]}','${data[6]}','${consecutivo}','Pendiente','${data[4]}','${data[8]}')`)
                 }
             })
             client.query(`select * from clientesads where id_cliente = '${data[4]}'`,function(err,result,field ){
@@ -662,7 +662,7 @@ const { response } = require('express');
                     });
                     const mailOptions = {
                         from: 'ventas@ads.com.mx', // sender address
-                to: `jesus.francisco@ads.com.mx`, // list of receivers
+                to: `miriam.quiroz@ads.com.mx,jesus.francisco@ads.com.mx`, // list of receivers
                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
                 subject: 'Solicitud de soporte a Alfa Diseño de Sistemas', // Subject line
                 text: 'Datos Obtenidos',
@@ -671,17 +671,18 @@ const { response } = require('express');
                     Ciudad de México.
                     <br/>
                     Basado en la solicitud de soporte, Se le Proporcionan los datos del clinte<br/><br/><br/>
-                    Cliente: ${resultados[0].razonSocial}<br/>
-                    RFC: ${resultados[0].rfc}<br/>
-                    Fecha de solicitud: ${data[0]}<br/>
-                    Consola: ${data[1]}<br/>
-                    Número de póliza: ${data[2]}<br/>
-                    Asunto del soporte: ${data[3]}<br/>
-                    Id del Teamviewer : ${data[5]}<br/>
-                    Contraseña de acceso: ${data[6]}<br/>
-                    Folio de la solicitud: ${folio}<br/>
+                    Cliente: <strong>${resultados[0].razonSocial}</strong><br/>
+                    RFC: <strong>${resultados[0].rfc}</strong><br/>
+                    Fecha de solicitud: <strong>${data[0]}</strong><br/>
+                    Consola: <strong>${data[1]}</strong><br/>
+                    Número de póliza: <strong>${data[2]}</strong><br/>
+                    Asunto del soporte: <strong>${data[3]}</strong><br/>
+                    Status: <strong>Pendiente de asignar</strong> <br/>
+                    Id del Teamviewer: <strong>${data[5]}</strong><br/>
+                    Contraseña de acceso: <strong>${data[6]}</strong><br/>
+                    Folio de la solicitud: <strong>${folio}</strong><br/>
                     <br/>
-                    <strong>Nota: Se requiere seguimiento del proceso de soporte y contactar al cliente.</strong>
+                    <strong>Nota: Se requiere seguimiento del proceso de soporte dentro del módulo administración/Soporte técnico y contactar al cliente.</strong>
                     <br/>
                     <br/>
                     Saludos cordiales, 
