@@ -39,6 +39,7 @@ type Mutation {
      sendMailSolicitudCotizacion(data:[String]!):message
      cancelSolicitud(data:[String]!):message
      sendSupport(data:[String]!):message
+     endSupport(data:[String]!):message
 }
 
 type Query{
@@ -86,6 +87,7 @@ getPolizasById(data:[String]!):[polizas]
 
 type support {
     id_soporte:String
+    fk_contacto:String
     fechaSoporte:String
     consola:String
     numeroPoliza:String
@@ -97,6 +99,7 @@ type support {
     ejecutivo:String
     rfc:String
     razonSocial:String
+    fechaFinalizacion:String
 }
 type solicitudes {
     id_solicitudCotizacion:String

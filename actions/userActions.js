@@ -568,6 +568,7 @@ const { response } = require('express');
                         bcrypt.compare(data[1],resultados[0].contraseña,function(error,res){
                             if(res){
                                 resolve({
+                                id_contacto:resultados[0].id_contacto,
                                 id_cliente:resultados2[0].id_cliente,
                                 correo:resultados[0].correo1,
                                 rfc:resultados2[0].rfc,
@@ -640,10 +641,10 @@ const { response } = require('express');
                 var resultados = JSON.parse(string)
                 if(resultados[0].folio){
                     consecutivo  = data[7] + (resultados[0].folio.length - 1 + 1)
-                    client.query(`insert into soporte (fechaSoporte,consola,numeroPoliza,asunto,idTeamviewer,passTeamviewer,folio,status,fk_cliente,fk_empresa) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[5]}','${data[6]}','${consecutivo}','Pendiente','${data[4]}','${data[8]}')`)
+                    client.query(`insert into soporte (fechaSoporte,consola,numeroPoliza,asunto,idTeamviewer,passTeamviewer,folio,status,fk_cliente,fk_empresa,fk_contacto,fechaFinalizacion) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[5]}','${data[6]}','${consecutivo}','Pendiente','${data[4]}','${data[8]}','${data[9]}',"En proceso")`)
                 }else{
                     consecutivo = data[7] + 1
-                    client.query(`insert into soporte (fechaSoporte,consola,numeroPoliza,asunto,idTeamviewer,passTeamviewer,folio,status,fk_cliente,fk_empresa) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[5]}','${data[6]}','${consecutivo}','Pendiente','${data[4]}','${data[8]}')`)
+                    client.query(`insert into soporte (fechaSoporte,consola,numeroPoliza,asunto,idTeamviewer,passTeamviewer,folio,status,fk_cliente,fk_empresa,fk_contacto,fechaFinalizacion) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[5]}','${data[6]}','${consecutivo}','Pendiente','${data[4]}','${data[8]}','${data[9]}',"En proceso")`)
                 }
             })
             client.query(`select * from clientesads where id_cliente = '${data[4]}'`,function(err,result,field ){
@@ -1029,7 +1030,6 @@ const { response } = require('express');
         client.query(`select * from soporte inner join clientesads on soporte.fk_cliente = clientesads.id_cliente where soporte.fk_empresa = '${data[0]}'`,function(err,results,fields){
            var string = JSON.stringify(results);
            var resultados = JSON.parse(string); 
-           console.log("resultados",resultados)
            resolve(resultados)
         })
     })
@@ -1050,6 +1050,7 @@ const SendSupport = ( data)  => {
             const mailOptions = {
                 from: 'ventas@ads.com.mx', // sender address
             to: `${data[11]}, jesus.francisco@ads.com.mx`, // list of receivers
+            // 
             // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
             subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
             text: 'Solicitud Soporte',
@@ -1115,7 +1116,84 @@ const GetPolizasById = ( data)  => {
         })
     })
 }
+const EndSupport = ( data)  => {
+    return new Promise((resolve,reject)=>{
+        client.query(`update soporte set status = '${data[3]}', fechaFinalizacion = '${data[4]}' where id_soporte = '${data[0]}'`)
+        client.query(`select * from contacto where id_contacto = '${data[1]}'`, function(err,results,fields){
+            var string = JSON.stringify(results);
+            let random = Math.random()
+            var resultados = JSON.parse(string); 
+            console.log("resultados",resultados)
+            var transporter = nodemailer.createTransport({  
+                secure: false,
+                host: 'mailc75.carrierzone.com',
+                port: 1025,
+                auth: {
+                        user: 'ventas@ads.com.mx',
+                        pass: 'E7!84JnG',                       
+                },
+                tls: {rejectUnauthorized: false},
+                });
+                const mailOptions = {
+                    from: 'ventas@ads.com.mx', // sender address
+                to: `${resultados[0].correo1},jesus.francisco@ads.com.mx,miriam.quiroz@ads.com.mx `, // list of receivers
+                // subject: 'Finalización del soporte técnico solicitado', // Subject line
+                subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
+                text: 'Seguimiento de solicitud de Soporte técnico',
+                html: `<p>Alfa y Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
+                    que ha recibido el reconocimiento como el Primer Lugar en Ventas por 16 Años consecutivos en la
+                    Ciudad de México.
+                    <br/>
+                    <br/>
+                        Solicitud de soporte mediante la plataforma ADS Contigo apartado Clientes con el folio <strong> ${data[5]} </strong> de la empresa ${data[9]}, RFC ${data[10]}, <br/>
+                    <br/>
+                        Estimado cliente, le notificamos que ha concluido de forma satisfactoria el proceso de soporte solicitado mediante los siguientes datos.
+                    <br/>
+                    <br/>
+    
+                        Fecha de solicitud  <strong>${data[8]}</strong>. 
+                    <br/>
+                    <br/>
+                        Asunto  <strong>${data[6]}</strong>. 
+                    <br/>
+                    <br/>
+                        Folio  <strong>${data[5]}</strong>. 
+                    <br/>
+                    <br/>
+                        Consola  <strong>${data[7]}</strong>. 
+                    <br/>
+                    <br/>
+                        Status  <strong>Soporte Finalizado</strong>. 
+                    <br/>
+                    <br/>
+                        Fecha de Finalización <strong>${data[4]}</strong>. 
+                    <br/>
+                    No olvide calificar la calidad de nuestro servicio por medio de la encuesta de satisfaccion mediante el siguiente enlace https://localhost:3000/qualitySurvey/%
+                    <br/>
+                      Para cualquier duda o información no dude en comunicarse con el equipo de Alfa Diseño de sistemas para su pronta aclaración.
+                    <br/>
+                    <br/>
+                    Saludos cordiales, 
+                    <center><br/><br/><br/>
+                    El equipo de desarrollo de <br/>
+                    ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
+                    www.ads.com.mx<br/></center>
+                </p> `
+                };
+                transporter.sendMail(mailOptions, function (err, info) {
+                    if("este es el error" , err)
+                    console.log(err)
+                    else
+                    console.log("esta es la info" ,  info);
+            
+                }); 
+            resolve({message:'soporte finalizado'})
+        })
+      
+    })
+}
 module.exports={
+    EndSupport,
     GetPolizasById,
     SendSupport,
     GetSupport,
