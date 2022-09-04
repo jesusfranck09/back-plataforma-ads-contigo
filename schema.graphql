@@ -83,6 +83,7 @@ getSolicitudes(data:[String]!):[solicitudes]
 getSolicitudesByFkEmpresa(data:[String]!):[solicitudes]
 getSupport(data:[String]!):[support]
 getPolizasById(data:[String]!):[polizas]
+getSupportById(data:[String]!):[support]
 } 
 
 type support {

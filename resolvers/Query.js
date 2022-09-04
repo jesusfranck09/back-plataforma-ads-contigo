@@ -216,7 +216,13 @@ const getPolizasById  =  (_ , data) =>{
     var variable = cadena.split(",")
 return actions.GetPolizasById(variable)
 }
+const getSupportById  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.GetSupportById(variable)
+}
 module.exports={
+    getSupportById,
     getPolizasById,
     getSupport,
     getSolicitudesByFkEmpresa,

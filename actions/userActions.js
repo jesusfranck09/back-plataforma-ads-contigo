@@ -1136,8 +1136,8 @@ const EndSupport = ( data)  => {
                 });
                 const mailOptions = {
                     from: 'ventas@ads.com.mx', // sender address
-                to: `${resultados[0].correo1},jesus.francisco@ads.com.mx,miriam.quiroz@ads.com.mx `, // list of receivers
-                // subject: 'Finalización del soporte técnico solicitado', // Subject line
+                // to: `${resultados[0].correo1},jesus.francisco@ads.com.mx,miriam.quiroz@ads.com.mx `,
+                to: `jesus.francisco@ads.com.mx`, 
                 subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
                 text: 'Seguimiento de solicitud de Soporte técnico',
                 html: `<p>Alfa y Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
@@ -1168,7 +1168,10 @@ const EndSupport = ( data)  => {
                     <br/>
                         Fecha de Finalización <strong>${data[4]}</strong>. 
                     <br/>
-                    No olvide calificar la calidad de nuestro servicio por medio de la encuesta de satisfaccion mediante el siguiente enlace https://localhost:3000/qualitySurvey/%
+                    No olvide calificar la calidad de nuestro servicio por medio de la encuesta de satisfaccion mediante el siguiente enlace 
+                    <br/><br/>
+                    <p> https://plataforma.adscontigo.com/qualitySurvey:&${data[0]} </p><br/>
+
                     <br/>
                       Para cualquier duda o información no dude en comunicarse con el equipo de Alfa Diseño de sistemas para su pronta aclaración.
                     <br/>
@@ -1192,7 +1195,17 @@ const EndSupport = ( data)  => {
       
     })
 }
+const GetSupportById = ( data)  => {
+    return new Promise((resolve,reject)=>{
+        client.query(`select * from soporte inner join clientesads on soporte.fk_cliente = clientesads.id_cliente where soporte.id_soporte = '${data[0]}'`,function(err,results,fields){
+           var string = JSON.stringify(results);
+           var resultados = JSON.parse(string); 
+           resolve(resultados)
+        })
+    })
+}
 module.exports={
+    GetSupportById,
     EndSupport,
     GetPolizasById,
     SendSupport,
