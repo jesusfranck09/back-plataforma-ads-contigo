@@ -1184,7 +1184,9 @@ const EndSupport = ( data)  => {
                 };
                 transporter.sendMail(mailOptions, function (err, info) {
                     if(err){
-                        console.log("error",err)
+                        console.log("Este es el error",err)
+                        console.log("Este es el error",err.response)
+
                     }
                     else{
                         console.log("esta es la info" ,  info.response);
