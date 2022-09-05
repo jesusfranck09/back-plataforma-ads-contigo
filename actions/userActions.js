@@ -305,24 +305,23 @@ const { response } = require('express');
         })
     }    
     const SendEmailCotizacion   = ( data)  => {
-
         let directorio = downloadsFolder()
-
         return new Promise((resolve,reject)=>{
             var date= new Date()
             let fecha = date.toLocaleString('es')            
             var transporter = nodemailer.createTransport({  
-                secure: false,
-                host: 'mailc75.carrierzone.com',
-                port: 1025,
+                secure: true,
+                host: 'adscontigo.com',
+                port: 465,
                 auth: {
-                        user: 'ventas@ads.com.mx',
-                        pass: 'E7!84JnG',                       
+                        user: 'ventas@adscontigo.com',
+                        pass: 'Nu07b_s38',                       
                 },
+                
                 tls: {rejectUnauthorized: false},
                 });
                 const mailOptions = {
-                    from: 'ventas@ads.com.mx',  // sender address
+                    from: 'ventas@adscontigo.com',  // sender address
                 to: `jesus.francisco@ads.com.mx`, // list of receivers
                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
                 subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
@@ -496,17 +495,18 @@ const { response } = require('express');
                                             client.query(`update clientesads set acceso = "true", fk_contactoAcceso = '${data[2]}' where  id_cliente = '${data[0]}'`)     
                                             client.query(`update contacto set contraseña = '${hash}' where  id_contacto = '${data[2]}'`)     
                                             var transporter = nodemailer.createTransport({  
-                                                secure: false,
-                                                host: 'mailc75.carrierzone.com',
-                                                port: 1025,
+                                                secure: true,
+                                                host: 'adscontigo.com',
+                                                port: 465,
                                                 auth: {
-                                                        user: 'ventas@ads.com.mx',
-                                                        pass: 'E7!84JnG',                       
+                                                        user: 'ventas@adscontigo.com',
+                                                        pass: 'Nu07b_s38',                       
                                                 },
+                                                
                                                 tls: {rejectUnauthorized: false},
                                                 });
                                                 const mailOptions = {
-                                                    from: 'ventas@ads.com.mx',  // sender address
+                                                    from: 'ventas@adscontigo.com',   // sender address
                                                 to: `${data[1]},jesus.francisco@ads.com.mx`, // list of receivers
                                                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
                                                 subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
@@ -652,17 +652,18 @@ const { response } = require('express');
                 var resultados = JSON.parse(string)
                 let folio =  data[7]
                 var transporter = nodemailer.createTransport({  
-                    secure: false,
-                    host: 'mailc75.carrierzone.com',
-                    port: 1025,
+                    secure: true,
+                    host: 'adscontigo.com',
+                    port: 465,
                     auth: {
-                            user: 'ventas@ads.com.mx',
-                            pass: 'E7!84JnG',                       
+                            user: 'ventas@adscontigo.com',
+                            pass: 'Nu07b_s38',                       
                     },
+                    
                     tls: {rejectUnauthorized: false},
                     });
                     const mailOptions = {
-                        from: 'ventas@ads.com.mx', // sender address
+                        from: 'ventas@adscontigo.com',  // sender address
                 to: `miriam.quiroz@ads.com.mx,jesus.francisco@ads.com.mx`, // list of receivers
                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
                 subject: 'Solicitud de soporte a Alfa Diseño de Sistemas', // Subject line
@@ -954,18 +955,19 @@ const { response } = require('express');
   }
   const SendMailSolicitudCotizacion = ( data)  => {
       return new Promise((resolve,reject)=>{
-          var transporter = nodemailer.createTransport({  
-              secure: false,
-              host: 'mailc75.carrierzone.com',
-              port: 1025,
-              auth: {
-                      user: 'ventas@ads.com.mx',
-                      pass: 'E7!84JnG',                       
-              },
-              tls: {rejectUnauthorized: false},
-              });
-              const mailOptions = {
-                  from: 'ventas@ads.com.mx', // sender address
+        var transporter = nodemailer.createTransport({  
+            secure: true,
+            host: 'adscontigo.com',
+            port: 465,
+            auth: {
+                    user: 'ventas@adscontigo.com',
+                    pass: 'Nu07b_s38',                       
+            },
+            
+            tls: {rejectUnauthorized: false},
+            });
+            const mailOptions = {
+                from: 'ventas@adscontigo.com',  // sender address
               to: `${data[6]}, jesus.francisco@ads.com.mx`, // list of receivers
               // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
               subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
@@ -1038,17 +1040,18 @@ const SendSupport = ( data)  => {
     return new Promise((resolve,reject)=>{
         client.query(`update soporte set status = 'En proceso', ejecutivo = '${data[10]}' where id_soporte = '${data[4]}'`)
         var transporter = nodemailer.createTransport({  
-            secure: false,
-            host: 'mailc75.carrierzone.com',
-            port: 1025,
+            secure: true,
+            host: 'adscontigo.com',
+            port: 465,
             auth: {
-                    user: 'ventas@ads.com.mx',
-                    pass: 'E7!84JnG',                       
+                    user: 'ventas@adscontigo.com',
+                    pass: 'Nu07b_s38',                       
             },
+            
             tls: {rejectUnauthorized: false},
             });
             const mailOptions = {
-                from: 'ventas@ads.com.mx', // sender address
+                from: 'ventas@adscontigo.com', // sender address
             to: `${data[11]}, jesus.francisco@ads.com.mx`, // list of receivers
             // 
             // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
@@ -1118,7 +1121,7 @@ const GetPolizasById = ( data)  => {
 }
 const EndSupport = ( data)  => {
     return new Promise((resolve,reject)=>{
-        client.query(`update soporte set status = '${data[3]}', fechaFinalizacion = '${data[4]}' where id_soporte = '${data[0]}'`)
+        // client.query(`update soporte set status = '${data[3]}', fechaFinalizacion = '${data[4]}' where id_soporte = '${data[0]}'`)
         client.query(`select * from contacto where id_contacto = '${data[1]}'`, function(err,results,fields){
             var string = JSON.stringify(results);
             var resultados = JSON.parse(string); 
@@ -1136,12 +1139,12 @@ const EndSupport = ( data)  => {
                 });
                 const mailOptions = {
                     from: 'ventas@adscontigo.com', // sender address
-                to: `${resultados[0].correo1},jesus.francisco@ads.com.mx,miriam.quiroz@ads.com.mx `,
+                // to: `${resultados[0].correo1},jesus.francisco@ads.com.mx,miriam.quiroz@ads.com.mx `,
                 // No olvide calificar la calidad de nuestro servicio por medio de la encuesta de satisfaccion mediante el siguiente enlace 
                 // <br/>
                 // <br/><br/>
                 // <p> https://plataforma.adscontigo.com/qualitySurvey:&${data[0]} </p><br/>
-                // to: `jesus.francisco@ads.com.mx`, 
+                to: `jesus.francisco@ads.com.mx`, 
                 subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
                 text: 'Seguimiento de solicitud de Soporte técnico',
                 html: `<p>Alfa y Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
