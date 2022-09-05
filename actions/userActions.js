@@ -1136,7 +1136,7 @@ const EndSupport = ( data)  => {
                 });
                 const mailOptions = {
                     from: 'ventas@ads.com.mx', // sender address
-                to: `${resultados[0].correo1},jesus.francisco@ads.com.mx,miriam.quiroz@ads.com.mx `,
+                // to: `${resultados[0].correo1},jesus.francisco@ads.com.mx,miriam.quiroz@ads.com.mx `,
                 // No olvide calificar la calidad de nuestro servicio por medio de la encuesta de satisfaccion mediante el siguiente enlace 
                 // <br/>
                 // <br/><br/>
