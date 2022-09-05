@@ -1131,6 +1131,7 @@ const EndSupport = ( data)  => {
                         user: 'ventas@ads.com.mx',
                         pass: 'E7!84JnG',                       
                 },
+                
                 tls: {rejectUnauthorized: false},
                 });
                 const mailOptions = {
@@ -1182,11 +1183,13 @@ const EndSupport = ( data)  => {
                 </p> `
                 };
                 transporter.sendMail(mailOptions, function (err, info) {
-                    if(err)
-                    console.log("error",err)
-                    else
-                    console.log("esta es la info" ,  info.response);
-            
+                    if(err){
+                        console.log("error",err)
+                    }
+                    else{
+                        console.log("esta es la info" ,  info.response);
+                        console.log("esta es la info" ,  info);
+                    }
                 }); 
             resolve({message:'soporte finalizado'})
         })
