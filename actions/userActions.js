@@ -1121,9 +1121,8 @@ const EndSupport = ( data)  => {
         client.query(`update soporte set status = '${data[3]}', fechaFinalizacion = '${data[4]}' where id_soporte = '${data[0]}'`)
         client.query(`select * from contacto where id_contacto = '${data[1]}'`, function(err,results,fields){
             var string = JSON.stringify(results);
-            let random = Math.random()
             var resultados = JSON.parse(string); 
-            console.log("resultados",resultados)
+
             var transporter = nodemailer.createTransport({  
                 secure: false,
                 host: 'mailc75.carrierzone.com',
@@ -1137,6 +1136,10 @@ const EndSupport = ( data)  => {
                 const mailOptions = {
                     from: 'ventas@ads.com.mx', // sender address
                 // to: `${resultados[0].correo1},jesus.francisco@ads.com.mx,miriam.quiroz@ads.com.mx `,
+                // No olvide calificar la calidad de nuestro servicio por medio de la encuesta de satisfaccion mediante el siguiente enlace 
+                // <br/>
+                // <br/><br/>
+                // <p> https://plataforma.adscontigo.com/qualitySurvey:&${data[0]} </p><br/>
                 to: `jesus.francisco@ads.com.mx`, 
                 subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
                 text: 'Seguimiento de solicitud de Soporte técnico',
@@ -1167,11 +1170,6 @@ const EndSupport = ( data)  => {
                     <br/>
                     <br/>
                         Fecha de Finalización <strong>${data[4]}</strong>. 
-                    <br/>
-                    No olvide calificar la calidad de nuestro servicio por medio de la encuesta de satisfaccion mediante el siguiente enlace 
-                    <br/><br/>
-                    <p> https://plataforma.adscontigo.com/qualitySurvey:&${data[0]} </p><br/>
-
                     <br/>
                       Para cualquier duda o información no dude en comunicarse con el equipo de Alfa Diseño de sistemas para su pronta aclaración.
                     <br/>
