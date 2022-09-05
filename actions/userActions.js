@@ -1136,12 +1136,12 @@ const EndSupport = ( data)  => {
                 });
                 const mailOptions = {
                     from: 'ventas@ads.com.mx', // sender address
-                // to: `${resultados[0].correo1},jesus.francisco@ads.com.mx,miriam.quiroz@ads.com.mx `,
+                to: `${resultados[0].correo1},jesus.francisco@ads.com.mx,miriam.quiroz@ads.com.mx `,
                 // No olvide calificar la calidad de nuestro servicio por medio de la encuesta de satisfaccion mediante el siguiente enlace 
                 // <br/>
                 // <br/><br/>
                 // <p> https://plataforma.adscontigo.com/qualitySurvey:&${data[0]} </p><br/>
-                to: `jesus.francisco@ads.com.mx`, 
+                // to: `jesus.francisco@ads.com.mx`, 
                 subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
                 text: 'Seguimiento de solicitud de Soporte técnico',
                 html: `<p>Alfa y Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
