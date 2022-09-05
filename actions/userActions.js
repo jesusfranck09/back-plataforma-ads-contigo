@@ -1042,8 +1042,8 @@ const SendSupport = ( data)  => {
             host: 'mailc75.carrierzone.com',
             port: 1025,
             auth: {
-                    user: 'ventas@ads.com.mx',
-                    pass: 'E7!84JnG',                       
+                user: 'jesus.francisco@ads.com.mx',
+                pass: '19jzf@c019',                      
             },
             tls: {rejectUnauthorized: false},
             });
@@ -1128,13 +1128,16 @@ const EndSupport = ( data)  => {
                 host: 'mailc75.carrierzone.com',
                 port: 1025,
                 auth: {
-                        user: 'ventas@ads.com.mx',
-                        pass: 'E7!84JnG',                       
+                        user: 'jesus.francisco@ads.com.mx',
+                        pass: '19jzf@c019',                       
                 },
                 tls: {rejectUnauthorized: false},
                 });
                 const mailOptions = {
-                    from: 'ventas@ads.com.mx', // sender address
+                    from: 'ventas@ads.com.mx', 
+                    from: 'jesus.francisco@ads.com.mx', 
+
+                // sender address
                 // to: `${resultados[0].correo1},jesus.francisco@ads.com.mx,miriam.quiroz@ads.com.mx `,
                 // No olvide calificar la calidad de nuestro servicio por medio de la encuesta de satisfaccion mediante el siguiente enlace 
                 // <br/>
