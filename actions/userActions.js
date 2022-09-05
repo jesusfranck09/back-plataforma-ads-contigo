@@ -1124,18 +1124,18 @@ const EndSupport = ( data)  => {
             var resultados = JSON.parse(string); 
 
             var transporter = nodemailer.createTransport({  
-                secure: false,
-                host: 'mailc75.carrierzone.com',
-                port: 1025,
+                secure: true,
+                host: 'adscontigo.com',
+                port: 465,
                 auth: {
-                        user: 'ventas@ads.com.mx',
-                        pass: 'E7!84JnG',                       
+                        user: 'ventas@adscontigo.com',
+                        pass: 'Nu07b_s38',                       
                 },
                 
                 tls: {rejectUnauthorized: false},
                 });
                 const mailOptions = {
-                    from: 'ventas@ads.com.mx', // sender address
+                    from: 'ventas@adscontigo.com', // sender address
                 // to: `${resultados[0].correo1},jesus.francisco@ads.com.mx,miriam.quiroz@ads.com.mx `,
                 // No olvide calificar la calidad de nuestro servicio por medio de la encuesta de satisfaccion mediante el siguiente enlace 
                 // <br/>
