@@ -1042,8 +1042,8 @@ const SendSupport = ( data)  => {
             host: 'mailc75.carrierzone.com',
             port: 1025,
             auth: {
-                user: 'jesus.francisco@ads.com.mx',
-                pass: '19jzf@c019',                      
+                    user: 'ventas@ads.com.mx',
+                    pass: 'E7!84JnG',                       
             },
             tls: {rejectUnauthorized: false},
             });
@@ -1128,16 +1128,13 @@ const EndSupport = ( data)  => {
                 host: 'mailc75.carrierzone.com',
                 port: 1025,
                 auth: {
-                        user: 'jesus.francisco@ads.com.mx',
-                        pass: '19jzf@c019',                       
+                        user: 'ventas@ads.com.mx',
+                        pass: 'E7!84JnG',                       
                 },
                 tls: {rejectUnauthorized: false},
                 });
                 const mailOptions = {
-                    from: 'ventas@ads.com.mx', 
-                    from: 'jesus.francisco@ads.com.mx', 
-
-                // sender address
+                    from: 'ventas@ads.com.mx', // sender address
                 // to: `${resultados[0].correo1},jesus.francisco@ads.com.mx,miriam.quiroz@ads.com.mx `,
                 // No olvide calificar la calidad de nuestro servicio por medio de la encuesta de satisfaccion mediante el siguiente enlace 
                 // <br/>
@@ -1185,10 +1182,10 @@ const EndSupport = ( data)  => {
                 </p> `
                 };
                 transporter.sendMail(mailOptions, function (err, info) {
-                    if("este es el error" , err)
-                    console.log(err)
+                    if(err)
+                    console.log("error",err)
                     else
-                    console.log("esta es la info" ,  info);
+                    console.log("esta es la info" ,  info.response);
             
                 }); 
             resolve({message:'soporte finalizado'})
