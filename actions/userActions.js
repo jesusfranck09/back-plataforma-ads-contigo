@@ -1118,7 +1118,7 @@ const GetPolizasById = ( data)  => {
 }
 const EndSupport = ( data)  => {
     return new Promise((resolve,reject)=>{
-        client.query(`update soporte set status = '${data[3]}', fechaFinalizacion = '${data[4]}' where id_soporte = '${data[0]}'`)
+        // client.query(`update soporte set status = '${data[3]}', fechaFinalizacion = '${data[4]}' where id_soporte = '${data[0]}'`)
         client.query(`select * from contacto where id_contacto = '${data[1]}'`, function(err,results,fields){
             var string = JSON.stringify(results);
             var resultados = JSON.parse(string); 
@@ -1141,7 +1141,7 @@ const EndSupport = ( data)  => {
                 // <br/>
                 // <br/><br/>
                 // <p> https://plataforma.adscontigo.com/qualitySurvey:&${data[0]} </p><br/>
-                // to: `jesus.francisco@ads.com.mx`, 
+                to: `jesus.francisco@ads.com.mx`, 
                 subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
                 text: 'Seguimiento de solicitud de Soporte técnico',
                 html: `<p>Alfa y Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
@@ -1194,6 +1194,7 @@ const EndSupport = ( data)  => {
                     }
                 }); 
             resolve({message:'soporte finalizado'})
+            console.log("transporter",transporter)
         })
       
     })
