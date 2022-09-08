@@ -1042,7 +1042,7 @@ const SendSupport = ( data)  => {
         var transporter = nodemailer.createTransport({  
             secure: true,
             host: 'adscontigo.com',
-            port: 465,
+            port: 465, 
             auth: {
                     user: 'ventas@adscontigo.com',
                     pass: 'Nu07b_s38',                       
@@ -1053,11 +1053,13 @@ const SendSupport = ( data)  => {
             const mailOptions = {
                 from: 'ventas@adscontigo.com', // sender address
             to: `${data[11]}, jesus.francisco@ads.com.mx`, // list of receivers
+            // to: `jesus.francisco@ads.com.mx`, // list of receivers
+
             // 
             // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
             subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
             text: 'Solicitud Soporte',
-            html: `<p>Alfa y Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
+            html:`<html><body><p>Alfa y Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
                 que ha recibido el reconocimiento como el Primer Lugar en Ventas por 16 Años consecutivos en la
                 Ciudad de México.
                 <br/>
@@ -1097,10 +1099,11 @@ const SendSupport = ( data)  => {
                 El equipo de desarrollo de <br/>
                 ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
                 www.ads.com.mx<br/></center>
-            </p> `
+            </p></body></html>  `
             };
+            // <div>Please <a href="' + req.headers.host + 'user/activate/' + req.code + '" target="__new">click here</a> to active your account.</div>'
             transporter.sendMail(mailOptions, function (err, info) {
-                if("este es el error" , err)
+                if(err)
                 console.log(err)
                 else
                 console.log("esta es la info" ,  info);
