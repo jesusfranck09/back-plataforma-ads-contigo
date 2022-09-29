@@ -513,6 +513,7 @@ type getTablaClientesAlfa{
     acceso:String,
     fk_contactoAcceso:String
     token:String
+    correo1:String
     id_contacto:String
 }
 
