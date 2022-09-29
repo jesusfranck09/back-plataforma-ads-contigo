@@ -1128,7 +1128,6 @@ const EndSupport = ( data)  => {
         client.query(`select * from contacto where id_contacto = '${data[1]}'`, function(err,results,fields){
             var string = JSON.stringify(results);
             var resultados = JSON.parse(string); 
-
             var transporter = nodemailer.createTransport({  
                 secure: true,
                 host: 'adscontigo.com',
@@ -1156,7 +1155,6 @@ const EndSupport = ( data)  => {
                         Estimado cliente, le notificamos que ha concluido de forma satisfactoria el proceso de soporte solicitado mediante los siguientes datos.
                     <br/>
                     <br/>
-    
                         Fecha de solicitud  <strong>${data[8]}</strong>. 
                     <br/>
                     <br/>

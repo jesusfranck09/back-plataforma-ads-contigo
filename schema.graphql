@@ -513,6 +513,7 @@ type getTablaClientesAlfa{
     acceso:String,
     fk_contactoAcceso:String
     token:String
+    id_contacto:String
 }
 
 type insertTotales{
