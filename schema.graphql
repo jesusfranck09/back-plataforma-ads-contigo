@@ -40,6 +40,7 @@ type Mutation {
      cancelSolicitud(data:[String]!):message
      sendSupport(data:[String]!):message
      endSupport(data:[String]!):message
+     insertSurveyQuality(data:[String]!):message
 }
 
 type Query{
@@ -84,9 +85,20 @@ getSolicitudesByFkEmpresa(data:[String]!):[solicitudes]
 getSupport(data:[String]!):[support]
 getPolizasById(data:[String]!):[polizas]
 getSupportById(data:[String]!):[support]
+getCalidadSurvey(data:[String]!):[calidadSurvey]
 } 
 
+type calidadSurvey{
+    id_calidadSurvey:String
+    respuestas:String
+    folio:String
+    fk_preguntas:String
+    fk_soporte:String
+    fk_clientes:String
+    fechaEvaluacion:String
+}
 type support {
+    id_cliente:String
     id_soporte:String
     fk_contacto:String
     fechaSoporte:String
@@ -101,6 +113,7 @@ type support {
     rfc:String
     razonSocial:String
     fechaFinalizacion:String
+    statusEncuesta:String
 }
 type solicitudes {
     id_solicitudCotizacion:String

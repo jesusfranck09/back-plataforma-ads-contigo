@@ -641,10 +641,10 @@ const { response } = require('express');
                 var resultados = JSON.parse(string)
                 if(resultados[0].folio){
                     consecutivo  = data[7] + (resultados[0].folio.length - 1 + 1)
-                    client.query(`insert into soporte (fechaSoporte,consola,numeroPoliza,asunto,idTeamviewer,passTeamviewer,folio,status,fk_cliente,fk_empresa,fk_contacto,fechaFinalizacion) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[5]}','${data[6]}','${consecutivo}','Pendiente','${data[4]}','${data[8]}','${data[9]}',"En proceso")`)
+                    client.query(`insert into soporte (fechaSoporte,consola,numeroPoliza,asunto,idTeamviewer,passTeamviewer,folio,status,fk_cliente,fk_empresa,fk_contacto,fechaFinalizacion,statusEncuesta) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[5]}','${data[6]}','${consecutivo}','Pendiente','${data[4]}','${data[8]}','${data[9]}',"En proceso","No aplicada")`)
                 }else{
                     consecutivo = data[7] + 1
-                    client.query(`insert into soporte (fechaSoporte,consola,numeroPoliza,asunto,idTeamviewer,passTeamviewer,folio,status,fk_cliente,fk_empresa,fk_contacto,fechaFinalizacion) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[5]}','${data[6]}','${consecutivo}','Pendiente','${data[4]}','${data[8]}','${data[9]}',"En proceso")`)
+                    client.query(`insert into soporte (fechaSoporte,consola,numeroPoliza,asunto,idTeamviewer,passTeamviewer,folio,status,fk_cliente,fk_empresa,fk_contacto,fechaFinalizacion,statusEncuesta) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[5]}','${data[6]}','${consecutivo}','Pendiente','${data[4]}','${data[8]}','${data[9]}',"En proceso","No aplicada")`)
                 }
             })
             client.query(`select * from clientesads where id_cliente = '${data[4]}'`,function(err,result,field ){
@@ -1141,7 +1141,9 @@ const EndSupport = ( data)  => {
                 });
                 const mailOptions = {
                     from: 'ventas@adscontigo.com', // sender address
-                to: `${resultados[0].correo1},jesus.francisco@ads.com.mx,miriam.quiroz@ads.com.mx `,
+                // to: `${resultados[0].correo1},jesus.francisco@ads.com.mx,miriam.quiroz@ads.com.mx `,
+                to: `jesus.francisco@ads.com.mx`,
+
                 // No olvide calificar la calidad de nuestro servicio por medio de la encuesta de satisfaccion mediante el siguiente enlace 
                 // <br/>
                 // <br/><br/>
@@ -1208,7 +1210,31 @@ const GetSupportById = ( data)  => {
         })
     })
 }
+const InsertSurveyQuality = ( data)  => {
+    return new Promise((resolve,reject)=>{
+        client.query(`insert into calidadsurvey (respuestas,folio,fk_preguntas,fk_soporte,fk_clientes,fechaEvaluacion) values ('${data[0]}','${data[7]}','${5}','${data[8]}','${data[9]}','${data[10]}')`);
+        client.query(`insert into calidadsurvey (respuestas,folio,fk_preguntas,fk_soporte,fk_clientes,fechaEvaluacion) values ('${data[1]}','${data[7]}','${15}','${data[8]}','${data[9]}','${data[10]}')`)
+        client.query(`insert into calidadsurvey (respuestas,folio,fk_preguntas,fk_soporte,fk_clientes,fechaEvaluacion) values ('${data[2]}','${data[7]}','${25}','${data[8]}','${data[9]}','${data[10]}')`)
+        client.query(`insert into calidadsurvey (respuestas,folio,fk_preguntas,fk_soporte,fk_clientes,fechaEvaluacion) values ('${data[3]}','${data[7]}','${35}','${data[8]}','${data[9]}','${data[10]}')`)
+        client.query(`insert into calidadsurvey (respuestas,folio,fk_preguntas,fk_soporte,fk_clientes,fechaEvaluacion) values ('${data[4]}','${data[7]}','${45}','${data[8]}','${data[9]}','${data[10]}')`)
+        client.query(`insert into calidadsurvey (respuestas,folio,fk_preguntas,fk_soporte,fk_clientes,fechaEvaluacion) values ('${data[5]}','${data[7]}','${55}','${data[8]}','${data[9]}','${data[10]}')`)
+        client.query(`insert into calidadsurvey (respuestas,folio,fk_preguntas,fk_soporte,fk_clientes,fechaEvaluacion) values ('${data[6]}','${data[7]}','${65}','${data[8]}','${data[9]}','${data[10]}')`)
+        client.query(`update soporte set statusEncuesta = 'Aplicada' where id_soporte = '${data[8]}'`)
+        resolve({message:"encuesta realizada"})
+    })
+}
+const GetCalidadSurvey = ( data)  => {
+    return new Promise((resolve,reject)=>{
+        client.query(`select * from calidadSurvey`,function(err,results,fields){
+           var string = JSON.stringify(results);
+           var resultados = JSON.parse(string); 
+           resolve(resultados)
+        })
+    })
+}
 module.exports={
+    GetCalidadSurvey,
+    InsertSurveyQuality,
     GetSupportById,
     EndSupport,
     GetPolizasById,

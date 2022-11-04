@@ -213,7 +213,13 @@ const actions = require('../actions/userActions')
         var variable = cadena.split(",")
         return actions.EndSupport(variable)
     }
+    const insertSurveyQuality =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.InsertSurveyQuality(variable)
+    }
 module.exports={
+    insertSurveyQuality,
     endSupport,
     sendSupport,
     cancelSolicitud,

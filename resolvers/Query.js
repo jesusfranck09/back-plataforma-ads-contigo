@@ -221,7 +221,13 @@ const getSupportById  =  (_ , data) =>{
     var variable = cadena.split(",")
 return actions.GetSupportById(variable)
 }
+const getCalidadSurvey  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.GetCalidadSurvey(variable)
+}
 module.exports={
+    getCalidadSurvey,
     getSupportById,
     getPolizasById,
     getSupport,
