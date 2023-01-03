@@ -224,17 +224,8 @@ const { response } = require('express');
     }   
     const updateInsertProductoServicio = (data)=> { 
         return new Promise((resolve,reject)=>{  
-            client.query(`select * from productoServicio where consecutivo ='${data[3]}'`,  function (err,result,fields ) {                                    
-                var string = JSON.stringify(result)
-                var resultados=JSON.parse(string);                                
-                if(resultados[0]){
-                    resolve({message:"clave existente"})
-                }else{
                     client.query(`insert into productoServicio(tipo,concepto,precio,consecutivo,tipoLicenciamiento,LineaProducto,id_actualizacion,asignacion,fechaRegistro,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}')`) 
                     resolve({message:"registro exitoso"})      
-                }
-            })         
-                     
         })
     }
     // ******************
@@ -306,6 +297,7 @@ const { response } = require('express');
     }    
     const SendEmailCotizacion   = ( data)  => {
         let directorio = downloadsFolder()
+        console.log("directorio",directorio)
         return new Promise((resolve,reject)=>{
             var date= new Date()
             let fecha = date.toLocaleString('es')            
@@ -321,7 +313,7 @@ const { response } = require('express');
                 tls: {rejectUnauthorized: false},
                 });
                 const mailOptions = {
-                    from: 'ventas@adscontigo.com',  // sender address
+                from: 'ventas@adscontigo.com',  // sender address
                 to: `jesus.francisco@ads.com.mx`, // list of receivers
                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
                 subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
