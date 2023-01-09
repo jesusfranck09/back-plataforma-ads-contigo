@@ -240,7 +240,6 @@ const { response } = require('express');
               resolve({message:"El concepto ya fue registrado"})
           }else{   
             client.query(`insert into productoServicio(tipo,concepto,precio,consecutivo,tipoLicenciamiento,LineaProducto,id_actualizacion,asignacion,fechaRegistro,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}')`,function(param1,param2){
-                console.log("param2",param2)
                 var stringParam = JSON.stringify(param2)
                 var resultadosParam =  JSON.parse(stringParam)
                 client.query(`update productoServicio set asignacion ='${resultadosParam.insertId}' where id_productoServicio = '${resultadosParam.insertId}'`)
@@ -297,7 +296,6 @@ const { response } = require('express');
     }    
     const SendEmailCotizacion   = ( data)  => {
         let directorio = downloadsFolder()
-        console.log("directorio",directorio)
         return new Promise((resolve,reject)=>{
             var date= new Date()
             let fecha = date.toLocaleString('es')            
@@ -314,12 +312,12 @@ const { response } = require('express');
                 });
                 const mailOptions = {
                 from: 'ventas@adscontigo.com',  // sender address
-                to: `jesus.francisco@ads.com.mx`, // list of receivers
+                to: `${data[3]}, jesus.francisco@ads.com.mx`, // list of receivers
                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
                 subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
                 text: 'Archivo de cotización PDF',
                 html: `<p>Alfa y Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
-                    que ha recibido el reconocimiento como el Primer Lugar en Ventas por 16 Años consecutivos en la
+                    que ha recibido el reconocimiento como el Primer Lugar en Ventas por 17 Años consecutivos en la
                     Ciudad de México.
                     <br/>
                     Basado en su solicitud de cotización, adjunto en este email nuestra propuesta comercial.
@@ -335,7 +333,7 @@ const { response } = require('express');
                 www.ads.com.mx<br/>${data[2]}</center>
                 </p> `, // plain text body
                 attachments: [{
-                    filename: 'Archivo de cortización.pdf',
+                    filename: 'Archivo de cotización.pdf',
                     path: directorio + "/" + data[0],
                     contentType: 'application/pdf'
                 }]
