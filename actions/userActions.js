@@ -12,16 +12,15 @@ const { response } = require('express');
         bcrypt.genSalt(SALT_WORK_FACTOR,function(error,salt){
             if (error){    
                 reject(error,{message:'error',token:error})
-            } else{
+            }else{
                 bcrypt.hash(data[7],salt, function(error,hash){
                     if(error){
                         throw error
-                    } else{
+                    }else{
                         client.query(`insert into adminAlfa(nombre,apellido,correo,telefono,extensionTelefonica,celular,puesto,contraseña,fk_empresa,fk_rolAdministrador) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${hash}','${data[8]}','${data[9]}')`);                  
                         resolve({           
                             message:"el registro en signup fue exitoso",
                         })
-                        
                     }
                 })
             }
@@ -80,7 +79,6 @@ const { response } = require('express');
                             fk_empresa:resultados[0].fk_empresa, 
                             fk_rolAdministrador:resultados[0].fk_rolAdministrador, 
                             razonSocial:resultadosEmpresa[0].razonSocial
-
                     })
                 })
                 } else{ 
@@ -295,6 +293,8 @@ const { response } = require('express');
         })
     }    
     const SendEmailCotizacion   = ( data)  => {
+        let telefono = data[4]
+        let extension =  data[5]
         let directorio = downloadsFolder()
         return new Promise((resolve,reject)=>{
             var date= new Date()
@@ -314,16 +314,20 @@ const { response } = require('express');
                 from: 'ventas@adscontigo.com',  // sender address
                 to: `${data[3]}, jesus.francisco@ads.com.mx`, // list of receivers
                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
-                subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
+                subject: 'Gracias por su interés en Alfa Diseño de Sistemas', // Subject line
                 text: 'Archivo de cotización PDF',
-                html: `<p>Alfa y Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
-                    que ha recibido el reconocimiento como el Primer Lugar en Ventas por 17 Años consecutivos en la
-                    Ciudad de México.
-                    <br/>
+                html: `<p>
                     Basado en su solicitud de cotización, adjunto en este email nuestra propuesta comercial.
                     <br/>
-                    Por favor, avísime si tiene alguna pregunta respondiendo a este correo electrónico o llamandome
-                    a los teléfonos 55 3603 9970 y 55 5553 2049.
+                    <br/>
+                    <br/>
+                    Notificar si tiene alguna pregunta respondiendo a este correo electrónico o llamando
+                    a los teléfonos ${telefono} extensión ${extension}.
+                    <br/>
+                    <br/>
+                    <strong>Alfa Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
+                    que ha recibido el reconocimiento como el Primer Lugar en Ventas por 17 Años consecutivos en la
+                    Ciudad de México.</strong>
                     <br/>
                     <br/>
                     Saludos cordiales, 
@@ -499,19 +503,21 @@ const { response } = require('express');
                                                     from: 'ventas@adscontigo.com',   // sender address
                                                 to: `${data[1]},jesus.francisco@ads.com.mx`, // list of receivers
                                                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
-                                                subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
+                                                subject: 'Gracias por su interés en Alfa Diseño de Sistemas', // Subject line
                                                 text: 'Datos de acceso',
-                                                html: `<p>Alfa y Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
-                                                    que ha recibido el reconocimiento como el Primer Lugar en Ventas por 16 Años consecutivos en la
-                                                    Ciudad de México.
+                                                html: `<p><strong>Alfa Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
+                                                    que ha recibido el reconocimiento como el Primer Lugar en Ventas por 17 Años consecutivos en la
+                                                    Ciudad de México.</strong>
+                                                    <br/>
+                                                    <br/>
                                                     <br/>
                                                     Basado en su solicitud de acceso, Se le otorgan los siguientes datos para que usted disfrute de los beneficios de la plataforma de ADS en el sitio https://www.google.com<br/><br/><br/>
                                                     Correo: ${data[1]}<br/>
                                                     Contraseña:${folio}<br/>
                                                     <br/>
-                                                        No olvide ingresar el path "/loginCliente" en su navegador para acceder alsistema de clientes
+                                                        No olvide ingresar al vínculo plataforma.adscontigo.com en su navegador para acceder al sistema de clientes
                                                     <br/>
-                                                    Estimado cliente se le sugiere cambiar su <strong>contraseña</strong> para la seguridad de su sesión.
+                                                        Se le sugiere cambiar su <strong>contraseña</strong> para la seguridad de su sesión.
                                                     <br/>
                                                     <br/>
                                                     Saludos cordiales, 
@@ -535,7 +541,6 @@ const { response } = require('express');
                                         }
                                     })
                                 }
-                       
                             })
                         }
                     })
@@ -658,9 +663,9 @@ const { response } = require('express');
                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
                 subject: 'Solicitud de soporte a Alfa Diseño de Sistemas', // Subject line
                 text: 'Datos Obtenidos',
-                html: `<p>Alfa y Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
-                    que ha recibido el reconocimiento como el Primer Lugar en Ventas por 16 Años consecutivos en la
-                    Ciudad de México.
+                html: `<p><strong> Alfa Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
+                    que ha recibido el reconocimiento como el Primer Lugar en Ventas por 17 Años consecutivos en la
+                    Ciudad de México.</strong>
                     <br/>
                     Basado en la solicitud de soporte, Se le Proporcionan los datos del clinte<br/><br/><br/>
                     Cliente: <strong>${resultados[0].razonSocial}</strong><br/>
@@ -960,11 +965,11 @@ const { response } = require('express');
                 from: 'ventas@adscontigo.com',  // sender address
               to: `${data[6]}, jesus.francisco@ads.com.mx`, // list of receivers
               // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
-              subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
+              subject: 'Gracias por su interés en Alfa Diseño de Sistemas', // Subject line
               text: 'Solicitud de Cotización',
-              html: `<p>Alfa y Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
-                  que ha recibido el reconocimiento como el Primer Lugar en Ventas por 16 Años consecutivos en la
-                  Ciudad de México.
+              html: `<p> <strong> Alfa Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
+                  que ha recibido el reconocimiento como el Primer Lugar en Ventas por 17 Años consecutivos en la
+                  Ciudad de México. </strong>
                   <br/>
                   <br/>
                       Solicitud de cotizacion con el folio <strong> ${data[0]} </strong> de la empresa ${data[7]}, RFC ${data[8]}, <br/><br/><br/>
@@ -1047,11 +1052,12 @@ const SendSupport = ( data)  => {
 
             // 
             // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
-            subject: 'Gracias por su interés en Alfa y Diseño de Sistemas', // Subject line
+            subject: 'Gracias por su interés en Alfa Diseño de Sistemas', // Subject line
             text: 'Solicitud Soporte',
-            html:`<html><body><p>Alfa y Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
-                que ha recibido el reconocimiento como el Primer Lugar en Ventas por 16 Años consecutivos en la
-                Ciudad de México.
+            html:`<html><body><p> <strong>Alfa Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
+                que ha recibido el reconocimiento como el Primer Lugar en Ventas por 17 Años consecutivos en la
+                Ciudad de México.</strong>
+                <br/>
                 <br/>
                 <br/>
                     Solicitud de soporte con el folio <strong> ${data[3]} </strong> de la empresa ${data[8]}, RFC ${data[9]}, <br/><br/><br/>
@@ -1131,8 +1137,8 @@ const EndSupport = ( data)  => {
                 });
                 const mailOptions = {
                     from: 'ventas@adscontigo.com', // sender address
-                // to: `${resultados[0].correo1},jesus.francisco@ads.com.mx,miriam.quiroz@ads.com.mx `,
-                to: `jesus.francisco@ads.com.mx`,
+                to: `${resultados[0].correo1},jesus.francisco@ads.com.mx,miriam.quiroz@ads.com.mx `,
+                // to: `jesus.francisco@ads.com.mx`,
 
                 // No olvide calificar la calidad de nuestro servicio por medio de la encuesta de satisfaccion mediante el siguiente enlace 
                 // <br/>
