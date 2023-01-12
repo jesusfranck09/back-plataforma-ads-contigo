@@ -292,10 +292,12 @@ const { response } = require('express');
             }) 
         })
     }    
-    const SendEmailCotizacion   = ( data)  => {
+    const SendEmailCotizacion   = (data)  => {
         let telefono = data[4]
         let extension =  data[5]
-        let directorio = downloadsFolder()
+        let directorio = downloadsFolder();
+        console.log("directorio",directorio);
+        
         return new Promise((resolve,reject)=>{
             var date= new Date()
             let fecha = date.toLocaleString('es')            
