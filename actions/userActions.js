@@ -297,7 +297,7 @@ const { response } = require('express');
         let extension =  data[5]
         let directorio = downloadsFolder();
         console.log("directorio",directorio);
-        
+
         return new Promise((resolve,reject)=>{
             var date= new Date()
             let fecha = date.toLocaleString('es')            
@@ -344,6 +344,8 @@ const { response } = require('express');
                     contentType: 'application/pdf'
                 }]
                 };
+                console.log("transporter",transporter);
+
                 transporter.sendMail(mailOptions, function (err, info) {
                     if("este es el error" , err)
                     console.log(err)
