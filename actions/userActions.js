@@ -6,6 +6,8 @@ const {jsonwebtoken} = require('../utils/index');
 const SALT_WORK_FACTOR =10
 const downloadsFolder = require('downloads-folder');
 const { response } = require('express');
+const path = require('path');
+
 
     const signupAlfa = (data) => {
     return new Promise((resolve,reject) =>{
@@ -293,10 +295,12 @@ const { response } = require('express');
         })
     }    
     const SendEmailCotizacion   = (data)  => {
+        const userDownloadDirectory = path.join(require('os').homedir(), 'downloads');
+
         let telefono = data[4]
         let extension =  data[5]
-        let directorio = downloadsFolder();
-        console.log("directorio",directorio);
+        
+        console.log("userDownloadDirectory",userDownloadDirectory);
 
         return new Promise((resolve,reject)=>{
             var date= new Date()
@@ -340,7 +344,7 @@ const { response } = require('express');
                 </p> `, // plain text body
                 attachments: [{
                     filename: 'Archivo de cotización.pdf',
-                    path: directorio + "/" + data[0],
+                    path: userDownloadDirectory + "/" + data[0],
                     contentType: 'application/pdf'
                 }]
                 };
