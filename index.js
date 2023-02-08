@@ -7,6 +7,10 @@ const typeDefs = importSchema('./schema.graphql')
 const resolvers = require('./resolvers')
 const express = require ('express')
 const path = require('path')
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const { sendEmail } = require("./resolvers/mail");
+
 
 const schema = makeExecutableSchema({
     typeDefs,
@@ -21,13 +25,24 @@ const option = {
     subscriptions: '/subscriptions',
     playground:'/playground'
 }
-const server= new GraphQLServer({
+
+const server = new GraphQLServer({
     schema,
     app,
     context:req =>({...req })
 
 })
 const port= process.env.port ||8000
+
+server.post("/sendMail", (req, res) => {
+  sendEmail(req);
+});
+
+
+server.use(bodyParser.urlencoded({ extended: true }));
+server.use(bodyParser.json());
+server.use(cookieParser());
+
 server.start(option,()=>
     console.log('servidor levantado en el puerto', port)
 )

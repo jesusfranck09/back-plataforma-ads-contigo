@@ -7,7 +7,8 @@ const SALT_WORK_FACTOR =10
 const downloadsFolder = require('downloads-folder');
 const { response } = require('express');
 const path = require('path');
-
+const fs = require('fs');
+const { resolve } = require('path');
 
     const signupAlfa = (data) => {
     return new Promise((resolve,reject) =>{
@@ -295,16 +296,69 @@ const path = require('path');
         })
     }    
     const SendEmailCotizacion   = (data)  => {
-        const userDownloadDirectory = path.join(require('os').homedir(), 'downloads');
-
-        let telefono = data[4]
-        let extension =  data[5]
-        
-        console.log("userDownloadDirectory",userDownloadDirectory);
-
+        let telefono = data[5]
+        let extension =  data[6]
+        var date= new Date()
+        let fecha = date.toLocaleString('es') 
         return new Promise((resolve,reject)=>{
-            var date= new Date()
-            let fecha = date.toLocaleString('es')            
+        if(data[0] === "1"){
+                var transporter = nodemailer.createTransport({  
+                secure: true,
+                host: 'adscontigo.com',
+                port: 465,
+                auth: {
+                        user: 'ventas@adscontigo.com',
+                        pass: 'Nu07b_s38',                       
+                },
+                
+                tls: {rejectUnauthorized: false},
+                });
+                const mailOptions = {
+                from: 'ventas@adscontigo.com',  // sender address
+                to: ` jesus.francisco@ads.com.mx`, // list of receivers
+                // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
+                subject: 'Gracias por su interés en Alfa Diseño de Sistemas', // Subject line
+                text: 'Archivo de cotización PDF',
+                html: `<p>
+                    Basado en su solicitud de cotización, adjunto en este email nuestra propuesta comercial.
+                    <br/>
+                    <br/>
+                    <br/>
+                    Notificar si tiene alguna pregunta respondiendo a este correo electrónico o llamando
+                    a los teléfonos ${telefono} extensión ${extension}.
+                    <br/>
+                    <br/>
+                    ${data[11]}
+                    <br/><br/>
+                    <strong>Alfa Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
+                    que ha recibido el reconocimiento como el Primer Lugar en Ventas por 17 Años consecutivos en la
+                    Ciudad de México.</strong>
+                    <br/>
+                    <br/>
+                    Saludos cordiales, 
+                    <center><br/><br/>${data[2]}<br/>
+                Ejecutivo de ventas <br/>
+                ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
+                www.ads.com.mx<br/>${data[3]}</center>
+                </p>`,
+                attachments: [{
+                    filename:  data[9],
+                    path: data[10],
+                    contentType: 'application/pdf'
+                }]
+                };
+                console.log("transporter",transporter);
+
+                transporter.sendMail(mailOptions, function (err, info) {
+                    if("este es el error" , err)
+                    console.log(err)
+                    else
+                    console.log("esta es la info" ,  info);
+            
+            });
+            client.query(`delete from urlFirebaseTemporal where folio ='${data[7]}'`)
+            resolve({message:"Correo Enviado"})      
+        }if(data[0] === "2"){
             var transporter = nodemailer.createTransport({  
                 secure: true,
                 host: 'adscontigo.com',
@@ -318,7 +372,7 @@ const path = require('path');
                 });
                 const mailOptions = {
                 from: 'ventas@adscontigo.com',  // sender address
-                to: `${data[3]}, jesus.francisco@ads.com.mx`, // list of receivers
+                to: ` jesus.francisco@ads.com.mx`, // list of receivers
                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
                 subject: 'Gracias por su interés en Alfa Diseño de Sistemas', // Subject line
                 text: 'Archivo de cotización PDF',
@@ -331,20 +385,26 @@ const path = require('path');
                     a los teléfonos ${telefono} extensión ${extension}.
                     <br/>
                     <br/>
+                    ${data[14]}
+                    <br/><br/>
                     <strong>Alfa Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
                     que ha recibido el reconocimiento como el Primer Lugar en Ventas por 17 Años consecutivos en la
                     Ciudad de México.</strong>
                     <br/>
                     <br/>
                     Saludos cordiales, 
-                    <center><br/><br/>${data[1]}<br/>
+                    <center><br/><br/>${data[2]}<br/>
                 Ejecutivo de ventas <br/>
                 ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
-                www.ads.com.mx<br/>${data[2]}</center>
-                </p> `, // plain text body
+                www.ads.com.mx<br/>${data[3]}</center>
+                </p>`,
                 attachments: [{
-                    filename: 'Archivo de cotización.pdf',
-                    path: userDownloadDirectory + "/" + data[0],
+                    filename:  data[10],
+                    path: data[12],
+                    contentType: 'application/pdf'
+                },{
+                    filename:  data[11],
+                    path: data[13],
                     contentType: 'application/pdf'
                 }]
                 };
@@ -356,9 +416,217 @@ const path = require('path');
                     else
                     console.log("esta es la info" ,  info);
             
-                });
+            });
+            client.query(`delete from urlFirebaseTemporal where folio ='${data[7]}'`)
             resolve({message:"Correo Enviado"})      
+        }if(data[0] === "3"){
+            var transporter = nodemailer.createTransport({  
+                secure: true,
+                host: 'adscontigo.com',
+                port: 465,
+                auth: {
+                        user: 'ventas@adscontigo.com',
+                        pass: 'Nu07b_s38',                       
+                },
+                
+                tls: {rejectUnauthorized: false},
+                });
+                const mailOptions = {
+                from: 'ventas@adscontigo.com',  // sender address
+                to: ` jesus.francisco@ads.com.mx`, // list of receivers
+                // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
+                subject: 'Gracias por su interés en Alfa Diseño de Sistemas', // Subject line
+                text: 'Archivo de cotización PDF',
+                html: `<p>
+                    Basado en su solicitud de cotización, adjunto en este email nuestra propuesta comercial.
+                    <br/>
+                    <br/>
+                    <br/>
+                    Notificar si tiene alguna pregunta respondiendo a este correo electrónico o llamando
+                    a los teléfonos ${telefono} extensión ${extension}.
+                    <br/>
+                    <br/>
+                    ${data[17]}
+                    <br/><br/>
+                    <strong>Alfa Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
+                    que ha recibido el reconocimiento como el Primer Lugar en Ventas por 17 Años consecutivos en la
+                    Ciudad de México.</strong>
+                    <br/>
+                    <br/>
+                    Saludos cordiales, 
+                    <center><br/><br/>${data[2]}<br/>
+                Ejecutivo de ventas <br/>
+                ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
+                www.ads.com.mx<br/>${data[3]}</center>
+                </p>`,
+                attachments: [{
+                    filename:  data[11],
+                    path: data[14],
+                    contentType: 'application/pdf'
+                },{
+                    filename:  data[12],
+                    path: data[15],
+                    contentType: 'application/pdf'
+                },,{
+                    filename:  data[13],
+                    path: data[16],
+                    contentType: 'application/pdf'
+                }]
+                };
+                console.log("transporter",transporter);
+
+                transporter.sendMail(mailOptions, function (err, info) {
+                    if("este es el error" , err)
+                    console.log(err)
+                    else
+                    console.log("esta es la info" ,  info);
+            
+            });
+            client.query(`delete from urlFirebaseTemporal where folio ='${data[7]}'`)
+            resolve({message:"Correo Enviado"})      
+        }if(data[0] === "4"){
+            var transporter = nodemailer.createTransport({  
+                secure: true,
+                host: 'adscontigo.com',
+                port: 465,
+                auth: {
+                        user: 'ventas@adscontigo.com',
+                        pass: 'Nu07b_s38',                       
+                },
+                
+                tls: {rejectUnauthorized: false},
+                });
+                const mailOptions = {
+                from: 'ventas@adscontigo.com',  // sender address
+                to: ` jesus.francisco@ads.com.mx`, // list of receivers
+                // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
+                subject: 'Gracias por su interés en Alfa Diseño de Sistemas', // Subject line
+                text: 'Archivo de cotización PDF',
+                html: `<p>
+                    Basado en su solicitud de cotización, adjunto en este email nuestra propuesta comercial.
+                    <br/>
+                    <br/>
+                    <br/>
+                    Notificar si tiene alguna pregunta respondiendo a este correo electrónico o llamando
+                    a los teléfonos ${telefono} extensión ${extension}.
+                    <br/>
+                    <br/>
+                    ${data[20]}
+                    <br/><br/>
+                    <strong>Alfa Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
+                    que ha recibido el reconocimiento como el Primer Lugar en Ventas por 17 Años consecutivos en la
+                    Ciudad de México.</strong>
+                    <br/>
+                    <br/>
+                    Saludos cordiales, 
+                    <center><br/><br/>${data[2]}<br/>
+                Ejecutivo de ventas <br/>
+                ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
+                www.ads.com.mx<br/>${data[3]}</center>
+                </p>`,
+                attachments: [{
+                    filename:  data[12],
+                    path: data[16],
+                    contentType: 'application/pdf'
+                },{
+                    filename:  data[13],
+                    path: data[17],
+                    contentType: 'application/pdf'
+                },,{
+                    filename:  data[14],
+                    path: data[18],
+                    contentType: 'application/pdf'
+                },{
+                    filename:  data[15],
+                    path: data[19],
+                    contentType: 'application/pdf'
+                }]
+                };
+                console.log("transporter",transporter);
+
+                transporter.sendMail(mailOptions, function (err, info) {
+                    if("este es el error" , err)
+                    console.log(err)
+                    else
+                    console.log("esta es la info" ,  info);
+            
+            });
+            client.query(`delete from urlFirebaseTemporal where folio ='${data[7]}'`)
+            resolve({message:"Correo Enviado"})      
+        }if(data[0] === "5"){
+            var transporter = nodemailer.createTransport({  
+                secure: true,
+                host: 'adscontigo.com',
+                port: 465,
+                auth: {
+                        user: 'ventas@adscontigo.com',
+                        pass: 'Nu07b_s38',                       
+                },
+                
+                tls: {rejectUnauthorized: false},
+                });
+                const mailOptions = {
+                from: 'ventas@adscontigo.com',  // sender address
+                to: ` jesus.francisco@ads.com.mx`, // list of receivers
+                // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
+                subject: 'Gracias por su interés en Alfa Diseño de Sistemas', // Subject line
+                text: 'Archivo de cotización PDF',
+                html: `<p>
+                    <strong> Basado en su solicitud de cotización, adjunto en este email nuestra propuesta comercial.</strong>
+                    <br/>
+                    <br/>
+                    <br/>
+                    Notificar si tiene alguna pregunta respondiendo a este correo electrónico o llamando
+                    a los teléfonos ${telefono} extensión ${extension}.
+                    <br/>
+                    <br/>
+                    <strong>${data[23]}</strong>
+                    <br/><br/>
+                    <strong>Alfa Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
+                    que ha recibido el reconocimiento como el Primer Lugar en Ventas por 17 Años consecutivos en la
+                    Ciudad de México.</strong>
+                    <br/>
+                    <br/>
+                    Saludos cordiales, 
+                    <center><br/><br/>${data[2]}<br/>
+                Ejecutivo de ventas <br/>
+                ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
+                www.ads.com.mx<br/>${data[3]}</center>
+                </p>`,
+                attachments: [{
+                    filename:  data[13],
+                    path: data[18],
+                    contentType: 'application/pdf'
+                },{
+                    filename:  data[14],
+                    path: data[19],
+                    contentType: 'application/pdf'
+                },,{
+                    filename:  data[15],
+                    path: data[20],
+                    contentType: 'application/pdf'
+                },{
+                    filename:  data[16],
+                    path: data[21],
+                    contentType: 'application/pdf'
+                },{
+                    filename:  data[17],
+                    path: data[22],
+                    contentType: 'application/pdf'
+                }]
+                };
+                transporter.sendMail(mailOptions, function (err, info) {
+                    if("este es el error" , err)
+                    console.log(err)
+                    else
+                    console.log("esta es la info" ,  info);
+            
+            });
+            client.query(`delete from urlFirebaseTemporal where folio ='${data[7]}'`)
+            resolve({message:"Correo Enviado"})      
+        }
         })
+
     }                 
     const insertTotales = ( data)  => {
         return new Promise((resolve,reject)=>{
@@ -425,6 +693,15 @@ const path = require('path');
     const GetClienteId = ( data)  => {
         return new Promise((resolve,reject)=>{             
             client.query(`select * from clientesads where id_cliente ='${data[0]}'`, function (err,results,fields ) {                
+                var string = JSON.stringify(results)
+                var resultados=JSON.parse(string);                      
+                resolve(resultados)
+            }) 
+        })
+    }  
+    const GetContactoId = ( data)  => {
+        return new Promise((resolve,reject)=>{             
+            client.query(`select * from contacto where id_contacto ='${data[0]}'`, function (err,results,fields ) {                
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);                      
                 resolve(resultados)
@@ -1236,7 +1513,41 @@ const GetCalidadSurvey = ( data)  => {
         })
     })
 }
+const InsertUrlTemporal = ( data)  => {
+    let comentarios;
+    if(data[3]){
+        comentarios = data[3]
+    }else{
+        comentarios = "sin comentarios"
+    }
+    return new Promise((resolve,reject)=>{
+        client.query(`insert into urlFirebaseTemporal (nombreArchivo,folio,url,comentarios) values('${data[0]}','${data[1]}','${data[2]}','${comentarios}')`)
+        resolve({message:"registro exitoso"})
+    })
+}
+const GetUrlPdfFile = ( data)  => {
+   
+    return new Promise((resolve,reject)=>{
+        client.query(`select * from urlFirebaseTemporal where folio  = '${data[0]}'`,function(err,results,fields){
+            var string = JSON.stringify(results);
+           var resultados = JSON.parse(string); 
+            resolve(resultados)
+        })
+
+    })
+}
+const DeleteFileTemporal = ( data)  => {
+    return new Promise((resolve,reject)=>{
+        client.query(`delete from urlFirebaseTemporal where folio ='${data[7]}'`)
+        resolve({message:"exitoso"})
+
+    })
+}
 module.exports={
+    DeleteFileTemporal,
+    GetUrlPdfFile,
+    InsertUrlTemporal,
+    GetContactoId,
     GetCalidadSurvey,
     InsertSurveyQuality,
     GetSupportById,

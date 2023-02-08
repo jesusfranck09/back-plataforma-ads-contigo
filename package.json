@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^9.0.2",
     "downloads-folder": "^3.0.1",
     "express": "^4.17.1",

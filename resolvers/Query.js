@@ -226,7 +226,19 @@ const getCalidadSurvey  =  (_ , data) =>{
     var variable = cadena.split(",")
 return actions.GetCalidadSurvey(variable)
 }
+const getContactoId  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.GetContactoId(variable)
+}
+const getUrlPdfFile  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.GetUrlPdfFile(variable)
+}
 module.exports={
+    getUrlPdfFile,
+    getContactoId,
     getCalidadSurvey,
     getSupportById,
     getPolizasById,

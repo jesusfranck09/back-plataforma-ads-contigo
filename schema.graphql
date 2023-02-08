@@ -41,6 +41,8 @@ type Mutation {
      sendSupport(data:[String]!):message
      endSupport(data:[String]!):message
      insertSurveyQuality(data:[String]!):message
+     insertUrlTemporal(data:[String]!):message
+     deleteFileTemporal(data:[String]!):message
 }
 
 type Query{
@@ -86,7 +88,17 @@ getSupport(data:[String]!):[support]
 getPolizasById(data:[String]!):[polizas]
 getSupportById(data:[String]!):[support]
 getCalidadSurvey(data:[String]!):[calidadSurvey]
+getContactoId(data:[String]!):[getTablaContactos]
+getUrlPdfFile(data:[String]!):[urlPdfFile]
 } 
+
+type urlPdfFile{
+    id_url:String
+    nombreArchivo:String
+    folio:String
+    url:String
+    comentarios:String
+}
 
 type calidadSurvey{
     id_calidadSurvey:String
