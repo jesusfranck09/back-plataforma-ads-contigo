@@ -236,7 +236,13 @@ const getUrlPdfFile  =  (_ , data) =>{
     var variable = cadena.split(",")
 return actions.GetUrlPdfFile(variable)
 }
+const getSoporte  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.GetSoporte(variable)
+}
 module.exports={
+    getSoporte,
     getUrlPdfFile,
     getContactoId,
     getCalidadSurvey,

@@ -921,10 +921,10 @@ const { resolve } = require('path');
                 var resultados = JSON.parse(string)
                 if(resultados[0].folio){
                     consecutivo  = data[7] + (resultados[0].folio.length - 1 + 1)
-                    client.query(`insert into soporte (fechaSoporte,consola,numeroPoliza,asunto,idTeamviewer,passTeamviewer,folio,status,fk_cliente,fk_empresa,fk_contacto,fechaFinalizacion,statusEncuesta) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[5]}','${data[6]}','${consecutivo}','Pendiente','${data[4]}','${data[8]}','${data[9]}',"En proceso","No aplicada")`)
+                    client.query(`insert into soporte (fechaSoporte,consola,numeroPoliza,asunto,idTeamviewer,passTeamviewer,folio,telefonoContacto,status,fk_cliente,fk_empresa,fk_contacto,fechaFinalizacion,statusEncuesta) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[5]}','${data[6]}','${consecutivo}','${data[10]}','Pendiente','${data[4]}','${data[8]}','${data[9]}',"En proceso","No aplicada")`)
                 }else{
                     consecutivo = data[7] + 1
-                    client.query(`insert into soporte (fechaSoporte,consola,numeroPoliza,asunto,idTeamviewer,passTeamviewer,folio,status,fk_cliente,fk_empresa,fk_contacto,fechaFinalizacion,statusEncuesta) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[5]}','${data[6]}','${consecutivo}','Pendiente','${data[4]}','${data[8]}','${data[9]}',"En proceso","No aplicada")`)
+                    client.query(`insert into soporte (fechaSoporte,consola,numeroPoliza,asunto,idTeamviewer,passTeamviewer,folio,telefonoContacto,status,fk_cliente,fk_empresa,fk_contacto,fechaFinalizacion,statusEncuesta) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[5]}','${data[6]}','${consecutivo}','${data[10]}','Pendiente','${data[4]}','${data[8]}','${data[9]}',"En proceso","No aplicada")`)
                 }
             })
             client.query(`select * from clientesads where id_cliente = '${data[4]}'`,function(err,result,field ){
@@ -1317,6 +1317,7 @@ const { resolve } = require('path');
     })
 }
 const SendSupport = ( data)  => {
+    console.log("data",data)
     return new Promise((resolve,reject)=>{
         client.query(`update soporte set status = 'En proceso', ejecutivo = '${data[10]}' where id_soporte = '${data[4]}'`)
         var transporter = nodemailer.createTransport({  
@@ -1364,6 +1365,9 @@ const SendSupport = ( data)  => {
                 <br/>
                 <br/>
                     Consola  <strong>${data[1]}</strong>. 
+                <br/>
+                <br/>
+                    Teléfono de contacto  <strong>${data[12]}</strong>. 
                 <br/>
                 <br/>
                     Id Acceso  <strong>${data[5]}</strong>. 
@@ -1423,13 +1427,6 @@ const EndSupport = ( data)  => {
                 const mailOptions = {
                     from: 'ventas@adscontigo.com', // sender address
                 to: `${resultados[0].correo1},jesus.francisco@ads.com.mx,miriam.quiroz@ads.com.mx `,
-                // to: `jesus.francisco@ads.com.mx`,
-
-                // No olvide calificar la calidad de nuestro servicio por medio de la encuesta de satisfaccion mediante el siguiente enlace 
-                // <br/>
-                // <br/><br/>
-                // <p> https://plataforma.adscontigo.com/qualitySurvey:&${data[0]} </p><br/>
-                // to: `d93409@gmail.com`, 
                 subject: 'Información de seguimiento de solicitudes de soporte', // Subject line
                 text: 'Proceso de soporte técnico',
                 html: `<p>
@@ -1455,6 +1452,10 @@ const EndSupport = ( data)  => {
                     <br/>
                         Fecha de Finalización <strong>${data[4]}</strong>. 
                     <br/>
+                     No olvide calificar la calidad de nuestro servicio por medio de la encuesta de satisfaccion mediante el siguiente enlace 
+                    <br/>
+                    <br/><br/>
+                    <p> https://plataforma.adscontigo.com/qualitySurvey:&${data[0]} </p><br/><br/>
                       Para cualquier duda o información no dude en comunicarse con el equipo de Alfa Diseño de sistemas para su pronta aclaración.
                     <br/>
                     <br/>
@@ -1543,7 +1544,25 @@ const DeleteFileTemporal = ( data)  => {
 
     })
 }
+const GetSoporte = ( data)  => {
+    return new Promise((resolve,reject)=>{
+        client.query(`select * from soporte where fk_cliente = '${data[0]}'`,function(err,results,fields){
+            var string = JSON.stringify(results)
+            var resultados = JSON.parse(string)
+            resolve(resultados)
+        })
+    })
+}
+const UpdateSoporte = ( data)  => {
+    return new Promise((resolve,reject)=>{
+        client.query(`update soporte set  idTeamviewer =  '${data[1]}', passTeamviewer = '${data[2]}' where id_soporte = '${data[0]}'`)
+        console.log(`update soporte set  idTeamviewer =  '${data[1]}', passTeamviewer = '${data[2]}' where id_soporte = '${data[0]}'`)
+        resolve({message:"Se actualizaron los datos"})
+    })
+}
 module.exports={
+    UpdateSoporte,
+    GetSoporte,
     DeleteFileTemporal,
     GetUrlPdfFile,
     InsertUrlTemporal,

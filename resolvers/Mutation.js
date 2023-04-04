@@ -228,7 +228,13 @@ const actions = require('../actions/userActions')
         var variable = cadena.split(",")
         return actions.DeleteFileTemporal(variable)
     }
+    const updateSoporte =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.UpdateSoporte(variable)
+    }
 module.exports={
+    updateSoporte,
     deleteFileTemporal,
     insertUrlTemporal,
     insertSurveyQuality,
