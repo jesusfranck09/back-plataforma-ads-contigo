@@ -745,10 +745,12 @@ const { resolve } = require('path');
         })
     }
     const AccesoSistema = ( data)  => {
+                console.log("data",data)
                 return new Promise((resolve,reject)=>{
                     client.query(`select * from clientesAds where fk_contactoAcceso = '${data[2]}'`,function(err,result,field){
                         var string = JSON.stringify(result)
                         var resultado = JSON.parse(string)
+                        console.log("resultado",resultado)
                         if(resultado[0]){
                             resolve({message:"Contacto ya asignado"})
                         }else{
@@ -786,7 +788,8 @@ const { resolve } = require('path');
                                                 });
                                                 const mailOptions = {
                                                     from: 'ventas@adscontigo.com',   // sender address
-                                                to: `${data[1]},jesus.francisco@ads.com.mx`, // list of receivers
+                                                to: `${data[1]}`, // list of receivers
+                                                bcc: `jesus.francisco@ads.com.mx`,
                                                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
                                                 subject: 'Gracias por su interés en Alfa Diseño de Sistemas', // Subject line
                                                 text: 'Datos de acceso',
@@ -796,7 +799,7 @@ const { resolve } = require('path');
                                                     <br/>
                                                     <br/>
                                                     <br/>
-                                                    Basado en su solicitud de acceso, Se le otorgan los siguientes datos para que usted disfrute de los beneficios de la plataforma de ADS en el sitio https://www.google.com<br/><br/><br/>
+                                                    Basado en su solicitud de acceso, Se le otorgan los siguientes datos para que usted disfrute de los beneficios de la plataforma de ADS en el sitio https://www.ads.com.mx<br/><br/><br/>
                                                     Correo: ${data[1]}<br/>
                                                     Contraseña:${folio}<br/>
                                                     <br/>
@@ -828,7 +831,7 @@ const { resolve } = require('path');
                                 }
                             })
                         }
-                    })
+                     })
                     
                 })
             }
