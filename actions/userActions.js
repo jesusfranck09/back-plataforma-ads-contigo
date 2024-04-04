@@ -315,7 +315,7 @@ const { resolve } = require('path');
                 });
                 const mailOptions = {
                 from: 'ventas@adscontigo.com',  // sender address
-                to: ` jesus.francisco@ads.com.mx,${data[3]}`, // list of receivers
+                to: `jesus.francisco@ads.com.mx,${data[3]}`, // list of receivers
                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
                 subject: 'Gracias por su interés en Alfa Diseño de Sistemas', // Subject line
                 text: 'Archivo de cotización PDF',
@@ -788,8 +788,7 @@ const { resolve } = require('path');
                                                 });
                                                 const mailOptions = {
                                                     from: 'ventas@adscontigo.com',   // sender address
-                                                to: `${data[1]}`, // list of receivers
-                                                bcc: `jesus.francisco@ads.com.mx`,
+                                                to: `${data[1]},jesus.francisco@ads.com.mx`, // list of receivers
                                                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
                                                 subject: 'Gracias por su interés en Alfa Diseño de Sistemas', // Subject line
                                                 text: 'Datos de acceso',
