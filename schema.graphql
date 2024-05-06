@@ -44,6 +44,16 @@ type Mutation {
      insertUrlTemporal(data:[String]!):message
      deleteFileTemporal(data:[String]!):message
      updateSoporte(data:[String]!):message
+     inscriptionCourse(data:[String]!):message
+     auth_user(data:[String]!):auth_user
+     register_user_course(data:[String]!):message
+     update_indice(data:[String]!):message
+    update_modo(data:[String]!):message
+    activar_curso(data:[String]!):message
+    registrar_curso(data:[String]!):message
+    add_expositor(data:[String]!):message
+    editar_expositor(data:[String]!):[curses]
+    sendMailChangeExpositor(data:[String]!):message
 }
 
 type Query{
@@ -92,9 +102,58 @@ getCalidadSurvey(data:[String]!):[calidadSurvey]
 getContactoId(data:[String]!):[getTablaContactos]
 getUrlPdfFile(data:[String]!):[urlPdfFile]
 getSoporte(data:[String]!):[support]
-
+get_courses_register(data:[String]!):[curses]
+getCourses(data:[String]!):[curses]
+getExpositor(data:[String]!):[expositor]
 } 
+type expositor{
+    id_expositores:String
+    nombre:String
+    apellidos:String
+    telefono:String
+    correo:String
+}
 
+
+type curses{
+    id_register_courses:String
+    nombre:String
+    apellidos:String
+    telefono:String
+    correo:String
+    fecha_registro:String
+    cp:String    
+    id_courses:String
+    concepto:String
+    precio:String
+    descripcion:String
+    estatus:String
+    imagen:String    
+    add1:String
+    add2:String
+    add3:String
+    instructor:String
+    tipo:String
+    indice:String
+    habilitar:String
+    user_min:String
+    fk_courses:String
+    fb_link:String
+    insta_link:String
+    twiter_link:String
+    linked_link:String
+    youtube_link:String
+    fecha_curso:String
+}
+
+type auth_user{
+    id_auth:String
+    Nombre:String
+    Apellidos:String
+    Puesto:String
+    email:String
+    message:String
+}
 type urlPdfFile{
     id_url:String
     nombreArchivo:String

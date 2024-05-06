@@ -241,7 +241,25 @@ const getSoporte  =  (_ , data) =>{
     var variable = cadena.split(",")
 return actions.GetSoporte(variable)
 }
+const get_courses_register  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.get_courses_register(variable)
+}
+const getCourses  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.getCourses(variable)
+}
+const getExpositor  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.getExpositor(variable)
+}
 module.exports={
+    getExpositor,
+    getCourses,
+    get_courses_register,
     getSoporte,
     getUrlPdfFile,
     getContactoId,

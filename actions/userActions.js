@@ -315,7 +315,7 @@ const { resolve } = require('path');
                 });
                 const mailOptions = {
                 from: 'ventas@adscontigo.com',  // sender address
-                to: `jesus.francisco@ads.com.mx,${data[3]}`, // list of receivers
+                to: `jesus.francisco@ads.com.mx,${data[4]}`, // list of receivers
                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
                 subject: 'Gracias por su interés en Alfa Diseño de Sistemas', // Subject line
                 text: 'Archivo de cotización PDF',
@@ -498,7 +498,7 @@ const { resolve } = require('path');
                 });
                 const mailOptions = {
                 from: 'ventas@adscontigo.com',  // sender address
-                to: ` jesus.francisco@ads.com.mx`, // list of receivers
+                to: `jesus.francisco@ads.com.mx`, // list of receivers
                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
                 subject: 'Gracias por su interés en Alfa Diseño de Sistemas', // Subject line
                 text: 'Archivo de cotización PDF',
@@ -1562,7 +1562,223 @@ const UpdateSoporte = ( data)  => {
         resolve({message:"Se actualizaron los datos"})
     })
 }
+const inscriptionCourse = ( data)  => {
+    return new Promise((resolve,reject)=>{
+        client.query(`insert into register_courses (nombre,apellidos,telefono,correo,cp,fecha_registro,fk_courses) values ('${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}', '${data[0]}' )`)
+        client.query(`update courses set  indice =  '${data[7]}' where id_courses = '${data[8]}'`,function(err,res){
+            console.log("err",err)
+            console.log("res",res)
+        })
+        console.log(`update courses set  indice ='${data[7]}' where id_courses = '${data[8]}'`)
+        resolve({message:"Usuario registrado"})
+    })
+}
+const auth_user = ( data)  => {
+    return new Promise((resolve,reject) =>{ 
+        client.query(`select * from auth_admin_courses where email='${data[0]}'`,
+            function(err,results,field){
+                if(err){ reject(err)
+                }
+        var string = JSON.stringify(results)
+        var resultados=JSON.parse(string);
+        console.log(resultados)
+        if(resultados[0]){
+            bcrypt.compare(data[1],resultados[0].contraseña,function(error,result){
+                if(resultados){
+                    resolve({
+                        id_auth:resultados[0].id_auth,
+                        Nombre:resultados[0].Nombre,
+                        Apellidos:resultados[0].Apellidos,                   
+                        email:resultados[0].email, 
+                        Puesto:resultados[0].Puesto, 
+                        message:"usuario encontrado"
+                    })
+                } else{ 
+                    resolve({message:"usuario y contraseña incorrecto", token:"no hay token"})
+                }
+            })       
+        }else{
+            resolve({
+                message:"usuario no encontrado",             
+            })
+        }   
+    })
+})}
+
+const register_user_course = (data) => {
+    return new Promise((resolve,reject) =>{
+        bcrypt.genSalt(SALT_WORK_FACTOR,function(error,salt){
+            if (error){    
+                reject(error,{message:'error',token:error})
+            }else{
+                bcrypt.hash(data[1],salt, function(error,hash){
+                    if(error){
+                        throw error
+                    }else{
+                        client.query(`insert into auth_admin_courses(Nombre,Apellidos,Puesto,email,contraseña) values ('${data[2]}','${data[3]}','${data[4]}','${data[0]}','${hash}')`);                  
+                        resolve({           
+                            message:"Registro exitoso",
+                        })
+                    }
+                })
+            }
+
+        })
+        
+    })   
+    } 
+    const get_courses_register = ( data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`select * from register_courses inner join courses on register_courses.fk_courses = courses.id_courses`,function(err,results,fields){
+               var string = JSON.stringify(results);
+               var resultados = JSON.parse(string); 
+               resolve(resultados)
+            })
+        })
+    }
+    const getCourses = ( data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`select * from courses`,function(err,results,fields){
+               var string = JSON.stringify(results);
+               var resultados = JSON.parse(string); 
+               resolve(resultados)
+            })
+        })
+    }
+    const update_indice = ( data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`update courses set user_min = '${data[0]}' where id_courses = '${data[1]}'`)
+            resolve({message:"indice actualizado"})
+        })
+    }
+    const update_modo = ( data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`update courses set habilitar = '${data[0]}' where id_courses = '${data[1]}'`)
+            resolve({message:"modo actualizado"})
+        })
+    }
+    const activar_curso = ( data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`update courses set estatus = 'activo' where id_courses = '${data[0]}'`)
+            resolve({message:"curso activado"})
+        })
+    }
+    const registrar_curso = ( data)  => {
+
+        console.log(data)
+        return new Promise((resolve,reject)=>{
+            client.query(`insert into courses (concepto,precio,descripcion,estatus,imagen,add1,add2,add3,instructor,tipo,indice,habilitar,user_min,insta_link,fb_link,twiter_link,linked_link,youtube_link,fecha_curso) values ('${data[0]}','0','${data[1]}','inactivo','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','0','${data[8]}','${data[9]}','${data[10]}','${data[11]}','${data[12]}','${data[13]}','${data[14]}','${data[15]}')`,function(err,res){
+                console.log(err)
+                console.log(res)
+            })
+            console.log(`insert into courses (concepto,precio,descripcion,razon_social,estatus,imagen,add1,add2,add3,instructor,tipo,indice,habilitar,user_min,insta_link,fb_link,twiter_link,linked_link,youtube_link,fecha_curso) values ('${data[0]}','0','${data[16]}','${data[1]}','inactivo','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','0','${data[8]}','${data[9]}','${data[10]}','${data[11]}','${data[12]}','${data[13]}','${data[14]}','${data[15]}')`)
+            resolve({message:"curso registrado"})
+        })
+    }
+    const add_expositor = ( data)  => {
+
+        console.log(data)
+        return new Promise((resolve,reject)=>{
+            client.query(`insert into expositores (nombre,apellidos,correo,telefono) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}')`,function(err,res){
+                console.log(err)
+                console.log(res)
+            })
+            resolve({message:"registro exitoso"})
+        })
+    }
+    const getExpositor = ( data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`select * from expositores`,function(err,results,fields){
+               var string = JSON.stringify(results);
+               var resultados = JSON.parse(string); 
+               resolve(resultados)
+            })
+        })
+    }
+    const editar_expositor = ( data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`update courses set instructor = '${data[0]}' where id_courses = '${data[1]}'`)
+
+            client.query(`select * from register_courses inner join courses on register_courses.fk_courses = courses.id_courses  where register_courses.fk_courses = '${data[1]}'`,function(err,results,fields){
+                var string = JSON.stringify(results);
+                var resultados = JSON.parse(string); 
+                resolve(resultados)
+             })
+        })
+    }
+    const sendMailChangeExpositor = (data)  => {
+        return new Promise((resolve,reject)=>{
+            var fecha = new Date();
+            var options = { weekday: 'long',year: 'numeric', month: 'long', day: 'numeric' };
+           
+            fecha.toLocaleDateString("es-ES", options)
+
+            console.log("data",data)
+            var transporter = nodemailer.createTransport({  
+                secure: true,
+                host: 'adscontigo.com',
+                port: 465,
+                auth: {
+                        user: 'ventas@adscontigo.com',
+                        pass: 'Nu07b_s38',                       
+                },
+                
+                tls: {rejectUnauthorized: false},
+                });
+
+                const mailOptions = {
+                from: 'ventas@adscontigo.com',  // sender address
+                to: `jesus.francisco@ads.com.mx`, // list of receivers
+                subject: 'Notificación de cambio de expositor', // Subject line
+                text: `Ciudad de México <br/><br/> ${fecha}`,
+                html: `<p>
+                    <strong>
+                        Estimados usuarios por medio de este breve mensaje les comunicamos que ha habido un cambio de expositor al curso ${data[1]}, de igual manera agradeciendo su total comprensión.
+                    <br/>
+                    <br/>
+                    <br/>
+                    Cualquier opinión, duda o sugerencia le agradecemos comunicarse a nuestros teléfonos 0000000000 0000000000 y expresamos nuestra alegría de tenerlo presente.
+                    
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    Esperando su participación quedamos atentos.
+                    <br/>
+                    <br/>
+                    Saludos cordiales, 
+                    <center><br/><br/><br/>
+                ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
+                www.ads.com.mx<br/></center>
+                </strong>
+                </p>`,
+                };
+                console.log("transporter",transporter);
+
+                transporter.sendMail(mailOptions, function (err, info) {
+                    if("este es el error" , err)
+                    console.log(err)
+                    else
+                    console.log("esta es la info" ,  info);
+            
+            });
+            // enviar email
+        })
+    }
 module.exports={
+    sendMailChangeExpositor,
+    editar_expositor,
+    getExpositor,
+    add_expositor,
+    registrar_curso,
+    activar_curso,
+    update_modo,
+    update_indice,
+    getCourses,
+    get_courses_register,
+    register_user_course,
+    auth_user,
+    inscriptionCourse,
     UpdateSoporte,
     GetSoporte,
     DeleteFileTemporal,

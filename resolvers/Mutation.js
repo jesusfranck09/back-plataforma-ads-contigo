@@ -233,7 +233,67 @@ const actions = require('../actions/userActions')
         var variable = cadena.split(",")
         return actions.UpdateSoporte(variable)
     }
+    const inscriptionCourse =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.inscriptionCourse(variable)
+    }
+    const auth_user =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.auth_user(variable)
+    }
+    const register_user_course =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.register_user_course(variable)
+    }
+    const update_indice =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.update_indice(variable)
+    }
+    const update_modo =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.update_modo(variable)
+    }
+    const activar_curso =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.activar_curso(variable)
+    }
+    const registrar_curso =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.registrar_curso(variable)
+    }
+    const add_expositor =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.add_expositor(variable)
+    }
+    const editar_expositor =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.editar_expositor(variable)
+    }
+    const sendMailChangeExpositor =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.sendMailChangeExpositor(variable)
+    }
 module.exports={
+    sendMailChangeExpositor,
+    editar_expositor,
+    add_expositor,
+    registrar_curso,
+    activar_curso,
+    update_modo,
+    update_indice,
+    register_user_course,
+    auth_user,
+    inscriptionCourse,
     updateSoporte,
     deleteFileTemporal,
     insertUrlTemporal,
