@@ -1,14 +1,8 @@
 const client  = require('../database');
-const bcrypt =  require('bcrypt');
-const puppeteer = require('puppeteer');
+const bcrypt =  require('bcryptjs');
 const nodemailer = require("nodemailer")
 const {jsonwebtoken} = require('../utils/index');
 const SALT_WORK_FACTOR =10
-const downloadsFolder = require('downloads-folder');
-const { response } = require('express');
-const path = require('path');
-const fs = require('fs');
-const { resolve } = require('path');
 
     const signupAlfa = (data) => {
     return new Promise((resolve,reject) =>{
