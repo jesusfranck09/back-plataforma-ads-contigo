@@ -54,6 +54,9 @@ type Mutation {
     add_expositor(data:[String]!):message
     editar_expositor(data:[String]!):[curses]
     sendMailChangeExpositor(data:[String]!):message
+    addVideoPromocional(data:[String]!):videoPromocional
+    desactivarVideoPromocional(data:[String]!):message
+    register_plataform_curse(data:[String]!):message
 }
 
 type Query{
@@ -105,6 +108,7 @@ getSoporte(data:[String]!):[support]
 get_courses_register(data:[String]!):[curses]
 getCourses(data:[String]!):[curses]
 getExpositor(data:[String]!):[expositor]
+getPromocional(data:[String]!):[videoPromocional]
 } 
 type expositor{
     id_expositores:String
@@ -114,6 +118,13 @@ type expositor{
     correo:String
 }
 
+type videoPromocional{
+    id_video_promocional:String
+    url:String
+    descripcion:String
+    activo:String
+    message:String
+}
 
 type curses{
     id_register_courses:String
@@ -144,6 +155,8 @@ type curses{
     linked_link:String
     youtube_link:String
     fecha_curso:String
+    hora_inicial:String
+    hora_final:String
 }
 
 type auth_user{

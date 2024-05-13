@@ -256,7 +256,13 @@ const getExpositor  =  (_ , data) =>{
     var variable = cadena.split(",")
 return actions.getExpositor(variable)
 }
+const getPromocional  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.getPromocional(variable)
+}
 module.exports={
+    getPromocional,
     getExpositor,
     getCourses,
     get_courses_register,

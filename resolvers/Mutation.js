@@ -283,7 +283,25 @@ const actions = require('../actions/userActions')
         var variable = cadena.split(",")
         return actions.sendMailChangeExpositor(variable)
     }
+    const addVideoPromocional =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.addVideoPromocional(variable)
+    }
+    const desactivarVideoPromocional =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.desactivarVideoPromocional(variable)
+    }
+    const register_plataform_curse =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.register_plataform_curse(variable)
+    }
 module.exports={
+    register_plataform_curse,
+    desactivarVideoPromocional,
+    addVideoPromocional,
     sendMailChangeExpositor,
     editar_expositor,
     add_expositor,

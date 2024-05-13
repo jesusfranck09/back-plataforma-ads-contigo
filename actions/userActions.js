@@ -1558,12 +1558,65 @@ const UpdateSoporte = ( data)  => {
 }
 const inscriptionCourse = ( data)  => {
     return new Promise((resolve,reject)=>{
+        var fecha = new Date();
+            var options = { weekday: 'long',year: 'numeric', month: 'long', day: 'numeric' };
+           
+        fecha.toLocaleDateString("es-ES", options)
         client.query(`insert into register_courses (nombre,apellidos,telefono,correo,cp,fecha_registro,fk_courses) values ('${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}', '${data[0]}' )`)
         client.query(`update courses set  indice =  '${data[7]}' where id_courses = '${data[8]}'`,function(err,res){
-            console.log("err",err)
-            console.log("res",res)
+            
         })
         console.log(`update courses set  indice ='${data[7]}' where id_courses = '${data[8]}'`)
+
+        fecha.toLocaleDateString("es-ES", options)
+
+        var transporter = nodemailer.createTransport({  
+            secure: true,
+            host: 'adscontigo.com',
+            port: 465,
+            auth: {
+                    user: 'ventas@adscontigo.com',
+                    pass: 'Nu07b_s38',                       
+            },
+            
+            tls: {rejectUnauthorized: false},
+            });
+
+            const mailOptions = {
+            from: 'ventas@adscontigo.com',  // sender address
+            to: `jesus.francisco@ads.com.mx`, // list of receivers
+            subject: 'Bienvenido al curso', // Subject line
+            text: `Ciudad de México <br/><br/> ${fecha}`,
+            html: `<p>
+                <strong>
+                    Le damos más cordial bienvenida a este curso ${data[9]} ${data[10]} <br/><br/> El cual espero sea para ustedes una experiencia provechosa, gratificante y altamente formativa.
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                Esperando contar con su valiosa presencia quedamos atentos.
+                <br/>
+                <br/>
+                Saludos cordiales, 
+                <center><br/><br/><br/>
+            ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
+            www.ads.com.mx<br/></center>
+            </strong>
+            </p>`,
+                           
+            };
+            console.log("transporter",transporter);
+
+            transporter.sendMail(mailOptions, function (err, info) {
+                if("este es el error" , err)
+                console.log(err)
+                else
+                console.log("esta es la info" ,  info);
+        
+        });
         resolve({message:"Usuario registrado"})
     })
 }
@@ -1633,6 +1686,8 @@ const register_user_course = (data) => {
     const getCourses = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`select * from courses`,function(err,results,fields){
+                console.log("error",err)
+                console.log("fields",fields)
                var string = JSON.stringify(results);
                var resultados = JSON.parse(string); 
                resolve(resultados)
@@ -1661,11 +1716,10 @@ const register_user_course = (data) => {
 
         console.log(data)
         return new Promise((resolve,reject)=>{
-            client.query(`insert into courses (concepto,precio,descripcion,estatus,imagen,add1,add2,add3,instructor,tipo,indice,habilitar,user_min,insta_link,fb_link,twiter_link,linked_link,youtube_link,fecha_curso) values ('${data[0]}','0','${data[1]}','inactivo','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','0','${data[8]}','${data[9]}','${data[10]}','${data[11]}','${data[12]}','${data[13]}','${data[14]}','${data[15]}')`,function(err,res){
+            client.query(`insert into courses (concepto,precio,descripcion,estatus,imagen,add1,add2,add3,instructor,tipo,indice,habilitar,user_min,insta_link,fb_link,twiter_link,linked_link,youtube_link,fecha_curso,hora_inicial,hora_final) values ('${data[0]}','0','${data[1]}','inactivo','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','0','${data[8]}','${data[9]}','${data[10]}','${data[11]}','${data[12]}','${data[13]}','${data[14]}','${data[15]}','${data[17]}','${data[18]}')`,function(err,res){
                 console.log(err)
                 console.log(res)
             })
-            console.log(`insert into courses (concepto,precio,descripcion,razon_social,estatus,imagen,add1,add2,add3,instructor,tipo,indice,habilitar,user_min,insta_link,fb_link,twiter_link,linked_link,youtube_link,fecha_curso) values ('${data[0]}','0','${data[16]}','${data[1]}','inactivo','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','0','${data[8]}','${data[9]}','${data[10]}','${data[11]}','${data[12]}','${data[13]}','${data[14]}','${data[15]}')`)
             resolve({message:"curso registrado"})
         })
     }
@@ -1707,7 +1761,6 @@ const register_user_course = (data) => {
            
             fecha.toLocaleDateString("es-ES", options)
 
-            console.log("data",data)
             var transporter = nodemailer.createTransport({  
                 secure: true,
                 host: 'adscontigo.com',
@@ -1759,7 +1812,63 @@ const register_user_course = (data) => {
             // enviar email
         })
     }
+    const addVideoPromocional = ( data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`select * from video_promocional where activo = "true"`,function(err,results,fields){
+                let string = JSON.stringify(results);
+                let resultados = JSON.parse(string);
+                if(resultados[0]){
+                    resolve({
+                        id_video_promocional:resultados[0].id_video_promocional,
+                        url:resultados[0].url,
+                        descripcion:resultados[0].descripcion,
+                        activo:resultados[0].activo,
+                        message:"curso activo"
+                    })
+                }else{
+                    client.query(`insert into video_promocional (url, descripcion, activo) values('${data[0]}','${data[1]}', 'true')`);
+                    resolve({message:"registro exitoso"})
+                }
+            })
+            
+        })
+    }
+    const desactivarVideoPromocional = ( data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`update video_promocional set activo = 'false' where id_video_promocional = '${data[0]}'`);
+            resolve({message:"video desactivado"})
+            
+        })
+    }
+    const getPromocional = ( data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`select * from video_promocional where activo = "true"`,function(err,results,fields){
+                console.log("error",err)
+                console.log("fields",fields)
+                var string = JSON.stringify(results);
+               var resultados = JSON.parse(string); 
+               
+               resolve(resultados)
+            })
+        })
+    }
+
+    const register_plataform_curse = ( data)  => {
+
+        console.log(data)
+        return new Promise((resolve,reject)=>{
+            // client.query(`insert into plataform_curses (concepto,precio,descripcion,estatus,imagen,add1,add2,add3,instructor,tipo,indice,habilitar,user_min,insta_link,fb_link,twiter_link,linked_link,youtube_link,fecha_curso,hora_inicial,hora_final) values ('${data[0]}','0','${data[1]}','inactivo','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','0','${data[8]}','${data[9]}','${data[10]}','${data[11]}','${data[12]}','${data[13]}','${data[14]}','${data[15]}','${data[17]}','${data[18]}')`,function(err,res){
+                console.log(err)
+                console.log(res)
+            // })
+            resolve({message:"curso registrado"})
+        })
+    }
 module.exports={
+    register_plataform_curse,
+    getPromocional,
+    desactivarVideoPromocional,
+    addVideoPromocional,
     sendMailChangeExpositor,
     editar_expositor,
     getExpositor,
