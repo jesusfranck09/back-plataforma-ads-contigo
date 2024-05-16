@@ -1886,6 +1886,7 @@ const register_user_course = (data) => {
             var string = JSON.stringify(results)
             var resultados=JSON.parse(string);
             console.log(resultados)
+
             if(resultados[0]){
                 bcrypt.compare(data[1],resultados[0].contraseña,function(error,result){
                         resolve({
