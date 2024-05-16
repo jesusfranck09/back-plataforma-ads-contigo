@@ -1888,7 +1888,6 @@ const register_user_course = (data) => {
             console.log(resultados)
             if(resultados[0]){
                 bcrypt.compare(data[1],resultados[0].contraseña,function(error,result){
-                    if(resultados){
                         resolve({
                             id_users_plataform:resultados[0].id_users_plataform,
                             nombre:resultados[0].nombre,
@@ -1898,9 +1897,6 @@ const register_user_course = (data) => {
                             perfil_completado:resultados[0].perfil_completado,
                             message:"usuario encontrado"
                         })
-                    } else{ 
-                        resolve({message:"usuario y contraseña incorrecto", token:"no hay token"})
-                    }
                 })       
             }else{
                 resolve({
