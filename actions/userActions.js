@@ -1854,17 +1854,75 @@ const register_user_course = (data) => {
     }
 
     const register_plataform_curse = ( data)  => {
-
-        console.log(data)
         return new Promise((resolve,reject)=>{
-            // client.query(`insert into plataform_curses (concepto,precio,descripcion,estatus,imagen,add1,add2,add3,instructor,tipo,indice,habilitar,user_min,insta_link,fb_link,twiter_link,linked_link,youtube_link,fecha_curso,hora_inicial,hora_final) values ('${data[0]}','0','${data[1]}','inactivo','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','0','${data[8]}','${data[9]}','${data[10]}','${data[11]}','${data[12]}','${data[13]}','${data[14]}','${data[15]}','${data[17]}','${data[18]}')`,function(err,res){
-                console.log(err)
-                console.log(res)
-            // })
-            resolve({message:"curso registrado"})
+            bcrypt.genSalt(SALT_WORK_FACTOR,function(error,salt){
+                if (error){    
+                    reject(error,{message:'error',token:error})
+                }else{
+                    bcrypt.hash(data[1],salt, function(error,hash){
+                        if(error){
+                            throw error
+                        }else{
+                            client.query(`insert into users_plataform(nombre,apellidos,telefono,correo,contraseña,perfil_completado) values('${data[2]}', '${data[3]}', '${data[4]}', '${data[0]}', '${hash}','false')`,function(err,res){
+                                console.log("error",err)
+                                console.log("fields",res)
+                            });                  
+                            resolve({           
+                                message:"signup exitoso",
+                            })
+                        }
+                    })
+                }
+
+        })})
+    }
+
+    const auth_user_plataform = ( data)  => {
+        return new Promise((resolve,reject) =>{ 
+            client.query(`select * from users_plataform where correo='${data[0]}'`,
+                function(err,results,field){
+                    if(err){ reject(err)
+                }
+            var string = JSON.stringify(results)
+            var resultados=JSON.parse(string);
+            console.log(resultados)
+            if(resultados[0]){
+                bcrypt.compare(data[1],resultados[0].contraseña,function(error,result){
+                    if(resultados){
+                        resolve({
+                            id_users_plataform:resultados[0].id_users_plataform,
+                            nombre:resultados[0].nombre,
+                            apellidos:resultados[0].apellidos,                   
+                            telefono:resultados[0].telefono, 
+                            correo:resultados[0].correo, 
+                            perfil_completado:resultados[0].perfil_completado,
+                            message:"usuario encontrado"
+                        })
+                    } else{ 
+                        resolve({message:"usuario y contraseña incorrecto", token:"no hay token"})
+                    }
+                })       
+            }else{
+                resolve({
+                    message:"usuario no encontrado",             
+                })
+            }   
+        })
+    })}
+    
+    const get_users_plataform = ( data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`select * from users_plataform`,function(err,results,fields){
+                var string = JSON.stringify(results);
+               var resultados = JSON.parse(string); 
+               
+               resolve(resultados)
+            })
         })
     }
 module.exports={
+    get_users_plataform,
+    auth_user_plataform,
     register_plataform_curse,
     getPromocional,
     desactivarVideoPromocional,

@@ -298,7 +298,14 @@ const actions = require('../actions/userActions')
         var variable = cadena.split(",")
         return actions.register_plataform_curse(variable)
     }
+
+    const auth_user_plataform =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.auth_user_plataform(variable)
+    }
 module.exports={
+    auth_user_plataform,
     register_plataform_curse,
     desactivarVideoPromocional,
     addVideoPromocional,

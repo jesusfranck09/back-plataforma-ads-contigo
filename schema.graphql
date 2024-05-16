@@ -57,6 +57,7 @@ type Mutation {
     addVideoPromocional(data:[String]!):videoPromocional
     desactivarVideoPromocional(data:[String]!):message
     register_plataform_curse(data:[String]!):message
+    auth_user_plataform(data:[String]!):auth_user_plataform
 }
 
 type Query{
@@ -109,7 +110,22 @@ get_courses_register(data:[String]!):[curses]
 getCourses(data:[String]!):[curses]
 getExpositor(data:[String]!):[expositor]
 getPromocional(data:[String]!):[videoPromocional]
+get_users_plataform(data:[String]!):[auth_user_plataform]
 } 
+type auth_user_plataform{
+    id_users_plataform:String
+    nombre:String
+    apellidos:String
+    telefono:String
+    correo:String
+    message:String
+    perfil_completado:String
+    telefono_empresa:String
+    rango_edad:String
+    cp:String
+    genero:String
+    profesion:String
+}
 type expositor{
     id_expositores:String
     nombre:String

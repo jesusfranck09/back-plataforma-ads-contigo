@@ -11,6 +11,19 @@ var con = mysql.createPool({
 module.exports =  con;
 
 
+
+// var mysql = require('mysql')
+// var con = mysql.createPool({
+//     database:"ads_contigo_local",
+//     host:"localhost",
+//     user:"root",
+//     password:"jesus33."
+// },
+//     console.log("conectado a la BD")
+// ) 
+
+// module.exports =  con;
+
 // var mysql = require ('mysql')
 // var coneccion= mysql.createConnection({
 //     database:'directorioalfa',
