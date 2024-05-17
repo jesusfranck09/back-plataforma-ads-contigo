@@ -266,7 +266,13 @@ const get_users_plataform  =  (_ , data) =>{
     var variable = cadena.split(",")
 return actions.get_users_plataform(variable)
 }
+const cursos_Anteriores  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.cursos_Anteriores(variable)
+}
 module.exports={
+    cursos_Anteriores,
     get_users_plataform,
     getPromocional,
     getExpositor,

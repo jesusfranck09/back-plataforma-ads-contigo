@@ -58,6 +58,7 @@ type Mutation {
     desactivarVideoPromocional(data:[String]!):message
     register_plataform_curse(data:[String]!):message
     auth_user_plataform(data:[String]!):auth_user_plataform
+    finalizar_curso(data:[String]!):message
 }
 
 type Query{
@@ -111,6 +112,7 @@ getCourses(data:[String]!):[curses]
 getExpositor(data:[String]!):[expositor]
 getPromocional(data:[String]!):[videoPromocional]
 get_users_plataform(data:[String]!):[auth_user_plataform]
+cursos_Anteriores(data:[String]!):[curses]
 } 
 type auth_user_plataform{
     id_users_plataform:String
