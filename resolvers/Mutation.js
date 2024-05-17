@@ -263,10 +263,18 @@ const actions = require('../actions/userActions')
         var variable = cadena.split(",")
         return actions.activar_curso(variable)
     }
-    const registrar_curso =  (_ ,data) =>{
-        var cadena= data.data[0]
-        var variable = cadena.split(",")
-        return actions.registrar_curso(variable)
+    const registrar_curso = async (_ , {concepto,descripcion,url,
+        encabezado1,encabezado2,encabezado3,
+        instructor,tipo,modo,
+        indice,ig,fb,
+        tw,li, yt,
+        fecha,rs,hora1,hora2}) =>{
+        return actions.registrar_curso(concepto,descripcion,url,
+            encabezado1,encabezado2,encabezado3,
+            instructor,tipo,modo,
+            indice,ig,fb,
+            tw,li, yt,
+            fecha,rs,hora1,hora2)
     }
     const add_expositor =  (_ ,data) =>{
         var cadena= data.data[0]

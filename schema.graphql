@@ -50,7 +50,12 @@ type Mutation {
      update_indice(data:[String]!):message
     update_modo(data:[String]!):message
     activar_curso(data:[String]!):message
-    registrar_curso(data:[String]!):message
+    registrar_curso(concepto:String,descripcion:String,url:String,
+                        encabezado1:String,encabezado2:String,encabezado3:String,
+                        instructor:String,tipo:String,modo:String,
+                        indice:String,ig:String,fb:String,
+                        tw:String,li:String, yt:String,
+                        fecha:String,rs:String,hora1:String,hora2:String):message
     add_expositor(data:[String]!):message
     editar_expositor(data:[String]!):[curses]
     sendMailChangeExpositor(data:[String]!):message

@@ -1686,8 +1686,6 @@ const register_user_course = (data) => {
     const getCourses = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`select * from courses where curso_finalizado = 'false'`,function(err,results,fields){
-                console.log("error",err)
-                console.log("fields",fields)
                var string = JSON.stringify(results);
                var resultados = JSON.parse(string); 
                resolve(resultados)
@@ -1712,24 +1710,29 @@ const register_user_course = (data) => {
             resolve({message:"curso activado"})
         })
     }
-    const registrar_curso = ( data)  => {
-
-        console.log(data)
+    const registrar_curso = ( concepto,descripcion,url,
+        encabezado1,encabezado2,encabezado3,
+        instructor,tipo,modo,
+        indice,ig,fb,
+        tw,li, yt,
+        fecha,rs,hora1,hora2)  => {
+        encabezado1,encabezado2,encabezado3,
+        instructor,tipo,modo,
+        indice,ig,fb,
+        tw,li, yt,
+        fecha,rs,hora1,hora2
         return new Promise((resolve,reject)=>{
-            client.query(`insert into courses (concepto,precio,descripcion,estatus,imagen,add1,add2,add3,instructor,tipo,indice,habilitar,user_min,insta_link,fb_link,twiter_link,linked_link,youtube_link,fecha_curso,hora_inicial,hora_final,curso_finalizado,servidor,url_video) values ('${data[0]}','0','${data[1]}','inactivo','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','0','${data[8]}','${data[9]}','${data[10]}','${data[11]}','${data[12]}','${data[13]}','${data[14]}','${data[15]}','${data[17]}','${data[18]}',"false","No proporcionado","No proporcionado")`,function(err,res){
-                console.log(err)
-                console.log(res)
+            client.query(`insert into courses (concepto,precio,descripcion,estatus,imagen,add1,add2,add3,instructor,tipo,indice,habilitar,user_min,insta_link,fb_link,twiter_link,linked_link,youtube_link,fecha_curso,hora_inicial,hora_final,curso_finalizado,servidor,url_video) values ('${concepto}','0','${descripcion}','inactivo','${url}','${encabezado1}','${encabezado2}','${encabezado3}'
+            ,'${instructor}','${tipo}','0','${modo}','${indice}','${ig}','${fb}','${tw}','${li}','${yt}','${fecha}','${hora1}','${hora2}',"false","No proporcionado","No proporcionado")`,function(err,res){
+               
             })
             resolve({message:"curso registrado"})
         })
     }
     const add_expositor = ( data)  => {
-
-        console.log(data)
         return new Promise((resolve,reject)=>{
             client.query(`insert into expositores (nombre,apellidos,correo,telefono) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}')`,function(err,res){
-                console.log(err)
-                console.log(res)
+                
             })
             resolve({message:"registro exitoso"})
         })
@@ -1843,8 +1846,6 @@ const register_user_course = (data) => {
     const getPromocional = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`select * from video_promocional where activo = "true"`,function(err,results,fields){
-                console.log("error",err)
-                console.log("fields",fields)
                 var string = JSON.stringify(results);
                var resultados = JSON.parse(string); 
                
