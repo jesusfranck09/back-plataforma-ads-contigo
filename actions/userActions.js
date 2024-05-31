@@ -1638,6 +1638,8 @@ const auth_user = ( data)  => {
                         Apellidos:resultados[0].Apellidos,                   
                         email:resultados[0].email, 
                         Puesto:resultados[0].Puesto, 
+                        fk_empresa:resultados[0].fk_empresa, 
+
                         message:"usuario encontrado"
                     })
                 } else{ 
@@ -1880,16 +1882,42 @@ const register_user_course = (data) => {
 
     const auth_user_plataform = ( data)  => {
         return new Promise((resolve,reject) =>{ 
+
+            console.log("data",data)
+            client.query(`select * from contacto where correo1 = '${data[0]}'`,function(error,res,fields){
+
+            var strings = JSON.stringify(res)
+            var resultado = JSON.parse(strings);
+
             client.query(`select * from users_plataform where correo='${data[0]}'`,
-                function(err,results,field){
-                    if(err){ reject(err)
-                }
+            function(err,results,field){
+            if(err){ reject(err)
+            }
             var string = JSON.stringify(results)
             var resultados=JSON.parse(string);
-            console.log(resultados)
-
             if(resultados[0]){
+
                 bcrypt.compare(data[1],resultados[0].contraseña,function(error,result){
+                    if(resultado[0]){
+                        console.log("resultados",resultados)
+                        client.query(`select * from clientesads where id_cliente = '${resultado[0].fk_clientesads}'`,function(errors,ress,fieldd){
+                            var st= JSON.stringify(ress)
+                            var re = JSON.parse(st);
+                            console.log("re",re)
+                            resolve({
+                                id_users_plataform:resultados[0].id_users_plataform,
+                                nombre:resultados[0].nombre,
+                                apellidos:resultados[0].apellidos,                   
+                                telefono:resultados[0].telefono, 
+                                correo:resultados[0].correo, 
+                                perfil_completado:resultados[0].perfil_completado,
+                                message:"usuario encontrado",
+                                id_cliente:re[0].id_cliente,
+                                rfc:re[0].rfc,
+                                razonSocial:re[0].razonSocial
+                            })
+                        })
+                    }else{
                         resolve({
                             id_users_plataform:resultados[0].id_users_plataform,
                             nombre:resultados[0].nombre,
@@ -1897,8 +1925,13 @@ const register_user_course = (data) => {
                             telefono:resultados[0].telefono, 
                             correo:resultados[0].correo, 
                             perfil_completado:resultados[0].perfil_completado,
-                            message:"usuario encontrado"
+                            message:"usuario encontrado",
+                            id_cliente:"",
+                            rfc:"",
+                            razonSocial:""
                         })
+                    }
+                        
                 })       
             }else{
                 resolve({
@@ -1906,6 +1939,8 @@ const register_user_course = (data) => {
                 })
             }   
         })
+            })
+            
     })}
     
     const get_users_plataform = ( data)  => {
@@ -1936,7 +1971,56 @@ const register_user_course = (data) => {
             
         })
     }
+    const getAllContactos = ( data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`select * from contacto`,function(err,results,fields){
+                var string = JSON.stringify(results);
+                var resultados = JSON.parse(string); 
+                resolve(resultados)
+            })
+            
+        })
+    }
+    const getRegisterCourses = ( data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`select * from register_courses where correo = '${data[0]}'`,function(err,results,fields){
+                var string = JSON.stringify(results);
+                var resultados = JSON.parse(string); 
+                resolve(resultados)
+            })
+            
+        })
+    }
+    const getRegisterCoursesById = ( data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`select * from courses where id_courses = '${data[0]}'`,function(err,results,fields){
+                var string = JSON.stringify(results);
+                var resultados = JSON.parse(string); 
+                resolve(resultados)
+            })
+            
+        })
+    }
+    const update_profile = ( data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`select * from users_plataform where correo = '${data[3]}'`,function(err,results,fields){
+                var string = JSON.stringify(results);
+                var resultados = JSON.parse(string); 
+                if(resultados[0]){
+                    client.query(`update users_plataform set nombre = '${data[0]}', apellidos = '${data[1]}', telefono = '${data[2]}', correo = '${data[3]}', rango_edad = '${data[4]}', cp = '${data[5]}', telefono_empresa = '${data[6]}', genero = '${data[7]}', profesion = '${data[8]}', perfil_completado = 'true' where correo = '${data[3]}' `)
+                    resolve({message:"perfil completado"})
+                }else{
+                    resolve({message:"correo no encotrado"})
+                }
+            })
+            
+        })
+    }
 module.exports={
+    update_profile,
+    getRegisterCoursesById,
+    getRegisterCourses,
+    getAllContactos,
     cursos_Anteriores,
     finalizar_curso,
     get_users_plataform,

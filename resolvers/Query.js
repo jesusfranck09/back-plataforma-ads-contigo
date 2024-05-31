@@ -271,7 +271,26 @@ const cursos_Anteriores  =  (_ , data) =>{
     var variable = cadena.split(",")
 return actions.cursos_Anteriores(variable)
 }
+
+const getAllContactos  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.getAllContactos(variable)
+}
+const getRegisterCourses  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.getRegisterCourses(variable)
+}
+const getRegisterCoursesById  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.getRegisterCoursesById(variable)
+}
 module.exports={
+    getRegisterCoursesById,
+    getRegisterCourses,
+    getAllContactos,
     cursos_Anteriores,
     get_users_plataform,
     getPromocional,

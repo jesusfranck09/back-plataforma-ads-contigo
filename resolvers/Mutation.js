@@ -317,7 +317,13 @@ const actions = require('../actions/userActions')
         var variable = cadena.split(",")
         return actions.finalizar_curso(variable)
     }
+    const update_profile =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.update_profile(variable)
+    }
 module.exports={
+    update_profile,
     finalizar_curso,
     auth_user_plataform,
     register_plataform_curse,

@@ -64,6 +64,7 @@ type Mutation {
     register_plataform_curse(data:[String]!):message
     auth_user_plataform(data:[String]!):auth_user_plataform
     finalizar_curso(data:[String]!):message
+    update_profile(data:[String]!):message
 }
 
 type Query{
@@ -118,6 +119,9 @@ getExpositor(data:[String]!):[expositor]
 getPromocional(data:[String]!):[videoPromocional]
 get_users_plataform(data:[String]!):[auth_user_plataform]
 cursos_Anteriores(data:[String]!):[curses]
+getAllContactos(data:[String]!):[getTablaContactos]
+getRegisterCourses(data:[String]!):[curses]
+getRegisterCoursesById(data:[String]!):[curses]
 } 
 type auth_user_plataform{
     id_users_plataform:String
@@ -132,6 +136,9 @@ type auth_user_plataform{
     cp:String
     genero:String
     profesion:String
+    id_cliente:String
+    razonSocial:String
+    rfc:String
 }
 type expositor{
     id_expositores:String
@@ -188,6 +195,7 @@ type auth_user{
     Apellidos:String
     Puesto:String
     email:String
+    fk_empresa:String
     message:String
 }
 type urlPdfFile{
