@@ -268,13 +268,15 @@ const actions = require('../actions/userActions')
         instructor,tipo,modo,
         indice,ig,fb,
         tw,li, yt,
-        fecha,rs,hora1,hora2}) =>{
+        fecha,rs,hora1,hora2,precio}) =>{
+            console.log("entro")
+
         return actions.registrar_curso(concepto,descripcion,url,
             encabezado1,encabezado2,encabezado3,
             instructor,tipo,modo,
             indice,ig,fb,
             tw,li, yt,
-            fecha,rs,hora1,hora2)
+            fecha,rs,hora1,hora2,precio)
     }
     const add_expositor =  (_ ,data) =>{
         var cadena= data.data[0]
@@ -322,7 +324,20 @@ const actions = require('../actions/userActions')
         var variable = cadena.split(",")
         return actions.update_profile(variable)
     }
+    const solicitar_cotizacion =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.solicitar_cotizacion(variable)
+    }
+    const ok_cotizacion =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.ok_cotizacion(variable)
+    }
+
 module.exports={
+    ok_cotizacion,
+    solicitar_cotizacion,
     update_profile,
     finalizar_curso,
     auth_user_plataform,

@@ -5,12 +5,10 @@ var con = mysql.createPool({
     user:"b0fa8c8ce35bfc",
     password:"c952ba31"
 },
-    console.log("conectado a la BD")
+console.log("conectado a la BD")
 ) 
 
 module.exports =  con;
-
-
 
 // var mysql = require('mysql')
 // var con = mysql.createPool({

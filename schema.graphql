@@ -1,61 +1,61 @@
 scalar Upload
 
 type Mutation {
-     signupAlfa(data:[String]!):signupAlfa
-     signupEmpresas(data:[String]!):signupEmpresas
-     insertCotizaciones(data:[String]!):insertCotizaciones
-     insertClientes(data:[String]!):insertClientes
-     deleteCliente(data:[String]!):deleteCliente
-    #  updateCliente(data:[String]!):updateCliente    
-     insertContacto(data:[String]!):insertContacto
-     insertProductoServicio(data:[String]!):insertProductoServicio 
-     insertClientesAlfa(data:[String]!):insertClientesAlfa
-     sendEmailCotizacion(data:[String]!):message
-     insertTotales(data:[String]!):message
-     updateStatusCotizacion(data:[String]!):message
-     updateContacto(data:[String]!):updateContacto
-     deliteContacto(data:[String]!):deliteContacto
-     cotizacionVencida(data:[String]!):message
-     accesoSistema(data:[String]!):message
-     transactionClientes(data:[String]!):message
-     updatePasswordCliente(data:[String]!):message
-     quitarAccesoSistema(data:[String]!):message
-     registerSupport(data:[String]!):message
-     insertURLVideos(data:[String]!):insertURLVideos
-    #  insertVenta(data:[String]!):insertVenta
-     ventas(data:[String]!):ventas
-     insertTotalesVenta(data:[String]!):insertTotalesVenta
-     registerPoliza(data:[String]!):polizas
-     activarPoliza(data:[String]!):message
-     editarPoliza(data:[String]!):[message]
-    #  polizaVencida(data:[String]!):message
-     updateInsertProductoServicio(data:[String]!):updateInsertProductoServicio
-     updateCliente(data:[String]!):updateCliente
-     polizaVencida(data:[String]!):polizas
-     registerCupones(data:[String]!):message
-     updateCupones(data:[String]!):message
-     deleteCupones(data:[String]!):message
-     registerSolictudCotizacion(data:[String]!):message
-     sendMailSolicitudCotizacion(data:[String]!):message
-     cancelSolicitud(data:[String]!):message
-     sendSupport(data:[String]!):message
-     endSupport(data:[String]!):message
-     insertSurveyQuality(data:[String]!):message
-     insertUrlTemporal(data:[String]!):message
-     deleteFileTemporal(data:[String]!):message
-     updateSoporte(data:[String]!):message
-     inscriptionCourse(data:[String]!):message
-     auth_user(data:[String]!):auth_user
-     register_user_course(data:[String]!):message
-     update_indice(data:[String]!):message
+    signupAlfa(data:[String]!):signupAlfa
+    signupEmpresas(data:[String]!):signupEmpresas
+    insertCotizaciones(data:[String]!):insertCotizaciones
+    insertClientes(data:[String]!):insertClientes
+    deleteCliente(data:[String]!):deleteCliente
+#  updateCliente(data:[String]!):updateCliente    
+    insertContacto(data:[String]!):insertContacto
+    insertProductoServicio(data:[String]!):insertProductoServicio 
+    insertClientesAlfa(data:[String]!):insertClientesAlfa
+    sendEmailCotizacion(data:[String]!):message
+    insertTotales(data:[String]!):message
+    updateStatusCotizacion(data:[String]!):message
+    updateContacto(data:[String]!):updateContacto
+    deliteContacto(data:[String]!):deliteContacto
+    cotizacionVencida(data:[String]!):message
+    accesoSistema(data:[String]!):message
+    transactionClientes(data:[String]!):message
+    updatePasswordCliente(data:[String]!):message
+    quitarAccesoSistema(data:[String]!):message
+    registerSupport(data:[String]!):message
+    insertURLVideos(data:[String]!):insertURLVideos
+#  insertVenta(data:[String]!):insertVenta
+    ventas(data:[String]!):ventas
+    insertTotalesVenta(data:[String]!):insertTotalesVenta
+    registerPoliza(data:[String]!):polizas
+    activarPoliza(data:[String]!):message
+    editarPoliza(data:[String]!):[message]
+#  polizaVencida(data:[String]!):message
+    updateInsertProductoServicio(data:[String]!):updateInsertProductoServicio
+    updateCliente(data:[String]!):updateCliente
+    polizaVencida(data:[String]!):polizas
+    registerCupones(data:[String]!):message
+    updateCupones(data:[String]!):message
+    deleteCupones(data:[String]!):message
+    registerSolictudCotizacion(data:[String]!):message
+    sendMailSolicitudCotizacion(data:[String]!):message
+    cancelSolicitud(data:[String]!):message
+    sendSupport(data:[String]!):message
+    endSupport(data:[String]!):message
+    insertSurveyQuality(data:[String]!):message
+    insertUrlTemporal(data:[String]!):message
+    deleteFileTemporal(data:[String]!):message
+    updateSoporte(data:[String]!):message
+    inscriptionCourse(data:[String]!):message
+    auth_user(data:[String]!):auth_user
+    register_user_course(data:[String]!):message
+    update_indice(data:[String]!):message
     update_modo(data:[String]!):message
     activar_curso(data:[String]!):message
     registrar_curso(concepto:String,descripcion:String,url:String,
-                        encabezado1:String,encabezado2:String,encabezado3:String,
-                        instructor:String,tipo:String,modo:String,
-                        indice:String,ig:String,fb:String,
-                        tw:String,li:String, yt:String,
-                        fecha:String,rs:String,hora1:String,hora2:String):message
+    encabezado1:String,encabezado2:String,encabezado3:String,
+    instructor:String,tipo:String,modo:String,
+    indice:String,ig:String,fb:String,
+    tw:String,li:String, yt:String,
+    fecha:String,rs:String,hora1:String,hora2:String,precio:String):message
     add_expositor(data:[String]!):message
     editar_expositor(data:[String]!):[curses]
     sendMailChangeExpositor(data:[String]!):message
@@ -65,6 +65,8 @@ type Mutation {
     auth_user_plataform(data:[String]!):auth_user_plataform
     finalizar_curso(data:[String]!):message
     update_profile(data:[String]!):message
+    solicitar_cotizacion(data:[String]!):message
+    ok_cotizacion(data:[String]!):message
 }
 
 type Query{
@@ -122,7 +124,11 @@ cursos_Anteriores(data:[String]!):[curses]
 getAllContactos(data:[String]!):[getTablaContactos]
 getRegisterCourses(data:[String]!):[curses]
 getRegisterCoursesById(data:[String]!):[curses]
-} 
+get_cotizaciones(data:[String]!):[cotizaciones_courses]
+get_cotizaciones_clientes(data:[String]!):[cotizaciones_courses]
+
+}
+
 type auth_user_plataform{
     id_users_plataform:String
     nombre:String
@@ -145,6 +151,27 @@ type expositor{
     nombre:String
     apellidos:String
     telefono:String
+    correo:String
+}
+type cotizaciones_courses{
+    id_cotizaciones_curses:String
+    fecha_emision:String
+    fecha_expiracion:String
+    folio:String
+    piezas:String
+    precio_unitario:String
+    iva:String
+    total_global:String
+    tipo_cotizacion:String
+    estado:String
+    concepto:String
+    precio:String
+    imagen:String
+    fecha_curso:String
+    instructor:String
+    tipo:String
+    nombre:String
+    apellidos:String
     correo:String
 }
 
@@ -187,6 +214,8 @@ type curses{
     fecha_curso:String
     hora_inicial:String
     hora_final:String
+    fk_contacto:String
+    fk_clientesads:String
 }
 
 type auth_user{

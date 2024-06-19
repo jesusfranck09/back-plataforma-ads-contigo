@@ -1,4 +1,4 @@
-const client  = require('../database');
+const client  = require('../database/index');
 const bcrypt =  require('bcryptjs');
 const nodemailer = require("nodemailer")
 const {jsonwebtoken} = require('../utils/index');
@@ -14,7 +14,8 @@ const SALT_WORK_FACTOR =10
                     if(error){
                         throw error
                     }else{
-                        client.query(`insert into adminAlfa(nombre,apellido,correo,telefono,extensionTelefonica,celular,puesto,contraseña,fk_empresa,fk_rolAdministrador) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${hash}','${data[8]}','${data[9]}')`);                  
+                        client.query(`insert into adminAlfa(nombre,apellido,correo,telefono,extensionTelefonica,celular,puesto,contraseña,fk_empresa,fk_rolAdministrador) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${hash}','${data[8]}','${data[9]}')`);             
+                        ;     
                         resolve({           
                             message:"el registro en signup fue exitoso",
                         })
@@ -38,6 +39,7 @@ const SALT_WORK_FACTOR =10
                 //      } else{
                         // client.query(`insert into empresas(rfc,razonSocial,correo,telefono,paginaWeb,domicilioFiscal,contraseña) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${hash}')`);    
                         client.query(`insert into empresas(rfc,razonSocial,correo,telefono,paginaWeb,domicilioFiscal) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}')`);
+                        ;
                         resolve({           
                             message:"el registro en signup fue exitoso",
                         })                       
@@ -62,6 +64,7 @@ const SALT_WORK_FACTOR =10
                     client.query(`select * from empresas where id_empresa = '${resultados[0].fk_empresa}'`,function(err, resultEmpresa, fieldsEmpresa){
                         var stringEmpresa =  JSON.stringify(resultEmpresa)
                         var resultadosEmpresa = JSON.parse(stringEmpresa)
+                        ;
                         // console.log("resultEmpresa",resultadosEmpresa)
                         resolve({
                             id_admin:resultados[0].id_admin,
@@ -99,7 +102,6 @@ const SALT_WORK_FACTOR =10
         var string = JSON.stringify(results)
         var resultados=JSON.parse(string);
         if(resultados[0]){
-
             bcrypt.compare(data[1],resultados[0].contraseña,function(error,result){
                 if(result){
                         resolve({
@@ -130,6 +132,7 @@ const SALT_WORK_FACTOR =10
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);
                 resolve(resultados)
+                ;
             }) 
         })
     }
@@ -139,6 +142,7 @@ const SALT_WORK_FACTOR =10
                 var string = JSON.stringify(result)
                 var resultados=JSON.parse(string);          
                 resolve(resultados)
+                ;
             }) 
         })
     }
@@ -146,6 +150,7 @@ const SALT_WORK_FACTOR =10
         return new Promise( (resolve,reject)=>{  
             client.query(`insert into cotizaciones(fechaEmision,NumFolio,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,statusCotizacion,fk_cliente,fk_productoServicio,fk_adminalfa,fk_empresa,fechaExpiracion,vigencia,fk_contacto,tipoSolicitud) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','Enviada','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[10]}','activa','${data[11]}','${data[12]}')`);
             resolve({message:"registro exitoso"})
+            ;
         })
     }
     const getCotizacionesTabla  = ( data)  => {
@@ -153,7 +158,8 @@ const SALT_WORK_FACTOR =10
                     client.query(`select * from cotizaciones  where  fk_adminalfa='${data[0]}'` , function (err,results,fields ) {            
                         var string = JSON.stringify(results)
                         var resultados=JSON.parse(string);
-                        resolve(resultados)                   
+                        resolve(resultados)  
+                        ;                 
                     }) 
             })
     }
@@ -162,7 +168,8 @@ const SALT_WORK_FACTOR =10
             client.query(`select * from cotizaciones inner join clientesads on cotizaciones.fk_cliente= clientesads.id_cliente where fk_cliente='${data[0]}'` , function (err,results,fields ) {            
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);    
-                resolve(resultados)                
+                resolve(resultados)  
+                ;              
             }) 
         })
     }  
@@ -172,18 +179,21 @@ const SALT_WORK_FACTOR =10
                 var string = JSON.stringify(result)
                 var resultados=JSON.parse(string);                      
                 resolve(resultados) 
+                ;
             }) 
         })
     }
     const insertClientes = (data)=> { 
         return new Promise((resolve,reject)=>{  
             client.query(`insert into clientes (rfc,empresa,nombre,apellido,correo1,correo2,telefono1,telefono2) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}')`) 
-        resolve({message:"registro exitoso"})
+            resolve({message:"registro exitoso"})
+            ;
         })
     }
     const deleteCliente   = ( data)  => {
         return new Promise((resolve,reject)=>{                        
             client.query(`delete from clientes where id_cliente='${data[0]}'`) 
+            ;
         })
     }
 
@@ -199,7 +209,7 @@ const SALT_WORK_FACTOR =10
                 var string = JSON.stringify(result)
                 var resultados=JSON.parse(string);                                
                 resolve(resultados)
-                
+                ;
             }) 
         })
     }  
@@ -210,17 +220,20 @@ const SALT_WORK_FACTOR =10
                 var resultados=JSON.parse(string);                                
                 if(resultados[0]){
                     resolve({message:"correo existente"})
+                    ;
                 }else{
                     client.query(`insert into contacto(nombre,apellidos,correo1,correo2,telefono1,extensionTelefonica,telefono2,puesto,tipoContacto,fk_clientesads) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}')`) 
                     resolve({message:"registro exitoso"})
+                    ;
                 }
             }) 
         })
     }   
     const updateInsertProductoServicio = (data)=> { 
         return new Promise((resolve,reject)=>{  
-                    client.query(`insert into productoServicio(tipo,concepto,precio,consecutivo,tipoLicenciamiento,LineaProducto,id_actualizacion,asignacion,fechaRegistro,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}')`) 
-                    resolve({message:"registro exitoso"})      
+                client.query(`insert into productoServicio(tipo,concepto,precio,consecutivo,tipoLicenciamiento,LineaProducto,id_actualizacion,asignacion,fechaRegistro,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}')`) 
+                resolve({message:"registro exitoso"})   
+                ;   
         })
     }
     // ******************
@@ -240,6 +253,7 @@ const SALT_WORK_FACTOR =10
                 client.query(`update productoServicio set asignacion ='${resultadosParam.insertId}' where id_productoServicio = '${resultadosParam.insertId}'`)
             }) 
             resolve({message:"registro exitoso"})
+            ;
           }        
       })
       })
@@ -251,7 +265,8 @@ const SALT_WORK_FACTOR =10
             client.query(`select * from productoServicio where fk_empresa ='${data[0]}'  `, function (err,result,fields ) {                                    
                 var string = JSON.stringify(result)
                 var resultados=JSON.parse(string);   
-                resolve(resultados)                                    
+                resolve(resultados)     
+                ;                               
             }) 
         })
     }   
@@ -261,7 +276,8 @@ const SALT_WORK_FACTOR =10
             client.query(`select * from productoServicio where  fk_empresa = '${data[0]}'`, function (err,result,fields ) {                                    
                 var string = JSON.stringify(result)
                 var resultados=JSON.parse(string);                                
-                resolve(resultados)                                    
+                resolve(resultados)            
+                ;                        
             }) 
         })
     } 
@@ -271,10 +287,12 @@ const SALT_WORK_FACTOR =10
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);   
                 if(resultados[0]){
-                    resolve({message:"rfc ya registrado"})   
+                    resolve({message:"rfc ya registrado"})  
+                    ; 
                 }else{
                     client.query(`insert into clientesads(rfc,razonSocial,tipoEmpresa,tamanoEmpresa,giroEmpresarial,domicilioFiscal,paginaWeb,acceso,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','false','${data[7]}')`) 
                     resolve({message:"registro exitoso"})   
+     ;
                 }
             })
                     
@@ -286,6 +304,7 @@ const SALT_WORK_FACTOR =10
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);   
                 resolve(resultados)
+                ;
             }) 
         })
     }    
@@ -351,7 +370,8 @@ const SALT_WORK_FACTOR =10
             
             });
             client.query(`delete from urlFirebaseTemporal where folio ='${data[7]}'`)
-            resolve({message:"Correo Enviado"})      
+            resolve({message:"Correo Enviado"})
+            ;      
         }if(data[0] === "2"){
             var transporter = nodemailer.createTransport({  
                 secure: true,
@@ -412,7 +432,8 @@ const SALT_WORK_FACTOR =10
             
             });
             client.query(`delete from urlFirebaseTemporal where folio ='${data[7]}'`)
-            resolve({message:"Correo Enviado"})      
+            resolve({message:"Correo Enviado"})     
+            ; 
         }if(data[0] === "3"){
             var transporter = nodemailer.createTransport({  
                 secure: true,
@@ -467,8 +488,6 @@ const SALT_WORK_FACTOR =10
                     contentType: 'application/pdf'
                 }]
                 };
-                console.log("transporter",transporter);
-
                 transporter.sendMail(mailOptions, function (err, info) {
                     if("este es el error" , err)
                     console.log(err)
@@ -477,7 +496,8 @@ const SALT_WORK_FACTOR =10
             
             });
             client.query(`delete from urlFirebaseTemporal where folio ='${data[7]}'`)
-            resolve({message:"Correo Enviado"})      
+            resolve({message:"Correo Enviado"}) 
+            ;     
         }if(data[0] === "4"){
             var transporter = nodemailer.createTransport({  
                 secure: true,
@@ -617,7 +637,8 @@ const SALT_WORK_FACTOR =10
             
             });
             client.query(`delete from urlFirebaseTemporal where folio ='${data[7]}'`)
-            resolve({message:"Correo Enviado"})      
+            resolve({message:"Correo Enviado"})  
+            ;    
         }
         })
 
@@ -629,7 +650,7 @@ const SALT_WORK_FACTOR =10
             //     var resultados = JSON.parse(string);   
             // })
             client.query(`insert into totales(subtotal,iva,total,NumFolio) values('${data[1]}','${data[2]}','${data[3]}','${data[0]}')`)
-
+            ;
         })
     } 
     const getIdClientesAlfa = ( data)  => {
@@ -638,6 +659,7 @@ const SALT_WORK_FACTOR =10
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string); 
                 resolve(resultados)
+                ;
             }) 
         })
     }    
@@ -647,6 +669,7 @@ const SALT_WORK_FACTOR =10
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);   
                 resolve(resultados)
+                ;
             }) 
         })
     }
@@ -656,6 +679,7 @@ const SALT_WORK_FACTOR =10
                 var string =JSON.stringify(results)
                 var resultados = JSON.parse(string);
                 resolve(resultados)
+                ;
             })
         })
     }    
@@ -665,6 +689,7 @@ const SALT_WORK_FACTOR =10
                 var string =JSON.stringify(results)
                 var resultados = JSON.parse(string);
                 resolve(resultados)
+                ;
                 // conosle.log("esto es resultados",resultados)
             })
         })
@@ -675,6 +700,7 @@ const SALT_WORK_FACTOR =10
                 var string =JSON.stringify(results)
                 var resultados = JSON.parse(string);
                 resolve(resultados)
+                ;
             })    
         })
     }
@@ -682,6 +708,7 @@ const SALT_WORK_FACTOR =10
         return new Promise((resolve,reject)=>{
             client.query(`update cotizaciones set statusCotizacion = '${data[1]}' where NumFolio ='${data[0]}'`)
             resolve({message:"actualizacion exitosa"})
+            ;
         })
     }    
     const GetClienteId = ( data)  => {
@@ -690,6 +717,7 @@ const SALT_WORK_FACTOR =10
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);                      
                 resolve(resultados)
+                ;
             }) 
         })
     }  
@@ -699,6 +727,7 @@ const SALT_WORK_FACTOR =10
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);                      
                 resolve(resultados)
+                ;
             }) 
         })
     }  
@@ -706,18 +735,21 @@ const SALT_WORK_FACTOR =10
         return new Promise((resolve,reject)=>{
             client.query(`update contacto set  nombre='${data[1]}',apellidos='${data[2]}',correo1='${data[3]}',correo2='${data[4]}',telefono1='${data[5]}',extensionTelefonica='${data[6]}',telefono2='${data[7]}',puesto='${data[8]}',tipoContacto='${data[9]}' where id_contacto='${data[0]}'`) 
             resolve({message:"actualizacion exitosa"})
+            ;
         })
     }
     const deliteContacto  = ( data)  => {
         return new Promise((resolve,reject)=>{                        
             client.query(`delete from contacto where id_contacto='${data[0]}'`) 
             resolve({message:"delite exitoso"})
+            ;
         })   
     }
     const CotizacionVencida   = ( data)  => {
         return new Promise((resolve,reject)=>{                        
             client.query(`update cotizaciones set vigencia = "vencida"  where NumFolio='${data[0]}'`);
             resolve({message:`folio ${data[0]} vencida`})
+            ;
         })
     }
     const getContactosId   = ( data)  => {
@@ -726,6 +758,7 @@ const SALT_WORK_FACTOR =10
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);
                 resolve(resultados)
+                ;
             }) 
         })
     }
@@ -734,6 +767,7 @@ const SALT_WORK_FACTOR =10
             client.query(`select * from contacto where id_contacto='${data[0]}'`, function (err,results,fields ) {                
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);   
+                ;
                 resolve(resultados)
             }) 
         })
@@ -768,7 +802,8 @@ const SALT_WORK_FACTOR =10
                                            throw error
                                         } else{
                                             client.query(`update clientesads set acceso = "true", fk_contactoAcceso = '${data[2]}' where  id_cliente = '${data[0]}'`)     
-                                            client.query(`update contacto set contraseña = '${hash}' where  id_contacto = '${data[2]}'`)     
+                                            client.query(`update contacto set contraseña = '${hash}' where  id_contacto = '${data[2]}'`)    
+                                            ; 
                                             var transporter = nodemailer.createTransport({  
                                                 secure: true,
                                                 host: 'adscontigo.com',
@@ -841,6 +876,7 @@ const SALT_WORK_FACTOR =10
                     client.query(`select * from clientesads where acceso = 'true' and id_cliente = '${resultados[0].fk_clientesads}'`,function(error,result,fields){
                         let string2 = JSON.stringify(result)
                         let resultados2 = JSON.parse(string2)
+                        ;
                         bcrypt.compare(data[1],resultados[0].contraseña,function(error,res){
                             if(res){
                                 resolve({
@@ -878,6 +914,7 @@ const SALT_WORK_FACTOR =10
         return new Promise((resolve,reject)=>{
             client.query(`insert into transaccionesClientes (id_cliente,rfc,fecha,hora) values ('${data[1]}','${data[0]}','${data[2]}','${data[3]}')`)
             resolve({message:"actualización exitosa"})
+            ;
         })
     }
     const GetClienteByCorreo = ( data)  => {
@@ -885,7 +922,7 @@ const SALT_WORK_FACTOR =10
             client.query(`select * from clientesads inner join contacto on contacto.fk_clientesads = clientesads.id_cliente where contacto.correo1='${data[0]}'`, function (err,results,fields ) {  
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);             
-
+                ;
                 resolve(resultados)
             })
         })
@@ -902,6 +939,7 @@ const SALT_WORK_FACTOR =10
                         } else{
                             client.query(`update contacto set contraseña = '${hash}' where id_contacto  = '${data[0]}'`)
                             resolve({message:"actualización exitosa"})
+                            ;
                         }
                     })
                 }                       
@@ -926,6 +964,7 @@ const SALT_WORK_FACTOR =10
             client.query(`select * from clientesads where id_cliente = '${data[4]}'`,function(err,result,field ){
                 var string =  JSON.stringify(result)
                 var resultados = JSON.parse(string)
+                ;
                 let folio =  data[7]
                 var transporter = nodemailer.createTransport({  
                     secure: true,
@@ -987,6 +1026,7 @@ const SALT_WORK_FACTOR =10
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);
                 resolve(resultados)
+                ;
             })
         })
     }
@@ -999,6 +1039,7 @@ const SALT_WORK_FACTOR =10
                 var string = JSON.stringify(result)
                 var resultados=JSON.parse(string);                    
                 resolve(resultados) 
+                ;
             }) 
         })
     }
@@ -1007,13 +1048,15 @@ const SALT_WORK_FACTOR =10
             client.query(`update clientesads set acceso = 'false', fk_contactoAcceso = ''  where id_cliente  = '${data[0]}'`)
             client.query(`update contacto set contraseña = '' where  id_contacto = '${data[1]}'`)  
             resolve({message:"acceso removido"})
+            ;
         })
     }   
     const insertURLVideos = (data)=> { 
             // console.log("esta es la data",data)
             return new Promise((resolve,reject)=>{ 
                 client.query(`insert into videosprivados(descripcion,autor,urlVideos,fechaInicio,fechaExpiracion,statusVideo,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','true','${data[5]}')`) 
-                resolve({message:"registro exitoso"})            
+                resolve({message:"registro exitoso"})   
+                ;         
         })
     }    
     const getURLVideos = ( data)  => {
@@ -1022,6 +1065,7 @@ const SALT_WORK_FACTOR =10
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);
                 resolve(resultados)
+                ;
             })
         })
     } 
@@ -1031,6 +1075,7 @@ const SALT_WORK_FACTOR =10
             return new Promise( (resolve,reject)=>{  
             client.query(`insert into ventas(numFolio,cantidad,descuento,descuentoAplicado,TotalPrecioProducto,ProductoPrecioUnitario,TotalPrecioProductoIVA,fechaPago,hora,banco,referenciaPago,tipoPago,importe,fechaEmisionVenta,statusPoliza,fk_productoServicio,fk_cliente,fk_adminalfa,fk_empresa,fk_contacto)values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[10]}','${data[11]}','${data[12]}','${data[13]}','${data[14]}','${data[15]}','${data[16]}','${data[17]}','${data[18]}','${data[19]}')`);
             resolve({message:"registro exitoso"})
+            ;
         })
     } 
     const insertTotalesVenta = ( data)  => {
@@ -1041,7 +1086,6 @@ const SALT_WORK_FACTOR =10
         //     var resultados = JSON.parse(string);   
         // })
         client.query(`insert into totalVenta(subTotal,IVA,total,numFolioVenta)values('${data[0]}','${data[1]}','${data[2]}','${data[3]}')`);
-
         })
     } 
     const RegisterPoliza = ( data)  => {
@@ -1049,7 +1093,7 @@ const SALT_WORK_FACTOR =10
         client.query(`insert into polizas (fechaInicial,fechaFinal,statusPoliza,fk_productoServicio,fk_cliente,fk_contacto) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}')`,function(err,results){
             var string = JSON.stringify(results)
             var resultados =  JSON.parse(string)
-            
+            ;
             if(resultados.insertId){
                 resolve({message:"registro exitoso",maxid:resultados.insertId})
             }
@@ -1062,6 +1106,7 @@ const SALT_WORK_FACTOR =10
             var string = JSON.stringify(results)
             var resultados=JSON.parse(string);
             resolve(resultados)
+            ;
             })
         })
     } 
@@ -1069,12 +1114,14 @@ const SALT_WORK_FACTOR =10
         return new Promise((resolve,reject)=>{
            client.query(`update polizas set fechaInicial = '${data[0]}',fechaFinal = '${data[2]}', statusPoliza = 'activa' where id_polizas = '${data[1]}'`)
            resolve({message:"Activacion exitosa"})
+            ;
         })
     } 
     const EditarPoliza = ( data)  => {
         return new Promise((resolve,reject)=>{
            client.query(`update polizas set fechaInicial = '${data[0]}',fechaFinal = '${data[2]}', statusPoliza = 'activa' where id_polizas = '${data[1]}'`)
            resolve({message:"Activacion exitosa"})
+            ;
         })
     } 
     const GetPoliza = ( data)  => {
@@ -1083,6 +1130,7 @@ const SALT_WORK_FACTOR =10
             var string = JSON.stringify(results)
             var resultados=JSON.parse(string);
             resolve(resultados)
+            ;
             })
         })
     } 
@@ -1101,7 +1149,7 @@ const SALT_WORK_FACTOR =10
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);
                 resolve(resultados)
-                
+                ;
             })
         })
     } 
@@ -1110,7 +1158,8 @@ const SALT_WORK_FACTOR =10
             client.query(`select * from ventas inner join productoServicio on ventas.fk_productoServicio = productoServicio.id_productoServicio where ventas.fk_adminalfa='${data[0]}'` , function (err,results,fields ) {            
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);
-                resolve(resultados)                   
+                resolve(resultados)   
+                ;                
             }) 
         })
     }
@@ -1119,7 +1168,8 @@ const SALT_WORK_FACTOR =10
             client.query(`select * from ventas where fk_adminalfa='${data[0]}'` , function (err,results,fields ) {            
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);
-                resolve(resultados)                   
+                resolve(resultados)           
+                ;        
             }) 
         })
     }
@@ -1128,7 +1178,8 @@ const SALT_WORK_FACTOR =10
             client.query(`select * from ventas inner join clientesads on ventas.fk_cliente=clientesads.id_cliente where fk_cliente='${data[0]}'` , function (err,results,fields ) {            
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);    
-                resolve(resultados)                
+                resolve(resultados) 
+                ;               
             }) 
         })
     }
@@ -1138,6 +1189,7 @@ const SALT_WORK_FACTOR =10
                 var string =JSON.stringify(results)
                 var resultados = JSON.parse(string);
                 resolve(resultados) 
+                ;
             })    
         })
     }
@@ -1148,6 +1200,7 @@ const SALT_WORK_FACTOR =10
                 var string =JSON.stringify(results)
                 var resultados = JSON.parse(string);
                 resolve(resultados)
+                ;
             })
         })
     }
@@ -1157,6 +1210,7 @@ const SALT_WORK_FACTOR =10
                 var string =JSON.stringify(results)
                     var resultados = JSON.parse(string);
                     resolve(resultados)          
+                    ;
             })
         })
     }  
@@ -1166,7 +1220,7 @@ const SALT_WORK_FACTOR =10
         function(err,results,fields){
             var string =JSON.stringify(results)
                 var resultados = JSON.parse(string);
-             
+                ;
                 resolve(resultados)  
             })
         })
@@ -1176,12 +1230,14 @@ const SALT_WORK_FACTOR =10
             return new Promise((resolve,reject)=>{
                 client.query(`update clientesads set  rfc='${data[4]}',razonSocial='${data[3]}',tipoEmpresa='${data[6]}',tamanoEmpresa='${data[5]}',giroEmpresarial='${data[2]}',paginaWeb='${data[7]}',domicilioFiscal='${data[1]}' where id_cliente='${data[0]}'`) 
                 resolve({message:"actualizacion exitosa"})
+                ;
         })
      }
     const polizaVencida   = ( data)  => {
         return new Promise((resolve,reject)=>{                        
             client.query(`update polizas set StatusPoliza = "vencida"  where id_polizas='${data[0]}'`);
             resolve({message:`folio ${data[0]} vencida`})
+            ;
         })
     }
 
@@ -1194,8 +1250,9 @@ const SALT_WORK_FACTOR =10
               if(resultados[0]){
                   resolve({message:"cupon existente"})
               }else{
-                  client.query(`insert into cupones (codigo,descripcion,descuento,polizaActivaVencida,cuponActivo,fechaRegistro,fechaExpiracion,id_Evento,url,fk_empresa) values ('${data[8]}','${data[0]}','${data[1]}','${data[2]}','true','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}')`) 
-                  resolve({message:"registro exitoso"})
+                client.query(`insert into cupones (codigo,descripcion,descuento,polizaActivaVencida,cuponActivo,fechaRegistro,fechaExpiracion,id_Evento,url,fk_empresa) values ('${data[8]}','${data[0]}','${data[1]}','${data[2]}','true','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}')`) 
+                resolve({message:"registro exitoso"})
+                ;
               }
           })
           
@@ -1205,28 +1262,32 @@ const SALT_WORK_FACTOR =10
   const GetCupones = ( data)  => {
       return new Promise((resolve,reject)=>{
           client.query(`select * from cupones where fk_empresa = '${data[0]}'`,function(err,result,fields){
-              var string = JSON.stringify(result)
-              var resultados = JSON.parse(string)
-              resolve(resultados)
+                var string = JSON.stringify(result)
+                var resultados = JSON.parse(string)
+                resolve(resultados)
+                ;
           })
       })
   }
   const UpdateCupones = ( data)  => {
       return new Promise((resolve,reject)=>{
-          client.query(`update cupones set codigo = '${data[7]}', descripcion = '${data[0]}', descuento = '${data[1]}',polizaActivaVencida = '${data[2]}',cuponActivo = 'true',fechaExpiracion= '${data[3]}',id_Evento = '${data[4]}',url = '${data[5]}' where id_cupones = '${data[6]}'`) 
-          resolve({message:"actualizacion exitoso"})
+            client.query(`update cupones set codigo = '${data[7]}', descripcion = '${data[0]}', descuento = '${data[1]}',polizaActivaVencida = '${data[2]}',cuponActivo = 'true',fechaExpiracion= '${data[3]}',id_Evento = '${data[4]}',url = '${data[5]}' where id_cupones = '${data[6]}'`) 
+            resolve({message:"actualizacion exitoso"})
+            ;
       })
   }
   const DeleteCupones = ( data)  => {
       return new Promise((resolve,reject)=>{
-          client.query(`update cupones set cuponActivo = 'false' where id_cupones = '${data[0]}'`) 
-          resolve({message:"actualizacion exitosa"})
+            client.query(`update cupones set cuponActivo = 'false' where id_cupones = '${data[0]}'`) 
+            resolve({message:"actualizacion exitosa"})
+            ;
       })
   }
   const RegisterSolictudCotizacion = ( data)  => {
       return new Promise((resolve,reject)=>{
-          client.query(`insert into solicitudCotizacion (folioSolicitud, asesorAsignado, fechaEmision, fechaValidacion, fechaExpiracion, statusSolicitud,fk_productoServicio, fk_cliente,fk_empresa) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[12]}')`)
-          resolve({message:"registro exitoso"}) 
+            client.query(`insert into solicitudCotizacion (folioSolicitud, asesorAsignado, fechaEmision, fechaValidacion, fechaExpiracion, statusSolicitud,fk_productoServicio, fk_cliente,fk_empresa) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[12]}')`)
+            resolve({message:"registro exitoso"}) 
+            ;
       })
   }
   const SendMailSolicitudCotizacion = ( data)  => {
@@ -1282,38 +1343,41 @@ const SALT_WORK_FACTOR =10
   const GetSolicitudes = ( data)  => {
       return new Promise((resolve,reject)=>{
           client.query(`select * from solicitudCotizacion inner join productoServicio on solicitudCotizacion.fk_productoServicio = productoServicio.id_productoServicio where solicitudCotizacion.fk_cliente = '${data[0]}'`,function(err,result,field){
-              var string = JSON.stringify(result)
-              var resultados =  JSON.parse(string)
-              resolve(resultados)
+                var string = JSON.stringify(result)
+                var resultados =  JSON.parse(string)
+                resolve(resultados)
+                ;
           }) 
       })
   }
   const CancelSolicitud = ( data)  => {
       return new Promise((resolve,reject)=>{
-          client.query(`update solicitudCotizacion set statusSolicitud = 'Cancelada', fechaValidacion = '${data[1]}' where folioSolicitud = '${data[0]}'`);
-          resolve({message:"solicitud cancelada"})
+            client.query(`update solicitudCotizacion set statusSolicitud = 'Cancelada', fechaValidacion = '${data[1]}' where folioSolicitud = '${data[0]}'`);
+            resolve({message:"solicitud cancelada"})
+            ;
       })
   }
   const GetSolicitudesByFkEmpresa = ( data)  => {
       return new Promise((resolve,reject)=>{
           client.query(`select * from solicitudCotizacion inner join productoServicio on solicitudCotizacion.fk_productoServicio = productoServicio.id_productoServicio where solicitudCotizacion.fk_Empresa = '${data[0]}'`,function(err,result,field){
-              var string = JSON.stringify(result)
-              var resultados =  JSON.parse(string)
-              resolve(resultados)
+            var string = JSON.stringify(result)
+            var resultados =  JSON.parse(string)
+            resolve(resultados)
+            ;
           }) 
       })
   }
   const GetSupport = ( data)  => {
     return new Promise((resolve,reject)=>{
         client.query(`select * from soporte inner join clientesads on soporte.fk_cliente = clientesads.id_cliente where soporte.fk_empresa = '${data[0]}'`,function(err,results,fields){
-           var string = JSON.stringify(results);
-           var resultados = JSON.parse(string); 
-           resolve(resultados)
+            var string = JSON.stringify(results);
+            var resultados = JSON.parse(string); 
+            resolve(resultados)
+            ;
         })
     })
 }
 const SendSupport = ( data)  => {
-    console.log("data",data)
     return new Promise((resolve,reject)=>{
         client.query(`update soporte set status = 'En proceso', ejecutivo = '${data[10]}' where id_soporte = '${data[4]}'`)
         var transporter = nodemailer.createTransport({  
@@ -1390,15 +1454,16 @@ const SendSupport = ( data)  => {
                 console.log("esta es la info" ,  info);
         
             }); 
+            ;
         resolve({message:"Asesor asignado"});
     })
 }
 const GetPolizasById = ( data)  => {
-    console.log("data",data)
     return new Promise((resolve,reject)=>{
         client.query(`select * from polizas inner join productoServicio on polizas.fk_productoServicio = productoServicio.id_productoServicio where id_polizas = '${data[0]}'`,function(err,results,fields){
            var string = JSON.stringify(results);
            var resultados = JSON.parse(string); 
+            ;
            resolve(resultados)
         })
     })
@@ -1407,8 +1472,10 @@ const EndSupport = ( data)  => {
     return new Promise((resolve,reject)=>{
         client.query(`update soporte set status = '${data[3]}', fechaFinalizacion = '${data[4]}' where id_soporte = '${data[0]}'`)
         client.query(`select * from contacto where id_contacto = '${data[1]}'`, function(err,results,fields){
+
             var string = JSON.stringify(results);
             var resultados = JSON.parse(string); 
+            ;
             var transporter = nodemailer.createTransport({  
                 secure: true,
                 host: 'adscontigo.com',
@@ -1474,7 +1541,6 @@ const EndSupport = ( data)  => {
                     }
                 }); 
             resolve({message:'soporte finalizado'})
-            console.log("transporter",transporter)
         })
       
     })
@@ -1485,6 +1551,7 @@ const GetSupportById = ( data)  => {
            var string = JSON.stringify(results);
            var resultados = JSON.parse(string); 
            resolve(resultados)
+            ;
         })
     })
 }
@@ -1499,6 +1566,7 @@ const InsertSurveyQuality = ( data)  => {
         client.query(`insert into calidadsurvey (respuestas,folio,fk_preguntas,fk_soporte,fk_clientes,fechaEvaluacion) values ('${data[6]}','${data[7]}','${65}','${data[8]}','${data[9]}','${data[10]}')`)
         client.query(`update soporte set statusEncuesta = 'Aplicada' where id_soporte = '${data[8]}'`)
         resolve({message:"encuesta realizada"})
+        ;
     })
 }
 const GetCalidadSurvey = ( data)  => {
@@ -1507,6 +1575,7 @@ const GetCalidadSurvey = ( data)  => {
            var string = JSON.stringify(results);
            var resultados = JSON.parse(string); 
            resolve(resultados)
+            ;
         })
     })
 }
@@ -1520,6 +1589,7 @@ const InsertUrlTemporal = ( data)  => {
     return new Promise((resolve,reject)=>{
         client.query(`insert into urlFirebaseTemporal (nombreArchivo,folio,url,comentarios) values('${data[0]}','${data[1]}','${data[2]}','${comentarios}')`)
         resolve({message:"registro exitoso"})
+        ;
     })
 }
 const GetUrlPdfFile = ( data)  => {
@@ -1527,8 +1597,9 @@ const GetUrlPdfFile = ( data)  => {
     return new Promise((resolve,reject)=>{
         client.query(`select * from urlFirebaseTemporal where folio  = '${data[0]}'`,function(err,results,fields){
             var string = JSON.stringify(results);
-           var resultados = JSON.parse(string); 
+            var resultados = JSON.parse(string); 
             resolve(resultados)
+            ;
         })
 
     })
@@ -1537,7 +1608,7 @@ const DeleteFileTemporal = ( data)  => {
     return new Promise((resolve,reject)=>{
         client.query(`delete from urlFirebaseTemporal where folio ='${data[7]}'`)
         resolve({message:"exitoso"})
-
+        ;
     })
 }
 const GetSoporte = ( data)  => {
@@ -1546,28 +1617,43 @@ const GetSoporte = ( data)  => {
             var string = JSON.stringify(results)
             var resultados = JSON.parse(string)
             resolve(resultados)
+            ;
         })
     })
 }
 const UpdateSoporte = ( data)  => {
     return new Promise((resolve,reject)=>{
         client.query(`update soporte set  idTeamviewer =  '${data[1]}', passTeamviewer = '${data[2]}' where id_soporte = '${data[0]}'`)
-        console.log(`update soporte set  idTeamviewer =  '${data[1]}', passTeamviewer = '${data[2]}' where id_soporte = '${data[0]}'`)
         resolve({message:"Se actualizaron los datos"})
+        ;
     })
 }
 const inscriptionCourse = ( data)  => {
     return new Promise((resolve,reject)=>{
         var fecha = new Date();
-            var options = { weekday: 'long',year: 'numeric', month: 'long', day: 'numeric' };
-           
+        var options = { weekday: 'long',year: 'numeric', month: 'long', day: 'numeric' };
         fecha.toLocaleDateString("es-ES", options)
-        client.query(`insert into register_courses (nombre,apellidos,telefono,correo,cp,fecha_registro,fk_courses) values ('${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}', '${data[0]}' )`)
-        client.query(`update courses set  indice =  '${data[7]}' where id_courses = '${data[8]}'`,function(err,res){
-            
+        client.query(`select * from contacto where correo1 = '${data[4]}' or correo2 = '${data[4]}'`,function(err,results,fields){
+            var string = JSON.stringify(results);
+            var resultados = JSON.parse(string)
+            if(resultados[0]){
+                client.query(`insert into register_courses (nombre,apellidos,telefono,correo,cp,fecha_registro,fk_courses,fk_contacto,fk_clientesads) values ('${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}', '${data[0]}', '${resultados[0].id_contacto}','${resultados[0].fk_clientesads}')`,function(error,res){
+                    console.log("error1",error)
+                    console.log("res",res)
+                })
+                client.query(`update courses set  indice =  '${data[7]}' where id_courses = '${data[8]}'`,function(err,res){; 
+                })
+            }else{
+                client.query(`insert into register_courses (nombre,apellidos,telefono,correo,cp,fecha_registro,fk_courses,fk_contacto,fk_clientesads) values ('${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}', '${data[0]}', '0','0')`,function(err,res,fields){
+                    console.log("error2",err)
+                    console.log("res",res)
+                    console.log("fields",fields)
+                })
+                client.query(`update courses set  indice =  '${data[7]}' where id_courses = '${data[8]}'`)
+            }
         })
-        console.log(`update courses set  indice ='${data[7]}' where id_courses = '${data[8]}'`)
 
+        
         fecha.toLocaleDateString("es-ES", options)
 
         var transporter = nodemailer.createTransport({  
@@ -1608,7 +1694,6 @@ const inscriptionCourse = ( data)  => {
             </p>`,
                            
             };
-            console.log("transporter",transporter);
 
             transporter.sendMail(mailOptions, function (err, info) {
                 if("este es el error" , err)
@@ -1632,6 +1717,7 @@ const auth_user = ( data)  => {
         if(resultados[0]){
             bcrypt.compare(data[1],resultados[0].contraseña,function(error,result){
                 if(resultados){
+                ;
                     resolve({
                         id_auth:resultados[0].id_auth,
                         Nombre:resultados[0].Nombre,
@@ -1665,6 +1751,7 @@ const register_user_course = (data) => {
                         throw error
                     }else{
                         client.query(`insert into auth_admin_courses(Nombre,Apellidos,Puesto,email,contraseña) values ('${data[2]}','${data[3]}','${data[4]}','${data[0]}','${hash}')`);                  
+                        ;
                         resolve({           
                             message:"Registro exitoso",
                         })
@@ -1679,8 +1766,11 @@ const register_user_course = (data) => {
     const get_courses_register = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`select * from register_courses inner join courses on register_courses.fk_courses = courses.id_courses`,function(err,results,fields){
-               var string = JSON.stringify(results);
-               var resultados = JSON.parse(string); 
+                var string = JSON.stringify(results);
+                var resultados = JSON.parse(string); 
+                ;
+                console.log("err",err)
+                console.log("res",resultados)
                resolve(resultados)
             })
         })
@@ -1688,27 +1778,31 @@ const register_user_course = (data) => {
     const getCourses = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`select * from courses where curso_finalizado = 'false'`,function(err,results,fields){
-               var string = JSON.stringify(results);
-               var resultados = JSON.parse(string); 
-               resolve(resultados)
+            var string = JSON.stringify(results);
+            var resultados = JSON.parse(string); 
+                resolve(resultados)
+                ;
             })
         })
     }
     const update_indice = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`update courses set user_min = '${data[0]}' where id_courses = '${data[1]}'`)
+            ;
             resolve({message:"indice actualizado"})
         })
     }
     const update_modo = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`update courses set habilitar = '${data[0]}' where id_courses = '${data[1]}'`)
+            ;
             resolve({message:"modo actualizado"})
         })
     }
     const activar_curso = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`update courses set estatus = 'activo' where id_courses = '${data[0]}'`)
+            ;
             resolve({message:"curso activado"})
         })
     }
@@ -1717,17 +1811,25 @@ const register_user_course = (data) => {
         instructor,tipo,modo,
         indice,ig,fb,
         tw,li, yt,
-        fecha,rs,hora1,hora2)  => {
-        encabezado1,encabezado2,encabezado3,
-        instructor,tipo,modo,
-        indice,ig,fb,
-        tw,li, yt,
-        fecha,rs,hora1,hora2
+        fecha,rs,hora1,hora2,precio)  => {
+            console.log("entro")
+
+            console.log(concepto,descripcion,url,
+                encabezado1,encabezado2,encabezado3,
+                instructor,tipo,modo,
+                indice,ig,fb,
+                tw,li, yt,
+                fecha,rs,hora1,hora2,precio)
+
         return new Promise((resolve,reject)=>{
-            client.query(`insert into courses (concepto,precio,descripcion,estatus,imagen,add1,add2,add3,instructor,tipo,indice,habilitar,user_min,insta_link,fb_link,twiter_link,linked_link,youtube_link,fecha_curso,hora_inicial,hora_final,curso_finalizado,servidor,url_video) values ('${concepto}','0','${descripcion}','inactivo','${url}','${encabezado1}','${encabezado2}','${encabezado3}'
-            ,'${instructor}','${tipo}','0','${modo}','${indice}','${ig}','${fb}','${tw}','${li}','${yt}','${fecha}','${hora1}','${hora2}',"false","No proporcionado","No proporcionado")`,function(err,res){
+            console.log(`insert into courses (concepto,precio,descripcion,estatus,imagen,add1,add2,add3,instructor,tipo,indice,habilitar,user_min,insta_link,fb_link,twiter_link,linked_link,youtube_link,fecha_curso,hora_inicial,hora_final,curso_finalizado,servidor,url_video) values ('${concepto}','${precio}','${descripcion}','inactivo','${url}','${encabezado1}','${encabezado2}','${encabezado3}'`)
+            client.query(`insert into courses (concepto,precio,descripcion,estatus,imagen,add1,add2,add3,instructor,tipo,indice,habilitar,user_min,insta_link,fb_link,twiter_link,linked_link,youtube_link,fecha_curso,hora_inicial,hora_final,curso_finalizado,servidor,url_video) values ('${concepto}','${precio}','${descripcion}','inactivo','${url}','${encabezado1}','${encabezado2}','${encabezado3}'
+            ,'${instructor}','${tipo}','${indice}','${modo}','${indice}','${ig}','${fb}','${tw}','${li}','${yt}','${fecha}','${hora1}','${hora2}',"false","No proporcionado","No proporcionado")`,function(err,res){
+                console.log("res",res)
+                console.log("err",err)
                
             })
+            ;
             resolve({message:"curso registrado"})
         })
     }
@@ -1736,15 +1838,17 @@ const register_user_course = (data) => {
             client.query(`insert into expositores (nombre,apellidos,correo,telefono) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}')`,function(err,res){
                 
             })
+            ;
             resolve({message:"registro exitoso"})
         })
     }
     const getExpositor = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`select * from expositores`,function(err,results,fields){
-               var string = JSON.stringify(results);
-               var resultados = JSON.parse(string); 
-               resolve(resultados)
+                ;
+                var string = JSON.stringify(results);
+                var resultados = JSON.parse(string); 
+                resolve(resultados)
             })
         })
     }
@@ -1755,6 +1859,7 @@ const register_user_course = (data) => {
             client.query(`select * from register_courses inner join courses on register_courses.fk_courses = courses.id_courses  where register_courses.fk_courses = '${data[1]}'`,function(err,results,fields){
                 var string = JSON.stringify(results);
                 var resultados = JSON.parse(string); 
+                ;
                 resolve(resultados)
              })
         })
@@ -1822,6 +1927,7 @@ const register_user_course = (data) => {
             client.query(`select * from video_promocional where activo = "true"`,function(err,results,fields){
                 let string = JSON.stringify(results);
                 let resultados = JSON.parse(string);
+                ;
                 if(resultados[0]){
                     resolve({
                         id_video_promocional:resultados[0].id_video_promocional,
@@ -1832,6 +1938,7 @@ const register_user_course = (data) => {
                     })
                 }else{
                     client.query(`insert into video_promocional (url, descripcion, activo) values('${data[0]}','${data[1]}', 'true')`);
+                    ;
                     resolve({message:"registro exitoso"})
                 }
             })
@@ -1842,7 +1949,7 @@ const register_user_course = (data) => {
         return new Promise((resolve,reject)=>{
             client.query(`update video_promocional set activo = 'false' where id_video_promocional = '${data[0]}'`);
             resolve({message:"video desactivado"})
-            
+            ;
         })
     }
     const getPromocional = ( data)  => {
@@ -1850,7 +1957,6 @@ const register_user_course = (data) => {
             client.query(`select * from video_promocional where activo = "true"`,function(err,results,fields){
                 var string = JSON.stringify(results);
                var resultados = JSON.parse(string); 
-               
                resolve(resultados)
             })
         })
@@ -1869,7 +1975,8 @@ const register_user_course = (data) => {
                             client.query(`insert into users_plataform(nombre,apellidos,telefono,correo,contraseña,perfil_completado) values('${data[2]}', '${data[3]}', '${data[4]}', '${data[0]}', '${hash}','false')`,function(err,res){
                                 console.log("error",err)
                                 console.log("fields",res)
-                            });                  
+                            });       
+                            ;           
                             resolve({           
                                 message:"signup exitoso",
                             })
@@ -1882,13 +1989,9 @@ const register_user_course = (data) => {
 
     const auth_user_plataform = ( data)  => {
         return new Promise((resolve,reject) =>{ 
-
-            console.log("data",data)
             client.query(`select * from contacto where correo1 = '${data[0]}'`,function(error,res,fields){
-
             var strings = JSON.stringify(res)
             var resultado = JSON.parse(strings);
-
             client.query(`select * from users_plataform where correo='${data[0]}'`,
             function(err,results,field){
             if(err){ reject(err)
@@ -1896,25 +1999,29 @@ const register_user_course = (data) => {
             var string = JSON.stringify(results)
             var resultados=JSON.parse(string);
             if(resultados[0]){
-
                 bcrypt.compare(data[1],resultados[0].contraseña,function(error,result){
                     if(resultado[0]){
                         console.log("resultados",resultados)
                         client.query(`select * from clientesads where id_cliente = '${resultado[0].fk_clientesads}'`,function(errors,ress,fieldd){
+                        ;
                             var st= JSON.stringify(ress)
                             var re = JSON.parse(st);
-                            console.log("re",re)
                             resolve({
                                 id_users_plataform:resultados[0].id_users_plataform,
                                 nombre:resultados[0].nombre,
                                 apellidos:resultados[0].apellidos,                   
                                 telefono:resultados[0].telefono, 
                                 correo:resultados[0].correo, 
+                                telefono_empresa:resultados[0].telefono_empresa, 
+                                cp:resultados[0].cp,
+                                profesion:resultados[0].profesion,
                                 perfil_completado:resultados[0].perfil_completado,
                                 message:"usuario encontrado",
                                 id_cliente:re[0].id_cliente,
                                 rfc:re[0].rfc,
-                                razonSocial:re[0].razonSocial
+                                razonSocial:re[0].razonSocial,
+                                rango_edad:resultados[0].rango_edad
+
                             })
                         })
                     }else{
@@ -1946,9 +2053,9 @@ const register_user_course = (data) => {
     const get_users_plataform = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`select * from users_plataform`,function(err,results,fields){
-                var string = JSON.stringify(results);
-               var resultados = JSON.parse(string); 
-               
+            var string = JSON.stringify(results);
+            var resultados = JSON.parse(string); 
+            ;
                resolve(resultados)
             })
         })
@@ -1957,7 +2064,7 @@ const register_user_course = (data) => {
         return new Promise((resolve,reject)=>{
             client.query(`update courses set curso_finalizado = 'true' where id_courses = '${data[0]}'`);
             resolve({message:"curso finalizado"})
-            
+            ;
         })
     }
     const cursos_Anteriores = ( data)  => {
@@ -1965,7 +2072,7 @@ const register_user_course = (data) => {
             client.query(`select * from courses where curso_finalizado = 'true'`,function(err,results,fields){
                 var string = JSON.stringify(results);
                 var resultados = JSON.parse(string); 
-               
+                ;
                 resolve(resultados)
             })
             
@@ -1974,6 +2081,7 @@ const register_user_course = (data) => {
     const getAllContactos = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`select * from contacto`,function(err,results,fields){
+                ;
                 var string = JSON.stringify(results);
                 var resultados = JSON.parse(string); 
                 resolve(resultados)
@@ -1984,6 +2092,7 @@ const register_user_course = (data) => {
     const getRegisterCourses = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`select * from register_courses where correo = '${data[0]}'`,function(err,results,fields){
+            ;
                 var string = JSON.stringify(results);
                 var resultados = JSON.parse(string); 
                 resolve(resultados)
@@ -1994,6 +2103,7 @@ const register_user_course = (data) => {
     const getRegisterCoursesById = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`select * from courses where id_courses = '${data[0]}'`,function(err,results,fields){
+            ;
                 var string = JSON.stringify(results);
                 var resultados = JSON.parse(string); 
                 resolve(resultados)
@@ -2004,6 +2114,7 @@ const register_user_course = (data) => {
     const update_profile = ( data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`select * from users_plataform where correo = '${data[3]}'`,function(err,results,fields){
+                ;
                 var string = JSON.stringify(results);
                 var resultados = JSON.parse(string); 
                 if(resultados[0]){
@@ -2016,7 +2127,117 @@ const register_user_course = (data) => {
             
         })
     }
+    const solicitar_cotizacion = (data)  => {
+        console.log("data",data)
+        return new Promise((resolve,reject)=>{            
+            client.query(`select * from cotizaciones_cursos where fk_curso = '${data[10]}' `,function(err,res,fields){
+                let string = JSON.stringify(res);
+                let resultados = JSON.parse(string); 
+                if(resultados[0]){
+                    resolve({message:"cotizacion encontrada"})
+                }else{
+                    client.query(`insert into cotizaciones_cursos (fecha_emision,fecha_expiracion,folio,piezas,precio_unitario,iva,total_global,tipo_cotizacion,estado,fk_usuario_plataforma,fk_curso) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[10]}')`,function(err,response){
+                        resolve({message:"registro exitoso"})
+                    })
+                    client.query(`select * from users_plataform where id_users_plataform = '${data[9]}'`,function(err,resu,fields){
+                        let str= JSON.stringify(resu);
+                        let resulta = JSON.parse(str); 
+                        var transporter = nodemailer.createTransport({  
+                            secure: true,
+                            host: 'adscontigo.com',
+                            port: 465,
+                            auth: {
+                                    user: 'ventas@adscontigo.com',
+                                    pass: 'Nu07b_s38',                       
+                            },
+                            
+                            tls: {rejectUnauthorized: false},
+                            });
+                            const mailOptions = {
+                            from: 'ventas@adscontigo.com',  // sender address
+                            to: `jesus.francisco@ads.com.mx,${data[4]}`, // list of receivers
+                            // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
+                            subject: 'Cotización pendiente de confirmar', // Subject line
+                            text: `Estimado ${resulta[0].nombre + " " + resulta[0].apellidos}`,
+                            html: `<p>
+                                Basado en su solicitud de cotización, le notificamos que su solicitud ya fue enviada a nuestro equipo administrativo.
+                                <br/>
+                                <br/>
+                                <br/>
+                                Solicitante: ${resulta[0].nombre + " " + resulta[0].apellidos}<br/>
+                                Cotización con el Folio: ${data[2]}<br/>
+                                Fecha de emisión: ${data[0]}<br/>
+                                Curso: ${data[11]}
+                                <br/>
+                                <br/>
+                                <br/><br/>
+                                <strong>En cuanto la validación sea aprobada usted podrá visualizar el documento dentro de su plataforma</strong>
+                                <br/>
+                                <br/>
+                                Cualquier duda o sugerencia no olvide comunicarse a nuestros teléfonos<br/>
+                                Saludos cordiales, 
+                                <center><br/><br/>${data[2]}<br/>
+                            El equipo de tecnologías de Plataforma de cursos <br/>
+                            Copyright © 2024 Instituto Mexicano de Auditores Internos, A.C.<br/>
+                            Todos los derechos reservados.<br/>
+                            Montecito No. 38 Piso 28 Oficina 22 Col. Nápoles, Del. Benito Juárez, CP. 03810 Tels: 55 5514-7908 / 55 5525-4110
+                            <br/></center>
+                            </p>`,
+                            
+                            };
+                            console.log("transporter",transporter);
+            
+                            transporter.sendMail(mailOptions, function (err, info) {
+                                if("este es el error" , err)
+                                console.log(err)
+                                else
+                                console.log("esta es la info" ,  info);
+                        
+                        });
+                        console.log("resUser",resultados)
+                    })
+                    
+
+                }
+            })
+            
+            
+        })
+    }
+    const get_cotizaciones = (data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`select * from cotizaciones_cursos inner join courses inner join users_plataform on cotizaciones_cursos.fk_curso = courses.id_courses and cotizaciones_cursos.fk_usuario_plataforma = users_plataform.id_users_plataform where cotizaciones_cursos.fk_usuario_plataforma = '${data[0]}'`,function(err,result,fields){
+                let string = JSON.stringify(result);
+                let resultados = JSON.parse(string);
+                resolve(resultados)
+            })
+            
+        })
+    }
+    const get_cotizaciones_clientes = (data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`select * from cotizaciones_cursos inner join courses inner join users_plataform on cotizaciones_cursos.fk_curso = courses.id_courses and cotizaciones_cursos.fk_usuario_plataforma = users_plataform.id_users_plataform  `,function(err,result,fields){
+                let string = JSON.stringify(result);
+                let resultados = JSON.parse(string);
+                resolve(resultados)
+            })
+            
+        })
+    }
+    const ok_cotizacion = ( data)  => {
+        console.log("data",data)
+        return new Promise((resolve,reject)=>{
+            client.query(`update cotizaciones_cursos set estado = 'Aprobada' where folio = '${data[0]}'`);
+            resolve({message:"cotizacion aprobada"})
+            ;
+        })
+    }
+
 module.exports={
+    ok_cotizacion,
+    get_cotizaciones_clientes,
+    get_cotizaciones,
+    solicitar_cotizacion,
     update_profile,
     getRegisterCoursesById,
     getRegisterCourses,

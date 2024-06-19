@@ -287,7 +287,20 @@ const getRegisterCoursesById  =  (_ , data) =>{
     var variable = cadena.split(",")
 return actions.getRegisterCoursesById(variable)
 }
+const get_cotizaciones  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.get_cotizaciones(variable)
+}
+const get_cotizaciones_clientes  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.get_cotizaciones_clientes(variable)
+}
+
 module.exports={
+    get_cotizaciones_clientes,
+    get_cotizaciones,
     getRegisterCoursesById,
     getRegisterCourses,
     getAllContactos,
