@@ -335,7 +335,25 @@ const actions = require('../actions/userActions')
         return actions.ok_cotizacion(variable)
     }
 
+    const registroSemblanza = async (_ , {folio,titulo,objetivo,
+        perfil,temario1,temario2,
+        temario3,temario4,temario5,
+        temario6,id_course}) =>{
+            console.log("entro")
+
+        return actions.registroSemblanza(folio,titulo,objetivo,
+            perfil,temario1,temario2,
+            temario3,temario4,temario5,
+            temario6,id_course)
+    }
+    const cursoPagado =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.cursoPagado(variable)
+    }
 module.exports={
+    cursoPagado,
+    registroSemblanza,
     ok_cotizacion,
     solicitar_cotizacion,
     update_profile,

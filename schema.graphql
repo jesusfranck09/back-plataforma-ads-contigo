@@ -67,6 +67,11 @@ type Mutation {
     update_profile(data:[String]!):message
     solicitar_cotizacion(data:[String]!):message
     ok_cotizacion(data:[String]!):message
+    registroSemblanza(folio:String,titulo:String,objetivo:String,
+    perfil:String,temario1:String,temario2:String,
+    temario3:String,temario4:String,temario5:String,
+    temario6:String,id_course:String):message
+    cursoPagado(data:[String]!):message
 }
 
 type Query{
@@ -126,9 +131,23 @@ getRegisterCourses(data:[String]!):[curses]
 getRegisterCoursesById(data:[String]!):[curses]
 get_cotizaciones(data:[String]!):[cotizaciones_courses]
 get_cotizaciones_clientes(data:[String]!):[cotizaciones_courses]
-
+getSemblanza(data:[String]!):[semblanza]
 }
 
+type semblanza {
+    id:String
+    folio:String
+    titulo:String
+    objetivo:String
+    perfil:String
+    temario1:String
+    temario2:String
+    temario3:String
+    temario4:String
+    temario5:String
+    temario6:String
+    fk_courses:String
+}
 type auth_user_plataform{
     id_users_plataform:String
     nombre:String
@@ -155,6 +174,7 @@ type expositor{
 }
 type cotizaciones_courses{
     id_cotizaciones_curses:String
+    estatus_pago:String
     fecha_emision:String
     fecha_expiracion:String
     folio:String

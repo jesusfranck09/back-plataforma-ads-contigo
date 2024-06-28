@@ -297,8 +297,14 @@ const get_cotizaciones_clientes  =  (_ , data) =>{
     var variable = cadena.split(",")
 return actions.get_cotizaciones_clientes(variable)
 }
+const getSemblanza  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.getSemblanza(variable)
+}
 
 module.exports={
+    getSemblanza,
     get_cotizaciones_clientes,
     get_cotizaciones,
     getRegisterCoursesById,

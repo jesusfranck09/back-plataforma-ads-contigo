@@ -2128,7 +2128,6 @@ const register_user_course = (data) => {
         })
     }
     const solicitar_cotizacion = (data)  => {
-        console.log("data",data)
         return new Promise((resolve,reject)=>{            
             client.query(`select * from cotizaciones_cursos where fk_curso = '${data[10]}' `,function(err,res,fields){
                 let string = JSON.stringify(res);
@@ -2136,7 +2135,7 @@ const register_user_course = (data) => {
                 if(resultados[0]){
                     resolve({message:"cotizacion encontrada"})
                 }else{
-                    client.query(`insert into cotizaciones_cursos (fecha_emision,fecha_expiracion,folio,piezas,precio_unitario,iva,total_global,tipo_cotizacion,estado,fk_usuario_plataforma,fk_curso) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}','${data[10]}')`,function(err,response){
+                    client.query(`insert into cotizaciones_cursos (fecha_emision,fecha_expiracion,folio,piezas,precio_unitario,iva,total_global,tipo_cotizacion,estado,estatus_pago,fk_usuario_plataforma,fk_curso) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','No pagado','${data[9]}','${data[10]}')`,function(err,response){
                         resolve({message:"registro exitoso"})
                     })
                     client.query(`select * from users_plataform where id_users_plataform = '${data[9]}'`,function(err,resu,fields){
@@ -2233,7 +2232,105 @@ const register_user_course = (data) => {
         })
     }
 
+    const registroSemblanza = ( folio,titulo,objetivo,
+        perfil,temario1,temario2,
+        temario3,temario4,temario5,
+        temario6,id_course)  => { 
+            console.log(folio,titulo,objetivo,
+                perfil,temario1,temario2,
+                temario3,temario4,temario5,
+                temario6,id_course)
+
+        return new Promise((resolve,reject)=>{
+            client.query(`insert into semblanza (folio,titulo,objetivo,perfil,temario1,temario2,temario3,temario4,temario5,temario6,fk_courses) values ('${folio}','${titulo}','${objetivo}','${perfil}','${temario1}','${temario2}','${temario3}'
+            ,'${temario4}','${temario5}','${temario6}','${id_course}')`,function(err,res){
+                console.log("res",res)
+                console.log("err",err)
+               
+            })
+            ;
+            resolve({message:"semblanza registrada"})
+        })
+    }
+    const getSemblanza = (data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`select * from semblanza`,function(err,result,fields){
+                let string = JSON.stringify(result);
+                let resultados = JSON.parse(string);
+                resolve(resultados)
+            })
+            
+        })
+    }
+
+    const cursoPagado = (data)  => {
+        return new Promise((resolve,reject)=>{
+            client.query(`update cotizaciones_cursos set estatus_pago = 'Pagado' where folio = '${data[0]}' `,function(err,res,fields){
+                console.log("err",err)
+                console.log("res",res)
+                console.log("field",fields)
+                // var transporter = nodemailer.createTransport({  
+                //     secure: true,
+                //     host: 'adscontigo.com',
+                //     port: 465,
+                //     auth: {
+                //             user: 'ventas@adscontigo.com',
+                //             pass: 'Nu07b_s38',                       
+                //     },
+                    
+                //     tls: {rejectUnauthorized: false},
+                //     });
+                //     const mailOptions = {
+                //     from: 'ventas@adscontigo.com',  // sender address
+                //     to: `jesus.francisco@ads.com.mx,${data[4]}`, // list of receivers
+                //     // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
+                //     subject: 'Cotización pendiente de confirmar', // Subject line
+                //     text: `Estimado ${resulta[0].nombre + " " + resulta[0].apellidos}`,
+                //     html: `<p>
+                //         Basado en su solicitud de cotización, le notificamos que su solicitud ya fue enviada a nuestro equipo administrativo.
+                //         <br/>
+                //         <br/>
+                //         <br/>
+                //         Solicitante: ${resulta[0].nombre + " " + resulta[0].apellidos}<br/>
+                //         Cotización con el Folio: ${data[2]}<br/>
+                //         Fecha de emisión: ${data[0]}<br/>
+                //         Curso: ${data[11]}
+                //         <br/>
+                //         <br/>
+                //         <br/><br/>
+                //         <strong>En cuanto la validación sea aprobada usted podrá visualizar el documento dentro de su plataforma</strong>
+                //         <br/>
+                //         <br/>
+                //         Cualquier duda o sugerencia no olvide comunicarse a nuestros teléfonos<br/>
+                //         Saludos cordiales, 
+                //         <center><br/><br/>${data[2]}<br/>
+                //     El equipo de tecnologías de Plataforma de cursos <br/>
+                //     Copyright © 2024 Instituto Mexicano de Auditores Internos, A.C.<br/>
+                //     Todos los derechos reservados.<br/>
+                //     Montecito No. 38 Piso 28 Oficina 22 Col. Nápoles, Del. Benito Juárez, CP. 03810 Tels: 55 5514-7908 / 55 5525-4110
+                //     <br/></center>
+                //     </p>`,
+                    
+                //     };
+                //     console.log("transporter",transporter);
+    
+                //     transporter.sendMail(mailOptions, function (err, info) {
+                //         if("este es el error" , err)
+                //         console.log(err)
+                //         else
+                //         console.log("esta es la info" ,  info);
+                
+                // });
+                resolve({message:"curso pagado"})
+            })
+            
+        })
+    }
+
 module.exports={
+    cursoPagado,
+    getSemblanza,
+    registroSemblanza,
     ok_cotizacion,
     get_cotizaciones_clientes,
     get_cotizaciones,
