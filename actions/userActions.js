@@ -2166,7 +2166,7 @@ const register_user_course = (data) => {
                             subject: 'Cotización pendiente de confirmar', // Subject line
                             text: `Estimado ${resulta[0].nombre + " " + resulta[0].apellidos}`,
                             html: `<p>
-                                Basado en su solicitud de cotización, le notificamos que su solicitud ya fue enviada a nuestro equipo administrativo.
+                                Basado en su solicitud de cotización, le notificamos que su peticion ya fue enviada a nuestro equipo administrativo.
                                 <br/>
                                 <br/>
                                 <br/>
@@ -2191,7 +2191,6 @@ const register_user_course = (data) => {
                             </p>`,
                             
                             };
-                            console.log("transporter",transporter);
             
                             transporter.sendMail(mailOptions, function (err, info) {
                                 if("este es el error" , err)
