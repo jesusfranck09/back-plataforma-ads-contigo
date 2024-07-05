@@ -173,7 +173,7 @@ type expositor{
     correo:String
 }
 type cotizaciones_courses{
-    id_cotizaciones_curses:String
+    id_cotizaciones_cursos:String
     estatus_pago:String
     fecha_emision:String
     fecha_expiracion:String
@@ -193,6 +193,8 @@ type cotizaciones_courses{
     nombre:String
     apellidos:String
     correo:String
+    fk_curso:String
+
 }
 
 type videoPromocional{

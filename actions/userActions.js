@@ -1637,12 +1637,21 @@ const inscriptionCourse = ( data)  => {
             var string = JSON.stringify(results);
             var resultados = JSON.parse(string)
             if(resultados[0]){
-                client.query(`insert into register_courses (nombre,apellidos,telefono,correo,cp,fecha_registro,fk_courses,fk_contacto,fk_clientesads) values ('${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}', '${data[0]}', '${resultados[0].id_contacto}','${resultados[0].fk_clientesads}')`,function(error,res){
-                    console.log("error1",error)
-                    console.log("res",res)
+                client.query(`select * from register_courses where fk_courses = '${data[0]}'`,function(errores,re,fiel){
+                    var strings = JSON.stringify(re)
+                    var resul1 = JSON.parse(strings)
+                    if(resul1[0]){
+                        resolve({message:"curso ya inscrito"})
+                    }else{
+                        client.query(`insert into register_courses (nombre,apellidos,telefono,correo,cp,fecha_registro,fk_courses,fk_contacto,fk_clientesads) values ('${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}', '${data[0]}', '${resultados[0].id_contacto}','${resultados[0].fk_clientesads}')`,function(error,res){
+                            console.log("error1",error)
+                            console.log("res",res)
+                        })
+                        client.query(`update courses set  indice =  '${data[7]}' where id_courses = '${data[8]}'`,function(err,res){; 
+                        })
+                    }
                 })
-                client.query(`update courses set  indice =  '${data[7]}' where id_courses = '${data[8]}'`,function(err,res){; 
-                })
+                
             }else{
                 client.query(`insert into register_courses (nombre,apellidos,telefono,correo,cp,fecha_registro,fk_courses,fk_contacto,fk_clientesads) values ('${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}', '${data[0]}', '0','0')`,function(err,res,fields){
                     console.log("error2",err)
@@ -1702,7 +1711,6 @@ const inscriptionCourse = ( data)  => {
                 console.log("esta es la info" ,  info);
         
         });
-        resolve({message:"Usuario registrado"})
     })
 }
 const auth_user = ( data)  => {
@@ -1822,7 +1830,6 @@ const register_user_course = (data) => {
                 fecha,rs,hora1,hora2,precio)
 
         return new Promise((resolve,reject)=>{
-            console.log(`insert into courses (concepto,precio,descripcion,estatus,imagen,add1,add2,add3,instructor,tipo,indice,habilitar,user_min,insta_link,fb_link,twiter_link,linked_link,youtube_link,fecha_curso,hora_inicial,hora_final,curso_finalizado,servidor,url_video) values ('${concepto}','${precio}','${descripcion}','inactivo','${url}','${encabezado1}','${encabezado2}','${encabezado3}'`)
             client.query(`insert into courses (concepto,precio,descripcion,estatus,imagen,add1,add2,add3,instructor,tipo,indice,habilitar,user_min,insta_link,fb_link,twiter_link,linked_link,youtube_link,fecha_curso,hora_inicial,hora_final,curso_finalizado,servidor,url_video) values ('${concepto}','${precio}','${descripcion}','inactivo','${url}','${encabezado1}','${encabezado2}','${encabezado3}'
             ,'${instructor}','${tipo}','${indice}','${modo}','${indice}','${ig}','${fb}','${tw}','${li}','${yt}','${fecha}','${hora1}','${hora2}',"false","No proporcionado","No proporcionado")`,function(err,res){
                 console.log("res",res)
