@@ -72,6 +72,12 @@ type Mutation {
     temario3:String,temario4:String,temario5:String,
     temario6:String,id_course:String):message
     cursoPagado(data:[String]!):message
+    insertUrlPdfVacant(data:[String]!):message
+    delete_vacante(data:[String]!):message
+    sendCV(data:[String]!):message
+    solicitar_vacante(data:[String]!):message
+    aprobar_cv(data:[String]!):message
+    rechazar_cv(data:[String]!):message
 }
 
 type Query{
@@ -132,6 +138,17 @@ getRegisterCoursesById(data:[String]!):[curses]
 get_cotizaciones(data:[String]!):[cotizaciones_courses]
 get_cotizaciones_clientes(data:[String]!):[cotizaciones_courses]
 getSemblanza(data:[String]!):[semblanza]
+get_vacantes(data:[String]!):[vacantes]
+get_cv(data:[String]!):[cv]
+get_all_cv(data:[String]!):[cv]
+
+}
+type cv {
+    id_cv:String
+    fecha_carga:String
+    estatus_aprobacion:String
+    url_cv:String
+    fk_users_plataform:String
 }
 
 type semblanza {
@@ -147,6 +164,15 @@ type semblanza {
     temario5:String
     temario6:String
     fk_courses:String
+}
+type vacantes {
+    id_vacantes:String
+    titulo_vacante:String
+    folio:String
+    fecha_publicacion:String
+    empresa_contratacion:String
+    correo_contacto:String
+    url_pdf:String
 }
 type auth_user_plataform{
     id_users_plataform:String
@@ -164,6 +190,10 @@ type auth_user_plataform{
     id_cliente:String
     razonSocial:String
     rfc:String
+    fecha_carga:String
+    estatus_aprobacion:String
+    url_cv:String
+    fk_users_plataform:String
 }
 type expositor{
     id_expositores:String

@@ -2272,9 +2272,6 @@ const register_user_course = (data) => {
     const cursoPagado = (data)  => {
         return new Promise((resolve,reject)=>{
             client.query(`update cotizaciones_cursos set estatus_pago = 'Pagado' where folio = '${data[0]}' `,function(err,res,fields){
-                console.log("err",err)
-                console.log("res",res)
-                console.log("field",fields)
                 // var transporter = nodemailer.createTransport({  
                 //     secure: true,
                 //     host: 'adscontigo.com',
@@ -2333,7 +2330,187 @@ const register_user_course = (data) => {
         })
     }
 
+
+    const insertUrlPdfVacant =async (filename) => {
+    return new Promise((resolve,reject)=>{
+    client.query(`insert into vacantes (titulo_vacante, folio, fecha_publicacion, empresa_contratacion, correo_contacto,url_pdf) values ('${filename[0]}','${filename[5]}','${filename[1]}','${filename[2]}','${filename[3]}','${filename[4]}')`,function(err,res){
+        resolve({message:"registro exitoso"})
+    })
+    })
+    };
+
+    const get_vacantes =async () => {
+    return new Promise((resolve,reject)=>{
+    client.query(`select * from vacantes`,function(err,results,fields){
+        var string = JSON.stringify(results)
+        var resultados = JSON.parse(string)
+
+        resolve(resultados)
+        console.log("resultados",resultados)
+    })
+    })
+    };
+     const delete_vacante =async (insertUrlPdfVacant) => {
+        return new Promise((resolve,reject)=>{
+        client.query(`delete from vacantes where folio = '${data[0]}'`,function(err,res){
+            resolve({message:"registro exitoso"})
+        })
+        })
+        };
+    const sendCV =async (data) => {
+        return new Promise((resolve,reject)=>{
+            let fecha = new Date()
+            client.query(`insert into cv_users_plataform (fecha_carga,estatus_aprobacion,url_cv,fk_users_plataform) values ('${fecha}', 'Pendiente', '${data[0]}', '${data[1]}')`,function(err,res){
+                resolve({message:"registro exitoso"})
+            })
+        })
+    };
+    const get_cv =async (data) => {
+        return new Promise((resolve,reject)=>{
+        client.query(`select * from cv_users_plataform where id_cv = '${data[0]}'`,function(err,results,fields){
+            var string = JSON.stringify(results)
+            var resultados = JSON.parse(string)
+            resolve(resultados)
+        })
+        })
+        };
+
+        const solicitar_vacante =async (data) => {
+            let fecha = new Date();
+            return new Promise((resolve,reject)=>{
+                let fecha = new Date()
+                client.query(`select * from vacantes where id_vacantes = '${data[0]}'`,function(error,resultado,field){
+                    var string2 = JSON.stringify(resultado)
+                    var result = JSON.parse(string2)
+                    client.query(`select * from solicitud_vacantes where id_solicitud_vacantes = '${data[0]}' and fk_users_plataform = '${data[1]}'`,function(err,results,fields){
+                        var string = JSON.stringify(results)
+                        var resultados = JSON.parse(string)
+                        if(resultados[0]){
+                            resolve({message:"vacante ya solicitada"})
+                        }else{
+                            client.query(`insert into solicitud_vacantes (fecha_solicitud, fk_vacantes, fk_users_plataform) values ('${fecha}', '${data[0]}', '${data[1]}')`,function(err,res){
+                                resolve({message:"registro exitoso"})
+                            })
+                            var transporter = nodemailer.createTransport({  
+                            secure: true,
+                            host: 'adscontigo.com',
+                            port: 465,
+                            auth: {
+                                    user: 'ventas@adscontigo.com',
+                                    pass: 'Nu07b_s38',                       
+                            },
+                            
+                            tls: {rejectUnauthorized: false},
+                            });
+                            const mailOptions = {
+                            from: 'ventas@adscontigo.com',  // sender address
+                            to: `${result[0].correo_contacto}`, // list of receivers
+                            // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
+                            subject: 'Proceso de solicitud de vacante', // Subject line
+                            text: `Solicitud`,
+                            html: `<p>
+                                <h2><strong>Estimado usuario ${result[0].empresa_contratacion}, le notificamos la solicitud a la oferta vacante con los siguientes datos</strong></h2>
+                                <h3>Datos del aspirante</h3><br/><br/>
+                                <table class="table table-small table-bordered table-striped">
+                                    <tr>
+                                    <td>Nombre</td>
+                                    <td>${data[2]}</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Apellidos</td>
+                                    <td>${data[3]}</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Correo</td>
+                                    <td>${data[4]}</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Teléfono</td>
+                                    <td>${data[5]}</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Curriculum</td>
+                                    <td>${data[6]}</td>
+                                    </tr>
+                                </table>
+
+                                <br/><br/>
+
+                               
+
+                                 Vacante solicitada:  ${result[0].titulo_vacante}<br/><br/>
+                                 Folio:  ${result[0].folio}<br/><br/>
+                                <br/>
+                                El aspirante ${data[2]} ${data[3]} queda a la espera de su respuesta<br/>
+
+                                <br/><br/>
+                                <strong> En cuanto se valide la solicitud se le notificará al interesado los resultados</strong>
+                                <br/>
+                                <br/>
+                                Cualquier duda o sugerencia no olvide comunicarse con el IMAI (Instituto Mexicano de Auditores Internos)<br/>
+                                Saludos cordiales, 
+                                <center><br/><br/><br/>
+                            El equipo de tecnologías de Plataforma de cursos <br/>
+                            Copyright © 2024 Instituto Mexicano de Auditores Internos, A.C.<br/>
+                            Todos los derechos reservados.<br/>
+                            Montecito No. 38 Piso 28 Oficina 22 Col. Nápoles, Del. Benito Juárez, CP. 03810 Tels: 55 5514-7908 / 55 5525-4110
+                            <br/></center>
+                            </p>`,
+                            
+                            };
+                            console.log("transporter",transporter);
+            
+                            transporter.sendMail(mailOptions, function (err, info) {
+                                if("este es el error" , err)
+                                console.log(err)
+                                else
+                                console.log("esta es la info" ,  info);
+                        
+                        });
+
+
+
+                        }
+                    })
+                    
+                })
+                
+                
+            })
+        };
+        const get_all_cv =async (data) => {
+            return new Promise((resolve,reject)=>{
+            client.query(`select * from cv_users_plataform`,function(err,results,fields){
+                var string = JSON.stringify(results)
+                var resultados = JSON.parse(string)
+                resolve(resultados)
+            })
+            })
+        };
+        const aprobar_cv =async (data) => {
+            return new Promise((resolve,reject)=>{
+                client.query(`update cv_users_plataform set estatus_aprobacion="Aprobada" where id_cv = '${data[0]}'`,function(err,res){
+                    resolve({message:"registro exitoso"})
+                })
+            })
+        };
+        const rechazar_cv =async (data) => {
+            return new Promise((resolve,reject)=>{
+                client.query(`update cv_users_plataform set estatus_aprobacion="Rechazada" where id_cv = '${data[0]}'`,function(err,res){
+                    resolve({message:"registro exitoso"})
+                })
+            })
+        };
 module.exports={
+    rechazar_cv,
+    aprobar_cv,
+    get_all_cv,
+    solicitar_vacante,
+    get_cv,
+    sendCV,
+    delete_vacante,
+    get_vacantes,
+    insertUrlPdfVacant,
     cursoPagado,
     getSemblanza,
     registroSemblanza,

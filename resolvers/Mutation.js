@@ -351,7 +351,45 @@ const actions = require('../actions/userActions')
         var variable = cadena.split(",")
         return actions.cursoPagado(variable)
     }
+
+      const insertUrlPdfVacant =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.insertUrlPdfVacant(variable)
+    }
+    const delete_vacante =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.delete_vacante(variable)
+    }
+    
+    const sendCV =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.sendCV(variable)
+    }
+    const solicitar_vacante =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.solicitar_vacante(variable)
+    }
+    const aprobar_cv =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.aprobar_cv(variable)
+    }
+    const rechazar_cv =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.rechazar_cv(variable)
+    }
 module.exports={
+    rechazar_cv,
+    aprobar_cv,
+    solicitar_vacante,
+    sendCV,
+    delete_vacante,
+    insertUrlPdfVacant,
     cursoPagado,
     registroSemblanza,
     ok_cotizacion,

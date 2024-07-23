@@ -302,8 +302,27 @@ const getSemblanza  =  (_ , data) =>{
     var variable = cadena.split(",")
 return actions.getSemblanza(variable)
 }
+const get_vacantes  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.get_vacantes(variable)
+}
+const get_cv  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.get_cv(variable)
+}
+const get_all_cv  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.get_all_cv(variable)
+}
+
 
 module.exports={
+    get_all_cv,
+    get_cv,
+    get_vacantes,
     getSemblanza,
     get_cotizaciones_clientes,
     get_cotizaciones,
