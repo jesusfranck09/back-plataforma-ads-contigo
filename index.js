@@ -42,7 +42,6 @@ const options = {
   playground: '/playground',
 };
 
-// Define rutas adicionales o manejo de peticiones
 graphqlServer.express.post('/sendMail', (req, res) => {
   sendEmail(req);
 });
