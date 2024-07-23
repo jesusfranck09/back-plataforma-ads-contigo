@@ -78,6 +78,7 @@ type Mutation {
     solicitar_vacante(data:[String]!):message
     aprobar_cv(data:[String]!):message
     rechazar_cv(data:[String]!):message
+    
 }
 
 type Query{
@@ -141,7 +142,7 @@ getSemblanza(data:[String]!):[semblanza]
 get_vacantes(data:[String]!):[vacantes]
 get_cv(data:[String]!):[cv]
 get_all_cv(data:[String]!):[cv]
-
+get_solicitud_vacantes(data:[String]!):[solicitud_vacantes]
 }
 type cv {
     id_cv:String
@@ -173,6 +174,22 @@ type vacantes {
     empresa_contratacion:String
     correo_contacto:String
     url_pdf:String
+}
+type solicitud_vacantes {
+    id_solicitud_vacantes:String
+    id_vacantes:String
+    titulo_vacante:String
+    folio:String
+    fecha_publicacion:String
+    empresa_contratacion:String
+    correo_contacto:String
+    url_pdf:String
+    id_users_plataform:String
+    nombre:String
+    apellidos:String
+    telefono:String
+    correo:String
+    fecha_solicitud:String
 }
 type auth_user_plataform{
     id_users_plataform:String

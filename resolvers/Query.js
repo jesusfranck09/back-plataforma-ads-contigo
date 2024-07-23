@@ -318,8 +318,13 @@ const get_all_cv  =  (_ , data) =>{
 return actions.get_all_cv(variable)
 }
 
-
+const get_solicitud_vacantes  =  (_ , data) =>{
+    var cadena= data.data[0]
+    var variable = cadena.split(",")
+return actions.get_solicitud_vacantes(variable)
+}
 module.exports={
+    get_solicitud_vacantes,
     get_all_cv,
     get_cv,
     get_vacantes,

@@ -2346,7 +2346,6 @@ const register_user_course = (data) => {
         var resultados = JSON.parse(string)
 
         resolve(resultados)
-        console.log("resultados",resultados)
     })
     })
     };
@@ -2367,7 +2366,7 @@ const register_user_course = (data) => {
     };
     const get_cv =async (data) => {
         return new Promise((resolve,reject)=>{
-        client.query(`select * from cv_users_plataform where id_cv = '${data[0]}'`,function(err,results,fields){
+        client.query(`select * from cv_users_plataform where fk_users_plataform = '${data[0]}'`,function(err,results,fields){
             var string = JSON.stringify(results)
             var resultados = JSON.parse(string)
             resolve(resultados)
@@ -2501,7 +2500,19 @@ const register_user_course = (data) => {
                 })
             })
         };
+
+        const get_solicitud_vacantes =async (data) => {
+            return new Promise((resolve,reject)=>{
+                console.log(`select * from solicitud vacantes inner join vacantes on solicitud_vacantes.fk_vacantes = vacantes.id_vacantes inner join users_plataform on solicitud_vacantes.fk_users_plataform = users_plataform.id_users_plataform`)
+                client.query(`select * from solicitud_vacantes inner join vacantes on solicitud_vacantes.fk_vacantes = vacantes.id_vacantes inner join users_plataform on solicitud_vacantes.fk_users_plataform = users_plataform.id_users_plataform`,function(err,res,fields){
+                    var string = JSON.stringify(res)
+                    var resultados = JSON.parse(string)
+                    resolve(resultados)
+                })
+            })
+        };
 module.exports={
+    get_solicitud_vacantes,
     rechazar_cv,
     aprobar_cv,
     get_all_cv,
