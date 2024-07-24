@@ -211,6 +211,7 @@ type auth_user_plataform{
     estatus_aprobacion:String
     url_cv:String
     fk_users_plataform:String
+    token:String
 }
 type expositor{
     id_expositores:String
@@ -294,6 +295,7 @@ type auth_user{
     Puesto:String
     email:String
     fk_empresa:String
+    token_admin:String
     message:String
 }
 type urlPdfFile{

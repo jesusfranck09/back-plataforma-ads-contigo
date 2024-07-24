@@ -1733,7 +1733,7 @@ const auth_user = ( data)  => {
                         email:resultados[0].email, 
                         Puesto:resultados[0].Puesto, 
                         fk_empresa:resultados[0].fk_empresa, 
-
+                        token_admin:jsonwebtoken(resultados[0].correo+resultados[0].contraseña), //coreo data[0]]
                         message:"usuario encontrado"
                     })
                 } else{ 
@@ -2008,7 +2008,6 @@ const register_user_course = (data) => {
             if(resultados[0]){
                 bcrypt.compare(data[1],resultados[0].contraseña,function(error,result){
                     if(resultado[0]){
-                        console.log("resultados",resultados)
                         client.query(`select * from clientesads where id_cliente = '${resultado[0].fk_clientesads}'`,function(errors,ress,fieldd){
                         ;
                             var st= JSON.stringify(ress)
@@ -2027,7 +2026,8 @@ const register_user_course = (data) => {
                                 id_cliente:re[0].id_cliente,
                                 rfc:re[0].rfc,
                                 razonSocial:re[0].razonSocial,
-                                rango_edad:resultados[0].rango_edad
+                                rango_edad:resultados[0].rango_edad,
+                                token:jsonwebtoken(resultados[0].correo + resultados[0].contraseña), //coreo data[0]]
 
                             })
                         })
@@ -2042,7 +2042,8 @@ const register_user_course = (data) => {
                             message:"usuario encontrado",
                             id_cliente:"",
                             rfc:"",
-                            razonSocial:""
+                            razonSocial:"",
+                            token:jsonwebtoken(resultados[0].correo + resultados[0].contraseña), //coreo data[0]]
                         })
                     }
                         
