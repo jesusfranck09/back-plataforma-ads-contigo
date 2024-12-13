@@ -383,7 +383,13 @@ const actions = require('../actions/userActions')
         var variable = cadena.split(",")
         return actions.rechazar_cv(variable)
     }
+    const saveURLPDF =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.saveURLPDF(variable)
+    }
 module.exports={
+    saveURLPDF,
     rechazar_cv,
     aprobar_cv,
     solicitar_vacante,

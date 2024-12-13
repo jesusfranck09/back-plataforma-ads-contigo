@@ -1785,7 +1785,9 @@ const register_user_course = (data) => {
     }
     const getCourses = ( data)  => {
         return new Promise((resolve,reject)=>{
+            console.log(`select * from courses where curso_finalizado = 'false'`)
             client.query(`select * from courses where curso_finalizado = 'false'`,function(err,results,fields){
+            console.log(err)
             var string = JSON.stringify(results);
             var resultados = JSON.parse(string); 
                 resolve(resultados)
@@ -1995,11 +1997,24 @@ const register_user_course = (data) => {
     }
 
     const auth_user_plataform = ( data)  => {
+        console.log("que datos puso kary ",data)
         return new Promise((resolve,reject) =>{ 
             client.query(`select * from contacto where correo1 = '${data[0]}'`,function(error,res,fields){
             var strings = JSON.stringify(res)
             var resultado = JSON.parse(strings);
-            client.query(`select * from users_plataform where correo='${data[0]}'`,
+            client.query(`SELECT users_plataform.*, latest_csf.*
+            FROM users_plataform
+            LEFT JOIN (
+                SELECT *
+                FROM CSF
+                WHERE id_csf = (
+                    SELECT MAX(id_csf) 
+                    FROM CSF 
+                    WHERE fk_users_plataform = CSF.fk_users_plataform
+                )
+            ) AS latest_csf ON latest_csf.fk_users_plataform = users_plataform.id_users_plataform
+            WHERE users_plataform.correo = '${data[0]}';
+            `,
             function(err,results,field){
             if(err){ reject(err)
             }
@@ -2027,6 +2042,9 @@ const register_user_course = (data) => {
                                 rfc:re[0].rfc,
                                 razonSocial:re[0].razonSocial,
                                 rango_edad:resultados[0].rango_edad,
+                                id_CSF:resultados[0].id_CSF,
+                                fk_users_plataform:resultados[0].fk_users_plataform,
+                                url:resultados[0].url,
                                 token:jsonwebtoken(resultados[0].correo + resultados[0].contraseña), //coreo data[0]]
 
                             })
@@ -2512,7 +2530,16 @@ const register_user_course = (data) => {
                 })
             })
         };
+        const saveURLPDF =async (data) => {
+            console.log(`insert into CSF fk_users_plataform, url values ('${data[1]}', '${data[0]}')`)
+            return new Promise((resolve,reject)=>{
+                client.query(`insert into CSF (fk_users_plataform, url) values ('${data[1]}', '${data[0]}')`,function(err,res){
+                    resolve({message:"registro exitoso"})
+                })
+            })
+        };
 module.exports={
+    saveURLPDF,
     get_solicitud_vacantes,
     rechazar_cv,
     aprobar_cv,

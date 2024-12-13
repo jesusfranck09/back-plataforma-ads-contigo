@@ -78,6 +78,7 @@ type Mutation {
     solicitar_vacante(data:[String]!):message
     aprobar_cv(data:[String]!):message
     rechazar_cv(data:[String]!):message
+    saveURLPDF(data:[String]!):message
     
 }
 
@@ -212,6 +213,8 @@ type auth_user_plataform{
     url_cv:String
     fk_users_plataform:String
     token:String
+     id_CSF:String
+    url:String
 }
 type expositor{
     id_expositores:String
