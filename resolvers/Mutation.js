@@ -388,7 +388,13 @@ const actions = require('../actions/userActions')
         var variable = cadena.split(",")
         return actions.saveURLPDF(variable)
     }
+    const uploadxls =  (_ ,data) =>{
+        var cadena= data.data[0]
+        var variable = cadena.split(",")
+        return actions.uploadxls(variable)
+    }
 module.exports={
+    uploadxls,
     saveURLPDF,
     rechazar_cv,
     aprobar_cv,

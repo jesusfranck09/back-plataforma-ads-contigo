@@ -1,16 +1,16 @@
 var mysql = require('mysql');
 var con = mysql.createPool({
-    database: "baseplataforma", // El nombre de la base de datos en RDS
-    host: "baseplataforma.cgeovhwjvxf3.us-east-1.rds.amazonaws.com", // El endpoint de tu base de datos en RDS
-    user: "Franck", // Tu nombre de usuario de MySQL
-    password: "Programacion2020", // Tu contraseña de MySQL
-    connectionLimit: 10 // Ajusta el número de conexiones concurrentes que tu aplicación puede manejar
+    database: "baseplataforma",
+    host: "baseplataforma.cgeovhwjvxf3.us-east-1.rds.amazonaws.com",
+    user: "Franck",
+    password: "Programacion2020",
+    connectionLimit: 10,
+    connectTimeout: 30000 // Aumenta el tiempo de espera a 30 segundos
 });
 
 console.log("Conectado a la BD");
 
 module.exports = con;
-
 
 // var mysql = require('mysql')
 // var con = mysql.createPool({

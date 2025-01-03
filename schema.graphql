@@ -79,6 +79,7 @@ type Mutation {
     aprobar_cv(data:[String]!):message
     rechazar_cv(data:[String]!):message
     saveURLPDF(data:[String]!):message
+    uploadxls(data:[String]!):message
     
 }
 
