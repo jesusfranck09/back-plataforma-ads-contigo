@@ -1,16 +1,17 @@
 var mysql = require('mysql');
 var con = mysql.createPool({
     database: "baseplataforma",
-    host: "baseplataforma.cgeovhwjvxf3.us-east-1.rds.amazonaws.com",
-    user: "Franck",
-    password: "Programacion2020",
+    host: "baseplataforma.cgeovhwjvxf3.us-east-1.rds.amazonaws.com",  // Endpoint correcto
+    user: "Franck",  // Usuario correcto
+    password: "Programacion2020",  // Contraseña correcta
     connectionLimit: 10,
-    connectTimeout: 30000 // Aumenta el tiempo de espera a 30 segundos
+    connectTimeout: 30000  // Aumenta el tiempo de espera si es necesario
 });
 
 console.log("Conectado a la BD");
 
 module.exports = con;
+
 
 // var mysql = require('mysql')
 // var con = mysql.createPool({

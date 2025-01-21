@@ -54,6 +54,7 @@ const SALT_WORK_FACTOR =10
     return new Promise((resolve,reject) =>{ 
         client.query(`select * from adminAlfa where correo='${data[0]}'`,
             function(err,results,field){
+                console.log("err",err)
                 if(err){ reject(err)
     }
         var string = JSON.stringify(results)
@@ -205,7 +206,7 @@ const SALT_WORK_FACTOR =10
 
     const getProductoServicio   = ( data)  => {
         return new Promise((resolve,reject)=>{                                
-            client.query(`select * from productoServicio where id_productoServicio='${data[0]}'`,  function (err,result,fields ) {                                    
+            client.query(`select * from productoservicio where id_productoServicio='${data[0]}'`,  function (err,result,fields ) {                                    
                 var string = JSON.stringify(result)
                 var resultados=JSON.parse(string);                                
                 resolve(resultados)
@@ -231,7 +232,7 @@ const SALT_WORK_FACTOR =10
     }   
     const updateInsertProductoServicio = (data)=> { 
         return new Promise((resolve,reject)=>{  
-                client.query(`insert into productoServicio(tipo,concepto,precio,consecutivo,tipoLicenciamiento,LineaProducto,id_actualizacion,asignacion,fechaRegistro,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}')`) 
+                client.query(`insert into productoservicio(tipo,concepto,precio,consecutivo,tipoLicenciamiento,LineaProducto,id_actualizacion,asignacion,fechaRegistro,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}')`) 
                 resolve({message:"registro exitoso"})   
                 ;   
         })
@@ -240,17 +241,17 @@ const SALT_WORK_FACTOR =10
 
       const insertProductoServicio =  async data=> { 
         return new Promise((resolve,reject) =>{ 
-         client.query(`select * from productoServicio where fk_empresa='${data[9]}' and concepto='${data[1]}' and consecutivo = '${data[3]}' `,
+         client.query(`select * from productoservicio where fk_empresa='${data[9]}' and concepto='${data[1]}' and consecutivo = '${data[3]}' `,
          function(err,results,field){
           var string = JSON.stringify(results)
           var resultados=JSON.parse(string);
           if (resultados[0]){
               resolve({message:"El concepto ya fue registrado"})
           }else{   
-            client.query(`insert into productoServicio(tipo,concepto,precio,consecutivo,tipoLicenciamiento,LineaProducto,id_actualizacion,asignacion,fechaRegistro,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}')`,function(param1,param2){
+            client.query(`insert into productoservicio(tipo,concepto,precio,consecutivo,tipoLicenciamiento,LineaProducto,id_actualizacion,asignacion,fechaRegistro,fk_empresa) values('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[4]}','${data[5]}','${data[6]}','${data[7]}','${data[8]}','${data[9]}')`,function(param1,param2){
                 var stringParam = JSON.stringify(param2)
                 var resultadosParam =  JSON.parse(stringParam)
-                client.query(`update productoServicio set asignacion ='${resultadosParam.insertId}' where id_productoServicio = '${resultadosParam.insertId}'`)
+                client.query(`update productoservicio set asignacion ='${resultadosParam.insertId}' where id_productoServicio = '${resultadosParam.insertId}'`)
             }) 
             resolve({message:"registro exitoso"})
             ;
@@ -262,7 +263,7 @@ const SALT_WORK_FACTOR =10
 // ********* Actualizar despues a esta cuando este funcionando la tabla de productos y servicios********
     const getTablaProductoServicio  = ( data)  => {
         return new Promise((resolve,reject)=>{     
-            client.query(`select * from productoServicio where fk_empresa ='${data[0]}'  `, function (err,result,fields ) {                                    
+            client.query(`select * from productoservicio where fk_empresa ='${data[0]}'  `, function (err,result,fields ) {                                    
                 var string = JSON.stringify(result)
                 var resultados=JSON.parse(string);   
                 resolve(resultados)     
@@ -273,7 +274,7 @@ const SALT_WORK_FACTOR =10
 
        const getAllTablaProductoServicio  = ( data)  => {
         return new Promise((resolve,reject)=>{                                
-            client.query(`select * from productoServicio where  fk_empresa = '${data[0]}'`, function (err,result,fields ) {                                    
+            client.query(`select * from productoservicio where  fk_empresa = '${data[0]}'`, function (err,result,fields ) {                                    
                 var string = JSON.stringify(result)
                 var resultados=JSON.parse(string);                                
                 resolve(resultados)            
@@ -675,7 +676,7 @@ const SALT_WORK_FACTOR =10
     }
     const getProductoServicioByFolio = ( data)  => {
         return new Promise((resolve,reject)=>{
-            client.query(`select * from cotizaciones inner join productoservicio on cotizaciones.fk_productoservicio = productoservicio.id_productoServicio  where cotizaciones.NumFolio ='${data[0]}'`,function(err,results,fields){
+            client.query(`select * from cotizaciones inner join productoservicio on cotizaciones.fk_productoServicio = productoservicio.id_productoServicio  where cotizaciones.NumFolio ='${data[0]}'`,function(err,results,fields){
                 var string =JSON.stringify(results)
                 var resultados = JSON.parse(string);
                 resolve(resultados)
@@ -685,7 +686,7 @@ const SALT_WORK_FACTOR =10
     }    
     const getCotizacionesFolio  = ( data)  => {
         return new Promise((resolve,reject)=>{
-            client.query(`select * from cotizaciones inner join productoservicio on cotizaciones.fk_productoservicio = productoservicio.id_productoServicio  where cotizaciones.NumFolio ='${data[0]}'`,function(err,results,fields){
+            client.query(`select * from cotizaciones inner join productoservicio on cotizaciones.fk_productoServicio = productoservicio.id_productoServicio  where cotizaciones.NumFolio ='${data[0]}'`,function(err,results,fields){
                 var string =JSON.stringify(results)
                 var resultados = JSON.parse(string);
                 resolve(resultados)
@@ -1031,11 +1032,13 @@ const SALT_WORK_FACTOR =10
         })
     }
     const getCotizacionByFolio = ( data)  => {
+        console.log("data",data)
         return new Promise((resolve,reject)=>{
-            client.query(`select * from cotizaciones inner join productoservicio on cotizaciones.fk_productoservicio = productoservicio.id_productoservicio 
+            client.query(`select * from cotizaciones inner join productoservicio on cotizaciones.fk_productoServicio = productoservicio.id_productoServicio 
             inner join contacto on cotizaciones.fk_contacto = contacto.id_contacto
             inner join clientesads on cotizaciones.fk_cliente = clientesads.id_cliente
-            where cotizaciones.NumFolio='${data[0]}'`, function (err,result,fields ) {                        
+            where cotizaciones.NumFolio='${data[0]}'`, function (err,result,fields ) {  
+                console.log("error",err)                      
                 var string = JSON.stringify(result)
                 var resultados=JSON.parse(string);                    
                 resolve(resultados) 
@@ -1102,7 +1105,7 @@ const SALT_WORK_FACTOR =10
     }     
     const GetPolizas = ( data)  => {
         return new Promise((resolve,reject)=>{
-            client.query(`select * from polizas inner join clientesads on polizas.fk_cliente = clientesads.id_cliente inner join productoServicio on polizas.fk_productoServicio = productoServicio.id_productoServicio where clientesads.fk_empresa = '${data[0]}'`,function(err,results,fields){
+            client.query(`select * from polizas inner join clientesads on polizas.fk_cliente = clientesads.id_cliente inner join productoservicio on polizas.fk_productoServicio = productoservicio.id_productoServicio where clientesads.fk_empresa = '${data[0]}'`,function(err,results,fields){
             var string = JSON.stringify(results)
             var resultados=JSON.parse(string);
             resolve(resultados)
@@ -1126,7 +1129,7 @@ const SALT_WORK_FACTOR =10
     } 
     const GetPoliza = ( data)  => {
         return new Promise((resolve,reject)=>{
-            client.query(`select * from polizas inner join productoServicio on polizas.fk_productoServicio = productoServicio.id_productoServicio where polizas.fk_cliente = '${data[0]}'`,function(err,results,fields){
+            client.query(`select * from polizas inner join productoServicio on polizas.fk_productoServicio = productoservicio.id_productoServicio where polizas.fk_cliente = '${data[0]}'`,function(err,results,fields){
             var string = JSON.stringify(results)
             var resultados=JSON.parse(string);
             resolve(resultados)
@@ -1146,6 +1149,7 @@ const SALT_WORK_FACTOR =10
 
             client.query(`select * from transaccionesClientes inner join clientesads on transaccionesClientes.id_cliente = clientesads.id_cliente where transaccionesClientes.id_cliente = '${data[0]}'`,
             function(err,results,fields){
+                console.log("error",err)
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);
                 resolve(resultados)
@@ -1155,7 +1159,7 @@ const SALT_WORK_FACTOR =10
     } 
     const getVentasTablaIndicadores  = ( data)  => {
         return new Promise((resolve,reject)=>{
-            client.query(`select * from ventas inner join productoServicio on ventas.fk_productoServicio = productoServicio.id_productoServicio where ventas.fk_adminalfa='${data[0]}'` , function (err,results,fields ) {            
+            client.query(`select * from ventas inner join productoservicio on ventas.fk_productoServicio = productoservicio.id_productoServicio where ventas.fk_adminalfa='${data[0]}'` , function (err,results,fields ) {            
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);
                 resolve(resultados)   
@@ -1195,7 +1199,7 @@ const SALT_WORK_FACTOR =10
     }
     const getProductoServicioByFolioVentas = ( data)  => {
         return new Promise((resolve,reject)=>{
-            client.query(`select * from ventas inner join productoservicio on ventas.fk_productoservicio = productoservicio.id_productoServicio  where ventas.numFolio = '${data[0]}'`,
+            client.query(`select * from ventas inner join productoservicio on ventas.fk_productoServicio = productoservicio.id_productoServicio  where ventas.numFolio = '${data[0]}'`,
             function(err,results,fields){
                 var string =JSON.stringify(results)
                 var resultados = JSON.parse(string);
@@ -1216,7 +1220,7 @@ const SALT_WORK_FACTOR =10
     }  
     const GetProductoServicioActualizado = ( data)  => {
        return new Promise((resolve,reject)=>{
-        client.query(`select * from productoServicio where id_productoServicio = '${data[0]}'`,
+        client.query(`select * from productoservicio where id_productoServicio = '${data[0]}'`,
         function(err,results,fields){
             var string =JSON.stringify(results)
                 var resultados = JSON.parse(string);
@@ -1342,7 +1346,7 @@ const SALT_WORK_FACTOR =10
   }
   const GetSolicitudes = ( data)  => {
       return new Promise((resolve,reject)=>{
-          client.query(`select * from solicitudCotizacion inner join productoServicio on solicitudCotizacion.fk_productoServicio = productoServicio.id_productoServicio where solicitudCotizacion.fk_cliente = '${data[0]}'`,function(err,result,field){
+          client.query(`select * from solicitudCotizacion inner join productoservicio on solicitudCotizacion.fk_productoServicio = productoservicio.id_productoServicio where solicitudCotizacion.fk_cliente = '${data[0]}'`,function(err,result,field){
                 var string = JSON.stringify(result)
                 var resultados =  JSON.parse(string)
                 resolve(resultados)
@@ -1359,7 +1363,7 @@ const SALT_WORK_FACTOR =10
   }
   const GetSolicitudesByFkEmpresa = ( data)  => {
       return new Promise((resolve,reject)=>{
-          client.query(`select * from solicitudCotizacion inner join productoServicio on solicitudCotizacion.fk_productoServicio = productoServicio.id_productoServicio where solicitudCotizacion.fk_Empresa = '${data[0]}'`,function(err,result,field){
+          client.query(`select * from solicitudCotizacion inner join productoservicio on solicitudCotizacion.fk_productoservicio = productoservicio.id_productoServicio where solicitudCotizacion.fk_Empresa = '${data[0]}'`,function(err,result,field){
             var string = JSON.stringify(result)
             var resultados =  JSON.parse(string)
             resolve(resultados)
@@ -1460,7 +1464,7 @@ const SendSupport = ( data)  => {
 }
 const GetPolizasById = ( data)  => {
     return new Promise((resolve,reject)=>{
-        client.query(`select * from polizas inner join productoServicio on polizas.fk_productoServicio = productoServicio.id_productoServicio where id_polizas = '${data[0]}'`,function(err,results,fields){
+        client.query(`select * from polizas inner join productoservicio on polizas.fk_productoServicio = productoservicio.id_productoServicio where id_polizas = '${data[0]}'`,function(err,results,fields){
            var string = JSON.stringify(results);
            var resultados = JSON.parse(string); 
             ;
@@ -1572,6 +1576,7 @@ const InsertSurveyQuality = ( data)  => {
 const GetCalidadSurvey = ( data)  => {
     return new Promise((resolve,reject)=>{
         client.query(`select * from calidadSurvey`,function(err,results,fields){
+            console.log("error",err)
            var string = JSON.stringify(results);
            var resultados = JSON.parse(string); 
            resolve(resultados)
