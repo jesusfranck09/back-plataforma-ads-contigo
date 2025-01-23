@@ -776,7 +776,8 @@ const SALT_WORK_FACTOR =10
     const AccesoSistema = ( data)  => {
                 console.log("data",data)
                 return new Promise((resolve,reject)=>{
-                    client.query(`select * from clientesAds where fk_contactoAcceso = '${data[2]}'`,function(err,result,field){
+                    client.query(`select * from clientesads where fk_contactoAcceso = '${data[2]}'`,function(err,result,field){
+                        console.log("error",err)
                         var string = JSON.stringify(result)
                         var resultado = JSON.parse(string)
                         console.log("resultado",resultado)
