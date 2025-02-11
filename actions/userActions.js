@@ -1130,7 +1130,8 @@ const SALT_WORK_FACTOR =10
     } 
     const GetPoliza = ( data)  => {
         return new Promise((resolve,reject)=>{
-            client.query(`select * from polizas inner join productoServicio on polizas.fk_productoServicio = productoservicio.id_productoServicio where polizas.fk_cliente = '${data[0]}'`,function(err,results,fields){
+            client.query(`select * from polizas inner join productoservicio on polizas.fk_productoservicio = productoservicio.id_productoservicio where polizas.fk_cliente = '${data[0]}'`,function(err,results,fields){
+                console.log("error",err)
             var string = JSON.stringify(results)
             var resultados=JSON.parse(string);
             resolve(resultados)
