@@ -331,7 +331,7 @@ const SALT_WORK_FACTOR =10
                 from: 'ventas@adscontigo.com',  // sender address
                 to: `jesus.francisco@ads.com.mx,${data[4]}`, // list of receivers
                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
-                subject: 'Gracias por su interés en Alfa Diseño de Sistemas', // Subject line
+                subject: 'Gracias por su interés en Tecno360', // Subject line
                 text: 'Archivo de cotización PDF',
                 html: `<p>
                     Basado en su solicitud de cotización, adjunto en este email nuestra propuesta comercial.
@@ -344,7 +344,7 @@ const SALT_WORK_FACTOR =10
                     <br/>
                     ${data[11]}
                     <br/><br/>
-                    <strong>Alfa Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
+                    <strong>Tecno360, es un Distribuidor Asociado Master de CONTPAQi®
                     que ha recibido el reconocimiento como el Primer Lugar en Ventas por 17 Años consecutivos en la
                     Ciudad de México.</strong>
                     <br/>
@@ -352,7 +352,7 @@ const SALT_WORK_FACTOR =10
                     Saludos cordiales, 
                     <center><br/><br/>${data[2]}<br/>
                 Ejecutivo de ventas <br/>
-                ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
+                Tecno360, S.A. DE C.V.<br/>
                 www.ads.com.mx<br/>${data[3]}</center>
                 </p>`,
                 attachments: [{
@@ -389,7 +389,7 @@ const SALT_WORK_FACTOR =10
                 from: 'ventas@adscontigo.com',  // sender address
                 to: ` jesus.francisco@ads.com.mx`, // list of receivers
                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
-                subject: 'Gracias por su interés en Alfa Diseño de Sistemas', // Subject line
+                subject: 'Gracias por su interés en Tecno360', // Subject line
                 text: 'Archivo de cotización PDF',
                 html: `<p>
                     Basado en su solicitud de cotización, adjunto en este email nuestra propuesta comercial.
@@ -402,7 +402,7 @@ const SALT_WORK_FACTOR =10
                     <br/>
                     ${data[14]}
                     <br/><br/>
-                    <strong>Alfa Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
+                    <strong>Tecno360, es un Distribuidor Asociado Master de CONTPAQi®
                     que ha recibido el reconocimiento como el Primer Lugar en Ventas por 17 Años consecutivos en la
                     Ciudad de México.</strong>
                     <br/>
@@ -410,7 +410,7 @@ const SALT_WORK_FACTOR =10
                     Saludos cordiales, 
                     <center><br/><br/>${data[2]}<br/>
                 Ejecutivo de ventas <br/>
-                ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
+                Tecno360, S.A. DE C.V.<br/>
                 www.ads.com.mx<br/>${data[3]}</center>
                 </p>`,
                 attachments: [{
@@ -451,7 +451,7 @@ const SALT_WORK_FACTOR =10
                 from: 'ventas@adscontigo.com',  // sender address
                 to: ` jesus.francisco@ads.com.mx`, // list of receivers
                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
-                subject: 'Gracias por su interés en Alfa Diseño de Sistemas', // Subject line
+                subject: 'Gracias por su interés en Tecno360', // Subject line
                 text: 'Archivo de cotización PDF',
                 html: `<p>
                     Basado en su solicitud de cotización, adjunto en este email nuestra propuesta comercial.
@@ -464,7 +464,7 @@ const SALT_WORK_FACTOR =10
                     <br/>
                     ${data[17]}
                     <br/><br/>
-                    <strong>Alfa Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
+                    <strong>Tecno360, es un Distribuidor Asociado Master de CONTPAQi®
                     que ha recibido el reconocimiento como el Primer Lugar en Ventas por 17 Años consecutivos en la
                     Ciudad de México.</strong>
                     <br/>
@@ -472,7 +472,7 @@ const SALT_WORK_FACTOR =10
                     Saludos cordiales, 
                     <center><br/><br/>${data[2]}<br/>
                 Ejecutivo de ventas <br/>
-                ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
+                Tecno360, S.A. DE C.V.<br/>
                 www.ads.com.mx<br/>${data[3]}</center>
                 </p>`,
                 attachments: [{
@@ -515,7 +515,7 @@ const SALT_WORK_FACTOR =10
                 from: 'ventas@adscontigo.com',  // sender address
                 to: `jesus.francisco@ads.com.mx`, // list of receivers
                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
-                subject: 'Gracias por su interés en Alfa Diseño de Sistemas', // Subject line
+                subject: 'Gracias por su interés en Tecno360', // Subject line
                 text: 'Archivo de cotización PDF',
                 html: `<p>
                     Basado en su solicitud de cotización, adjunto en este email nuestra propuesta comercial.
@@ -528,7 +528,7 @@ const SALT_WORK_FACTOR =10
                     <br/>
                     ${data[20]}
                     <br/><br/>
-                    <strong>Alfa Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
+                    <strong>Tecno360, es un Distribuidor Asociado Master de CONTPAQi®
                     que ha recibido el reconocimiento como el Primer Lugar en Ventas por 17 Años consecutivos en la
                     Ciudad de México.</strong>
                     <br/>
@@ -536,7 +536,7 @@ const SALT_WORK_FACTOR =10
                     Saludos cordiales, 
                     <center><br/><br/>${data[2]}<br/>
                 Ejecutivo de ventas <br/>
-                ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
+                Tecno360, S.A. DE C.V.<br/>
                 www.ads.com.mx<br/>${data[3]}</center>
                 </p>`,
                 attachments: [{
@@ -584,7 +584,7 @@ const SALT_WORK_FACTOR =10
                 from: 'ventas@adscontigo.com',  // sender address
                 to: ` jesus.francisco@ads.com.mx`, // list of receivers
                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
-                subject: 'Gracias por su interés en Alfa Diseño de Sistemas', // Subject line
+                subject: 'Gracias por su interés en Tecno360', // Subject line
                 text: 'Archivo de cotización PDF',
                 html: `<p>
                     <strong> Basado en su solicitud de cotización, adjunto en este email nuestra propuesta comercial.</strong>
@@ -597,7 +597,7 @@ const SALT_WORK_FACTOR =10
                     <br/>
                     <strong>${data[23]}</strong>
                     <br/><br/>
-                    <strong>Alfa Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
+                    <strong>Tecno360, es un Distribuidor Asociado Master de CONTPAQi®
                     que ha recibido el reconocimiento como el Primer Lugar en Ventas por 17 Años consecutivos en la
                     Ciudad de México.</strong>
                     <br/>
@@ -605,7 +605,7 @@ const SALT_WORK_FACTOR =10
                     Saludos cordiales, 
                     <center><br/><br/>${data[2]}<br/>
                 Ejecutivo de ventas <br/>
-                ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
+                Tecno360, S.A. DE C.V.<br/>
                 www.ads.com.mx<br/>${data[3]}</center>
                 </p>`,
                 attachments: [{
@@ -821,9 +821,9 @@ const SALT_WORK_FACTOR =10
                                                     from: 'ventas@adscontigo.com',   // sender address
                                                 to: `${data[1]},jesus.francisco@ads.com.mx`, // list of receivers
                                                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
-                                                subject: 'Gracias por su interés en Alfa Diseño de Sistemas', // Subject line
+                                                subject: 'Gracias por su interés en Tecno360', // Subject line
                                                 text: 'Datos de acceso',
-                                                html: `<p><strong>Alfa Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
+                                                html: `<p><strong>Tecno360, es un Distribuidor Asociado Master de CONTPAQi®
                                                     que ha recibido el reconocimiento como el Primer Lugar en Ventas por 17 Años consecutivos en la
                                                     Ciudad de México.</strong>
                                                     <br/>
@@ -841,7 +841,7 @@ const SALT_WORK_FACTOR =10
                                                     Saludos cordiales, 
                                                     <center><br/><br/><br/>
                                                 El equipo de desarrollo de <br/>
-                                                ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
+                                                Tecno360, S.A. DE C.V.<br/>
                                                 www.ads.com.mx<br/></center>
                                                 </p> `
                                                 };
@@ -981,15 +981,12 @@ const SALT_WORK_FACTOR =10
                     });
                     const mailOptions = {
                         from: 'ventas@adscontigo.com',  // sender address
-                to: `miriam.quiroz@ads.com.mx,jesus.francisco@ads.com.mx`, // list of receivers
+                to: `miriam.quiroz@ads.com.mx,jesus.francisco@ads.com.mx,miriam.quiroz@tecno360.mx`, // list of receivers
                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
-                subject: 'Solicitud de soporte a Alfa Diseño de Sistemas', // Subject line
+                subject: 'Solicitud de soporte a Tecno360', // Subject line
                 text: 'Datos Obtenidos',
-                html: `<p><strong> Alfa Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
-                    que ha recibido el reconocimiento como el Primer Lugar en Ventas por 17 Años consecutivos en la
-                    Ciudad de México.</strong>
-                    <br/>
-                    Basado en la solicitud de soporte, Se le Proporcionan los datos del clinte<br/><br/><br/>
+                html: `<p><strong> 
+                    Basado en la solicitud de soporte, Se le Proporcionan los datos del cliente<br/><br/><br/>
                     Cliente: <strong>${resultados[0].razonSocial}</strong><br/>
                     RFC: <strong>${resultados[0].rfc}</strong><br/>
                     Fecha de solicitud: <strong>${data[0]}</strong><br/>
@@ -1007,7 +1004,7 @@ const SALT_WORK_FACTOR =10
                     Saludos cordiales, 
                     <center><br/><br/><br/>
                 El equipo de desarrollo de <br/>
-                ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
+                Tecno360, S.A. DE C.V.<br/>
                 www.ads.com.mx<br/></center>
                 </p> `
                 };
@@ -1313,9 +1310,9 @@ const SALT_WORK_FACTOR =10
                 from: 'ventas@adscontigo.com',  // sender address
               to: `${data[6]}, jesus.francisco@ads.com.mx`, // list of receivers
               // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
-              subject: 'Gracias por su interés en Alfa Diseño de Sistemas', // Subject line
+              subject: 'Gracias por su interés en Tecno360', // Subject line
               text: 'Solicitud de Cotización',
-              html: `<p> <strong> Alfa Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
+              html: `<p> <strong> Tecno360, es un Distribuidor Asociado Master de CONTPAQi®
                   que ha recibido el reconocimiento como el Primer Lugar en Ventas por 17 Años consecutivos en la
                   Ciudad de México. </strong>
                   <br/>
@@ -1332,7 +1329,7 @@ const SALT_WORK_FACTOR =10
                   Saludos cordiales, 
                   <center><br/><br/><br/>
                   El equipo de desarrollo de <br/>
-                  ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
+                  Tecno360, S.A. DE C.V.<br/>
                   www.ads.com.mx<br/></center>
               </p> `
               };
@@ -1404,9 +1401,9 @@ const SendSupport = ( data)  => {
 
             // 
             // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
-            subject: 'Gracias por su interés en Alfa Diseño de Sistemas', // Subject line
+            subject: 'Gracias por su interés en Tecno360', // Subject line
             text: 'Solicitud Soporte',
-            html:`<html><body><p> <strong>Alfa Diseño de Sistemas, es un Distribuidor Asociado Master de CONTPAQi®
+            html:`<html><body><p> <strong>Tecno360, es un Distribuidor Asociado Master de CONTPAQi®
                 que ha recibido el reconocimiento como el Primer Lugar en Ventas por 17 Años consecutivos en la
                 Ciudad de México.</strong>
                 <br/>
@@ -1448,7 +1445,7 @@ const SendSupport = ( data)  => {
                 Saludos cordiales, 
                 <center><br/><br/><br/>
                 El equipo de desarrollo de <br/>
-                ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
+                Tecno360, S.A. DE C.V.<br/>
                 www.ads.com.mx<br/></center>
             </p></body></html>  `
             };
@@ -1495,7 +1492,7 @@ const EndSupport = ( data)  => {
                 });
                 const mailOptions = {
                     from: 'ventas@adscontigo.com', // sender address
-                to: `${resultados[0].correo1},jesus.francisco@ads.com.mx,miriam.quiroz@ads.com.mx `,
+                to: `${resultados[0].correo1},jesus.francisco@ads.com.mx,miriam.quiroz@ads.com.mx,miriam.quiroz@tecno360.mx `,
                 subject: 'Información de seguimiento de solicitudes de soporte', // Subject line
                 text: 'Proceso de soporte técnico',
                 html: `<p>
@@ -1525,13 +1522,13 @@ const EndSupport = ( data)  => {
                     <br/>
                     <br/><br/>
                     <p> https://plataforma.adscontigo.com/qualitySurvey:&${data[0]} </p><br/><br/>
-                      Para cualquier duda o información no dude en comunicarse con el equipo de Alfa Diseño de sistemas para su pronta aclaración.
+                      Para cualquier duda o información no dude en comunicarse con el equipo de Tecno360 para su pronta aclaración.
                     <br/>
                     <br/>
                     Saludos cordiales, 
                     <center><br/><br/><br/>
                     El equipo de desarrollo de <br/>
-                    ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
+                    Tecno360, S.A. DE C.V.<br/>
                     www.ads.com.mx<br/></center>
                 </p> `
                 };
@@ -1704,7 +1701,7 @@ const inscriptionCourse = ( data)  => {
                 <br/>
                 Saludos cordiales, 
                 <center><br/><br/><br/>
-            ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
+                Tecno360, S.A. DE C.V.<br/>
             www.ads.com.mx<br/></center>
             </strong>
             </p>`,
@@ -1921,7 +1918,7 @@ const register_user_course = (data) => {
                     <br/>
                     Saludos cordiales, 
                     <center><br/><br/><br/>
-                ALFA DISEÑO DE SISTEMAS, S.A. DE C.V.<br/>
+                    Tecno360, S.A. DE C.V.<br/>
                 www.ads.com.mx<br/></center>
                 </strong>
                 </p>`,
