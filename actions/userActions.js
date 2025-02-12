@@ -957,6 +957,7 @@ const SALT_WORK_FACTOR =10
                 var resultados = JSON.parse(string)
                 if(resultados[0].folio){
                     consecutivo  = data[7] + (resultados[0].folio.length - 1 + 1)
+                    
                     client.query(`insert into soporte (fechaSoporte,consola,numeroPoliza,asunto,idTeamviewer,passTeamviewer,folio,telefonoContacto,status,fk_cliente,fk_empresa,fk_contacto,fechaFinalizacion,statusEncuesta) values ('${data[0]}','${data[1]}','${data[2]}','${data[3]}','${data[5]}','${data[6]}','${consecutivo}','${data[10]}','Pendiente','${data[4]}','${data[8]}','${data[9]}',"En proceso","No aplicada")`)
                 }else{
                     consecutivo = data[7] + 1
@@ -966,7 +967,8 @@ const SALT_WORK_FACTOR =10
             client.query(`select * from clientesads where id_cliente = '${data[4]}'`,function(err,result,field ){
                 var string =  JSON.stringify(result)
                 var resultados = JSON.parse(string)
-                ;
+                console.log("resultados",resultados[0])
+                
                 let folio =  data[7]
                 var transporter = nodemailer.createTransport({  
                     secure: true,
@@ -981,7 +983,7 @@ const SALT_WORK_FACTOR =10
                     });
                     const mailOptions = {
                         from: 'ventas@adscontigo.com',  // sender address
-                to: `miriam.quiroz@ads.com.mx,jesus.francisco@ads.com.mx,miriam.quiroz@tecno360.mx`, // list of receivers
+                to: `${data[11]},miriam.quiroz@ads.com.mx,jesus.francisco@ads.com.mx,miriam.quiroz@tecno360.mx`, // list of receivers
                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
                 subject: 'Solicitud de soporte a Tecno360', // Subject line
                 text: 'Datos Obtenidos',
