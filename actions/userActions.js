@@ -823,11 +823,11 @@ const SALT_WORK_FACTOR =10
                                                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
                                                 subject: 'Gracias por su interés en Tecno360', // Subject line
                                                 text: 'Datos de acceso',
-                                                html: `<p><strong>Comunicado Tecno360</strong>
+                                                html: `<p><strong>Comunicado de solicitud de acceso Tecno360</strong>
                                                     <br/>
                                                     <br/>
                                                     <br/>
-                                                    Basado en su solicitud de acceso, Se le otorgan los siguientes datos para que usted disfrute de los beneficios de la plataforma ADSContigo en el sitio https://www.ads.com.mx<br/><br/><br/>
+                                                    Basado en su solicitud de acceso, Se le otorgan los siguientes datos para que usted disfrute de los beneficios de la plataforma ADSContigo en el sitio https://plataforma.adscontigo.com<br/><br/><br/>
                                                     Correo: ${data[1]}<br/>
                                                     Contraseña:${folio}<br/>
                                                     <br/>
@@ -1003,7 +1003,7 @@ const SALT_WORK_FACTOR =10
                     <center><br/><br/><br/>
                 El equipo de desarrollo de <br/>
                 Tecno360, S.A. DE C.V.<br/>
-                www.ads.com.mx<br/></center>
+                www.plataforma.adscontigo.com/loginCliente<br/></center>
                 </p> `
                 };
                 transporter.sendMail(mailOptions, function (err, info) {
