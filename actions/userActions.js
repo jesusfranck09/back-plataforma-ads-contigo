@@ -1170,7 +1170,8 @@ const SALT_WORK_FACTOR =10
     }
     const getVentasTabla  = ( data)  => {
         return new Promise((resolve,reject)=>{
-            client.query(`select * from ventas where fk_adminalfa='${data[0]}'` , function (err,results,fields ) {            
+            client.query(`select * from ventas where fk_adminalfa='${data[0]}'` , function (err,results,fields ) {     
+                console.log("error",err)       
                 var string = JSON.stringify(results)
                 var resultados=JSON.parse(string);
                 resolve(resultados)           

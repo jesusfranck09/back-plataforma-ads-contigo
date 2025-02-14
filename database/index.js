@@ -1,7 +1,7 @@
 var mysql = require('mysql');
 var con = mysql.createPool({
     database: "baseplataforma",
-    host: "baseplataforma.cgeovhwjvxf3.us-east-1.rds.amazonaws.com",  // Endpoint correcto
+    host: "baseplataforma-restaurada.cgeovhwjvxf3.us-east-1.rds.amazonaws.com",  // Endpoint correcto
     user: "Franck",  // Usuario correcto
     password: "Programacion2020",  // Contraseña correcta
     connectionLimit: 10,
