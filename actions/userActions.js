@@ -823,17 +823,13 @@ const SALT_WORK_FACTOR =10
                                                 // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
                                                 subject: 'Gracias por su interés en Tecno360', // Subject line
                                                 text: 'Datos de acceso',
-                                                html: `<p><strong>Tecno360, es un Distribuidor Asociado Master de CONTPAQi®
-                                                    que ha recibido el reconocimiento como el Primer Lugar en Ventas por 17 Años consecutivos en la
-                                                    Ciudad de México.</strong>
+                                                html: `<p><strong>Comunicado Tecno360</strong>
                                                     <br/>
                                                     <br/>
                                                     <br/>
-                                                    Basado en su solicitud de acceso, Se le otorgan los siguientes datos para que usted disfrute de los beneficios de la plataforma de ADS en el sitio https://www.ads.com.mx<br/><br/><br/>
+                                                    Basado en su solicitud de acceso, Se le otorgan los siguientes datos para que usted disfrute de los beneficios de la plataforma ADSContigo en el sitio https://www.ads.com.mx<br/><br/><br/>
                                                     Correo: ${data[1]}<br/>
                                                     Contraseña:${folio}<br/>
-                                                    <br/>
-                                                        No olvide ingresar al vínculo plataforma.adscontigo.com en su navegador para acceder al sistema de clientes
                                                     <br/>
                                                         Se le sugiere cambiar su <strong>contraseña</strong> para la seguridad de su sesión.
                                                     <br/>
@@ -1406,9 +1402,7 @@ const SendSupport = ( data)  => {
             // subject: 'Cotizacion de producto o servicio' + " " + fecha, // Subject line
             subject: 'Gracias por su interés en Tecno360', // Subject line
             text: 'Solicitud Soporte',
-            html:`<html><body><p> <strong>Tecno360, es un Distribuidor Asociado Master de CONTPAQi®
-                que ha recibido el reconocimiento como el Primer Lugar en Ventas por 17 Años consecutivos en la
-                Ciudad de México.</strong>
+            html:`<html><body><p> <strong>Comunicado Tecno360</strong>
                 <br/>
                 <br/>
                 <br/>
