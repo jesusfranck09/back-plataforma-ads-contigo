@@ -827,7 +827,7 @@ const SALT_WORK_FACTOR =10
                                                     <br/>
                                                     <br/>
                                                     <br/>
-                                                    Basado en su solicitud de acceso, Se le otorgan los siguientes datos para que usted disfrute de los beneficios de la plataforma ADSContigo en el sitio https://plataforma.adscontigo.com<br/><br/><br/>
+                                                    Basado en su solicitud de acceso, Se le otorgan los siguientes datos para que usted disfrute de los beneficios de la plataforma ADSContigo en el sitio https://plataforma.adscontigo.com/loginCliente<br/><br/><br/>
                                                     Correo: ${data[1]}<br/>
                                                     Contraseña:${folio}<br/>
                                                     <br/>
